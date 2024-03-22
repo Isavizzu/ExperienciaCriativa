@@ -16,4 +16,5 @@
 <?php
         die("Connection failed: " . $conn->connect_error);
     }
+    fica salvo
 ?>
