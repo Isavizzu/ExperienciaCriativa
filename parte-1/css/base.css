@@ -1,0 +1,45 @@
+/* Ajustes para dispositivos móveis */
+@media screen and (max-width: 768px) {
+    .w3-main {
+      margin-top: 60px; /* Aumenta a margem superior para evitar a sobreposição do cabeçalho pelo menu */
+      margin-left: 0; /* Remover margem esquerda para que o conteúdo não seja sobreposto pelo menu */
+    }
+  
+    .w3-top {
+      position: fixed; /* Torna o cabeçalho fixo para que ele permaneça no topo da tela */
+      width: 100%; /* Ajusta a largura para ocupar toda a largura da tela */
+      z-index: 4; /* Ajusta a ordem de empilhamento para garantir que o cabeçalho fique sobre o menu */
+    }
+  }
+
+/* Ajustes para tablets */
+@media screen and (max-width: 1024px) {
+  .w3-main {
+    margin-top: 60px; /* Aumenta a margem superior para evitar a sobreposição do cabeçalho pelo menu */
+    margin-left: 0; /* Remover margem esquerda para que o conteúdo não seja sobreposto pelo menu */
+  }
+
+  .w3-top {
+    position: fixed; /* Torna o cabeçalho fixo para que ele permaneça no topo da tela */
+    width: 100%; /* Ajusta a largura para ocupar toda a largura da tela */
+    z-index: 4; /* Ajusta a ordem de empilhamento para garantir que o cabeçalho fique sobre o menu */
+  }
+}
+
+
+/* Ajustes para computadores */
+@media screen and (min-width: 1025px) {
+  .w3-top {
+    position: fixed; /* Torna o cabeçalho fixo para que ele permaneça no topo da tela */
+    width: 100%; /* Ajusta a largura para ocupar toda a largura da tela */
+    z-index: 4; /* Ajusta a ordem de empilhamento para garantir que o cabeçalho fique sobre o menu */
+  }
+
+  .w3-main {
+    margin-top: 60px; /* Aumenta a margem superior para evitar a sobreposição do conteúdo pelo cabeçalho */
+  }
+
+  .w3-sidebar {
+    z-index: 3; /* Ajusta a ordem de empilhamento para garantir que o menu fique abaixo do cabeçalho */
+  }
+}

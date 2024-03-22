@@ -1,0 +1,64 @@
+body {
+    font-family: "Poppins", sans-serif; /* Usando a fonte Poppins */
+    background-color: #f2f5f8; /* Um tom mais suave de azul para o fundo */
+    margin: 0;
+    padding: 0;
+}
+
+.tabela-container {
+    margin: 20px auto;
+    width: 80%;
+}
+
+.horarios {
+    width: 100%;
+    border-collapse: collapse;
+    background-color: #6ab0de; /* Fundo azul mais forte para o cabeçalho */
+    border-radius: 10px; /* Cantos arredondados */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Sombra suave */
+}
+
+.horarios th, .horarios td {
+    padding: 10px;
+    text-align: center;
+    border: 1px solid #dcdcdc; /* Linhas da tabela em tom mais suave */
+}
+
+.horarios th {
+    background-color: #cfe7f8; /* Fundo azul mais suave para os cabeçalhos */
+    color: #6ab0de; /* Texto azul mais forte */
+}
+
+.horarios td {
+    background-color: #e7f2f8; /* Fundo azul ainda mais suave para células */
+}
+
+.horarios th:first-child {
+    background-color: transparent; /* Canto superior esquerdo transparente */
+    color: #6ab0de; /* Tom azul mais forte para o texto */
+}
+
+.no-agenda-section {
+    background-color: #e7f0f7; /* Azul claro */
+    border: 1px solid #b8daff; /* Tom mais escuro de azul */
+    border-radius: 8px;
+    padding: 20px;
+    margin: 20px 0;
+    display: flex;
+    flex-direction: column; /* Ajuste para empilhar os elementos verticalmente */
+    justify-content: center; /* Centralizar verticalmente */
+    align-items: center; /* Centralizar horizontalmente */
+    height: 200px; /* Ajuste a altura conforme necessário */
+}
+
+.message {
+    font-size: 16px;
+    color: #007bff; /* Azul principal */
+    margin: 0;
+    text-align: center;
+}
+
+.message-container {
+    text-align: center;
+    width: 100%; /* Para garantir que o texto fique centralizado */
+}
