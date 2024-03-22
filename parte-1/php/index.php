@@ -18,11 +18,6 @@
             <label for="id">Senha:</label>
             <input type="text" id="senha" name="senha" placeholder="Sua senha">
 
-            <input type="submit" value="Login" name="botao_login">
-        </form>
-        <p>Não tem uma conta? <a href="#">Crie aqui!</a></p>
-    </div>
-
     <!-- É a função em php para validar o login -->
     <?php
         if(isset($_POST['botao_login'])) {
@@ -65,15 +60,14 @@
 
             }
             else {
-                ?>
-                <script>
-                    alert("Senha ou CPF inválidos!");
-                </script>
-                <?php
+                echo "<section class='section_invalido'><p>Senha ou/e CPF inválidos!</p></section>";
             }
         }
-
     ?>
+            <input type="submit" value="Login" name="botao_login">
+        </form>
+        <p>Não tem uma conta? <a href="#">Crie aqui!</a></p>
+    </div>
  
 </body>
 </html>

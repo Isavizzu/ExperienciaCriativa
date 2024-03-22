@@ -193,7 +193,6 @@
                             <p class='message'>O doutor ainda não tem agenda.</p>
                         </div>
                     </section>";
-
                 }
                 ?>
             </tbody>
