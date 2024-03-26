@@ -81,6 +81,17 @@
 </body> 
 
 
+<?php 
+    function verifica_cpf($cpf){
+        $pesquisa_cpf = "SELECT cpf FROM usuario WHERE cpf = '$cpf'";
+        $resultado_pesquisa = $conn->query($pesquisa_cpf);
+        $row = $resultado_pesquisa->fetch_assoc();
+        $ok = false;
+        if($row != null){
+            $ok = true;
+        }
+    }
+?>
 <script>
 
     function confirm(){
@@ -96,6 +107,10 @@
         const testa_senha = /^.{6,30}$/;
         const testa_num = /^\d+(\.\d+)?$/;
         const letra = /^[A-Za-z ]{1,100}$/;
+        <?php 
+            verifica_cpf('?>Cpf<?php');
+        ?>
+
         if (!(testa_senha.test(senha))) {
             alert('Sua senha tem que ter de 6 a 30 caracteres.');
             return;
@@ -115,6 +130,9 @@
         else if (!(testa_num.test(pes))){
             alert("Digite seu peso em kg")
             return;
+        }
+        else if (<?php $ok ?> == true){
+            alert('Esse CPF já foi cadastrado anteriormente!');
         }
         else{
 
