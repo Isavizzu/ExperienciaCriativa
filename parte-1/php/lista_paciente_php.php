@@ -7,34 +7,48 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cadastro de Paciente</title>
-    <link rel="stylesheet" href="../css/cadastro.css">
+    <link rel="stylesheet" href="../css/lista_paciente.css">
+    <title>Dados do paciente</title>
 </head>
-<body>
-<br>
-<h1>Formulário de Cadastro</h1>
 
+<body class="">
+    <?php
+    $CPF= $_GET["crm"];
+    $pesquisa_cpf = "SELECT cpf, nome, data_nascimento, senha FROM usuario WHERE cpf = '$CPF'";
+    $resultado_pesquisa = $conn->query($pesquisa_cpf);
+    $row = $resultado_pesquisa->fetch_assoc();
+    $nome = $row['nome'];
+    $data= $row['data_nascimento'];
+    $senha = $row['senha'];
 
-<br>
+    $pesquisa_paciente_cpf = "SELECT telefone, paciente_cpf, altura, peso FROM paciente WHERE paciente_cpf = '$CPF'";
+    $resultado_pesquisa_paciente = $conn->query($pesquisa_paciente_cpf);
+    $row = $resultado_pesquisa_paciente->fetch_assoc();
+    $alt= $row['altura'];
+    $pes= $row['peso'];
+    $tel= $row['telefone'];
 
-<section class="caixa">
-<form class="form" id="form" name="form" action="criar_cadastro.php" method="post">
+    ?>
+    
+   <section class="caixa">
+        <h1>Dados do paciente</h2><br>
+        <form class="form" id="form" name="form" action="atualiza_cadastro.php" method="post">
       
       <div class="input-box">
           <label>Nome completo</label>
-          <input type="text" id="nome" name="nome" placeholder="Digite o nome completo" required="" >
+          <input type="text" id="nome" name="nome" value="<?php echo $nome; ?>" required="" >
       </div>
       
       <div class="column">
       
           <div class="input-box">
             <label>CPF</label>
-            <input type="text" id="cpf" name="cpf" placeholder="Digite o CPF no formato xxxxxxxxxxx ou xxx.xxx.xxx-xx" required="" >
+            <input type="text" id="cpf" name="cpf" value="<?php echo $CPF; ?>" required="" >
           </div>
       
           <div class="input-box">
             <label>Data de Nascimento</label>
-            <input type="date" name="data" placeholder="Digite a data de nascimento" >
+            <input type="date" name="data" placeholder="dd/mm/aaaa" value="<?php echo $data; ?>" >
           </div>
       
       </div>
@@ -43,12 +57,12 @@
       
           <div class="input-box">
             <label>Senha</label>
-            <input type="text" id="Senha" name="Senha" placeholder="Digite uma senha com 6 a 30 caracteres" required="" >
+            <input type="text" id="Senha" name="Senha" value="<?php echo $senha; ?>" required="" >
           </div>
       
           <div class="input-box">
             <label>Confirme a senha</label>
-            <input type="text" id="confirmaSenha" name="confirmaSenha" placeholder="Confirme sua senha" required="">
+            <input type="text" id="confirmaSenha" name="confirmaSenha" value="<?php echo $senha; ?>" required="">
           </div>
       
       </div>
@@ -57,46 +71,51 @@
       
           <div class="input-box">
             <label>Altura</label>
-            <input type="text" id="alt" name="alt" placeholder="Digite a altura em metros" required="" >
+            <input type="text" id="alt" name="alt" value="<?php echo $alt; ?>" required="" >
           </div>
       
           <div class="input-box">
             <label>Peso</label>
-            <input type="text" id="pes" name="pes" placeholder="Digite o peso em Kg" required="">
+            <input type="text" id="pes" name="pes" value="<?php echo $pes; ?>" required="">
           </div>
       
       </div>
 
       <div class="input-box">
           <label>Telefone</label>
-          <input type="text" id="tel" name="telefone" placeholder="Digite o telefone no formato xxxxx-xxxx ou xxxxxxxxx" required="" >
+          <input type="text" id="tel" name="telefone" value="<?php echo $tel; ?>" required="" >
       </div>
       <br>
       
+      <div class="column">
+      
+          <div class="input-box">
+            
+            <input type="button" id="atualizar" class="cadbot" value="Atualizar" onclick="confirm()">
+          </div>
+      
+          <div class="input-box">
+            
+            <input type="button" id="deletar" class="cadbot" value="Excluir" onclick="confirmarExclusao()">
+          </div>
+      
+      </div>
 
-      <input type="button" id="Enviar" class="cadbot" value="Cadastrar" onclick="confirm()">
-  
     </form>
-</section>
-
-</div>
-</body> 
-
-<?php 
-    function verifica_cpf($cpf){
-        $pesquisa_cpf = "SELECT cpf FROM usuario WHERE cpf = '$cpf'";
-        $resultado_pesquisa = $conn->query($pesquisa_cpf);
-        $row = $resultado_pesquisa->fetch_assoc();
-        $ok = false;
-        if($row != null){
-            $ok = true;
-        }
-    }
-?>
+</section>    
+</body>
 
 <script>
+// Função para exibir confirmação antes de excluir o usuário
+function confirmarExclusao() {
+    // Exibe uma caixa de diálogo de confirmação
+    if (confirm("Tem certeza que deseja excluir este usuário?")) {
+        // Se o usuário confirmar, redireciona para uma página PHP que realiza a exclusão
+        window.location.href = "excluir_usuario.php?";
+    }
+}
 
-    function confirm(){
+function confirm(){
         var senha = document.getElementById('Senha').value
         var confirmaSenha = document.getElementById('confirmaSenha').value;
         var CpfRegex = /^[0-9]{3}[\.]?[0-9]{3}[\.]?[0-9]{3}[-]?[0-9]{2}$/i
@@ -110,9 +129,6 @@
         const testa_num = /^\d{2,10}(\.\d+)?$/;
         const letra = /^[A-Za-z ]{1,100}$/;
 
-        <?php 
-            verifica_cpf('?>Cpf<?php');
-        ?>
 
         if (!(testa_senha.test(senha))) {
             alert('Sua senha tem que ter de 6 a 30 caracteres.');
@@ -134,9 +150,6 @@
             alert("Digite seu peso em kg")
             return;
         }
-        else if (<?php $ok ?> == true){
-            alert('Esse CPF já foi cadastrado anteriormente!');
-        }
         
         else{
 
@@ -155,8 +168,5 @@
              
         }
     }
-
-    
 </script>
-
 </html>
