@@ -11,7 +11,7 @@
     <title>Lista de pacientes</title>
 </head>
 
-<body class="agenda-body">
+<body class="agenda-body"> 
     
     <section class="container">
         <?php
