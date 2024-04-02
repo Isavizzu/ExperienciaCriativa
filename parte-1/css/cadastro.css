@@ -145,6 +145,7 @@ h1 {
     cursor: pointer;
     transition: all 0.2s ease;
     background: #007cff;
+    margin-bottom: 2%;
   }
 
 .success-message {
@@ -184,5 +185,9 @@ h1 {
   max-width: 95%;
   margin-left: auto;
   margin-right: auto;
-
+  padding: 3%;
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  margin-bottom: 5%;
 }

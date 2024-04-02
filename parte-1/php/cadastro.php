@@ -1,5 +1,6 @@
 <?php
     include("base.php");
+    include("conexao.php");
 ?>
 
 <!DOCTYPE html>
@@ -12,7 +13,7 @@
 </head>
 <body>
 <br>
-<h1>Formulário de Cadastro</h1>
+<h1>Formulário de Cadastro de Paciente</h1>
 
 
 <br>
@@ -82,16 +83,18 @@
 </div>
 </body> 
 
-<?php 
+<?php
     function verifica_cpf($cpf){
         $pesquisa_cpf = "SELECT cpf FROM usuario WHERE cpf = '$cpf'";
         $resultado_pesquisa = $conn->query($pesquisa_cpf);
         $row = $resultado_pesquisa->fetch_assoc();
-        $ok = false;
-        if($row != null){
-            $ok = true;
+        if ($row == null){
+            return false;
         }
-    }
+        else{
+            return true;
+        }
+    } 
 ?>
 
 <script>
@@ -109,10 +112,10 @@
         const testa_senha = /^.{6,30}$/;
         const testa_num = /^\d{2,10}(\.\d+)?$/;
         const letra = /^[A-Za-z ]{1,100}$/;
-
-        <?php 
-            verifica_cpf('?>Cpf<?php');
-        ?>
+        let ok = <?php verifica_cpf(?>Cpf<?php)?>;
+        if(ok){
+            alert('Esse CPF já foi cadastrado!');
+        }
 
         if (!(testa_senha.test(senha))) {
             alert('Sua senha tem que ter de 6 a 30 caracteres.');
@@ -133,9 +136,6 @@
         else if (!(testa_num.test(pes))){
             alert("Digite seu peso em kg")
             return;
-        }
-        else if (<?php $ok ?> == true){
-            alert('Esse CPF já foi cadastrado anteriormente!');
         }
         
         else{
