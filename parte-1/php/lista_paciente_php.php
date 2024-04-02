@@ -33,6 +33,10 @@
    <section class="caixa">
         <h1>Dados do paciente</h2><br>
         <form class="form" id="form" name="form" action="atualiza_cadastro.php" method="post">
+
+        <!Adiciona campos ocultos para armazenar as variáveis>
+        <input type="hidden" id="Cpf" name="cpf" value="">
+        <input type="hidden" id="verifica" name="verifica" value="0">
       
       <div class="input-box">
           <label>Nome completo</label>
@@ -91,10 +95,11 @@
       
           <div class="input-box">
             
-            <input type="button" id="atualizar" class="cadbot" value="Atualizar" onclick="confirm()">
+            <input type="button" id="atualizar" class="cadbot" value="Atualizar" onclick="confirn()">
           </div>
       
           <div class="input-box">
+
             
             <input type="button" id="deletar" class="cadbot" value="Excluir" onclick="confirmarExclusao()">
           </div>
@@ -106,16 +111,19 @@
 </body>
 
 <script>
+
 // Função para exibir confirmação antes de excluir o usuário
 function confirmarExclusao() {
     // Exibe uma caixa de diálogo de confirmação
     if (confirm("Tem certeza que deseja excluir este usuário?")) {
         // Se o usuário confirmar, redireciona para uma página PHP que realiza a exclusão
-        window.location.href = "excluir_usuario.php?";
-    }
+        var Cpf = document.getElementById('cpf').value;
+        var verifica = 1;
+        window.location.href = "atualiza_cadastro.php?verifica=" +verifica + "&Cpf=" +Cpf;
+    } 
 }
 
-function confirm(){
+function confirn(){
         var senha = document.getElementById('Senha').value
         var confirmaSenha = document.getElementById('confirmaSenha').value;
         var CpfRegex = /^[0-9]{3}[\.]?[0-9]{3}[\.]?[0-9]{3}[-]?[0-9]{2}$/i
