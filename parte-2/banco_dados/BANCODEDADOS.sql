@@ -15,6 +15,8 @@ CREATE TABLE medico (
 
 CREATE TABLE paciente (
     telefone varchar(14),
+    peso varchar(10),
+    altura varchar(10),
     paciente_cpf varchar(15) PRIMARY KEY
 );
 
@@ -54,35 +56,44 @@ CREATE TABLE agendamento (
 ALTER TABLE recepcionista ADD CONSTRAINT FK_recepcionista_2
     FOREIGN KEY (recepcionista_cpf)
     REFERENCES usuario (cpf)
-    ON DELETE CASCADE;
+    ON DELETE CASCADE
+    ON UPDATE CASCADE;
  
 ALTER TABLE medico ADD CONSTRAINT FK_medico_2
     FOREIGN KEY (medico_cpf)
     REFERENCES usuario (cpf)
-    ON DELETE CASCADE;
+    ON DELETE CASCADE
+    ON UPDATE CASCADE;
  
 ALTER TABLE medico ADD CONSTRAINT FK_medico_3
     FOREIGN KEY (especialidade_id)
     REFERENCES especialidade (id)
-    ON DELETE CASCADE;
+    ON DELETE CASCADE
+    ON UPDATE CASCADE;
  
 ALTER TABLE paciente ADD CONSTRAINT FK_paciente_2
     FOREIGN KEY (paciente_cpf)
     REFERENCES usuario (cpf)
-    ON DELETE CASCADE;
+    ON DELETE CASCADE
+    ON UPDATE CASCADE;
  
 ALTER TABLE agenda ADD CONSTRAINT FK_agenda_1
     FOREIGN KEY (medico_crm)
     REFERENCES medico (crm)
-    ON DELETE CASCADE;
+    ON DELETE CASCADE
+    ON UPDATE CASCADE;
  
 ALTER TABLE agendamento ADD CONSTRAINT FK__agendamento_1
     FOREIGN KEY (medico_crm)
-    REFERENCES medico (crm);
+    REFERENCES medico (crm)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE;
  
 ALTER TABLE agendamento ADD CONSTRAINT FK__agendamento_2
     FOREIGN KEY (paciente_cpf)
-    REFERENCES paciente (paciente_cpf);
+    REFERENCES paciente (paciente_cpf)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE;
     
 -- Inserir usuários (genéricos)
 
@@ -90,21 +101,31 @@ ALTER TABLE agendamento ADD CONSTRAINT FK__agendamento_2
 INSERT INTO especialidade (id, nome_especialidade)
 VALUES 
     (1, 'Cardiologia'),
-    (2, 'Dermatologia');
+    (2, 'Dermatologia'),
+    (3, 'Pediatria'),
+    (4, 'Neurologia'),
+    (5, 'Ortopedia'),
+    (6, 'Endocrinologia');
 
 INSERT INTO usuario (cpf, nome, senha, data_nascimento)
 VALUES 
     ('12345678901', 'Paciente 1', 'senha1', '1990-01-01'),
     ('23456789012', 'Paciente 2', 'senha2', '1990-01-02'),
+    ('99345678901', 'Paciente 3', 'senha1', '1990-01-01'),
+    ('99456789012', 'Paciente 4', 'senha2', '1990-01-02'),
+    ('98345678901', 'Paciente 5', 'senha1', '1990-01-01'),
     ('34567890123', 'Médico 1', 'senha3', '1980-01-01'),
     ('45678901234', 'Médico 2', 'senha4', '1980-01-02'),
     ('56789012345', 'Recepcionista 1', 'senha5', '1970-01-01');
 
 -- Inserir pacientes
-INSERT INTO paciente (telefone, paciente_cpf)
+INSERT INTO paciente (telefone, peso, altura, paciente_cpf)
 VALUES 
-    ('(11) 1111-1111', '12345678901'),
-    ('(22) 2222-2222', '23456789012');
+    ('(11) 1111-1111', '54', '1.64', '12345678901'),
+    ('(22) 2222-2222', '55', '1.54', '23456789012'),
+    ('(33) 1111-1111', '56', '1.64', '99345678901'),
+    ('(44) 2222-2222', '57', '1.94', '99456789012'),
+    ('(55) 1111-1111', '58', '1.84', '98345678901');
 
 -- Inserir médicos
 INSERT INTO medico (crm, medico_cpf, especialidade_id)
