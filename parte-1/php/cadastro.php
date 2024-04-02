@@ -35,7 +35,7 @@
       
           <div class="input-box">
             <label>Data de Nascimento</label>
-            <input type="date" name="data" placeholder="Digite a data de nascimento" >
+            <input type="date" id='data' name="data" placeholder="Digite a data de nascimento" >
           </div>
       
       </div>
@@ -109,17 +109,12 @@
         let pes = document.getElementById('pes').value
         let alt = document.getElementById('alt').value
         let nome = document.getElementById('nome').value
+        let data = document.getElementById('data').value
         const testa_senha = /^.{6,30}$/;
         const testa_num = /^\d{2,10}(\.\d+)?$/;
         const letra = /^[A-Za-z ]{1,100}$/;
-        let ok = <?php verifica_cpf(?>Cpf<?php)?>;
-        if(ok){
-            alert('Esse CPF já foi cadastrado!');
-        }
-
-        if (!(testa_senha.test(senha))) {
-            alert('Sua senha tem que ter de 6 a 30 caracteres.');
-            return;
+        if(!data){
+            alert("Preencha a data de nascimento.");
         }
         else if (!(letra.test(nome))){
             alert("Digite o nome completo.")
@@ -141,12 +136,12 @@
         else{
 
             if (TelRegex.test(Tel) == false){
-                alert('Digite um telefone Válido')
+                alert('Digite um telefone Válido!')
                 return
             }
            
             if (CpfRegex.test(Cpf) == false){
-                alert('Digite um cpf Válido')
+                alert('Digite um cpf Válido!')
                 return
             }
             else{
