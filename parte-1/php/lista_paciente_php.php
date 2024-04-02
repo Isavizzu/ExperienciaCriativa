@@ -40,19 +40,19 @@
       
       <div class="input-box">
           <label>Nome completo</label>
-          <input type="text" id="nome" name="nome" value="<?php echo $nome; ?>" required="" >
+          <input type="text" id="nome" name="nome" placeholder="Digite o nome completo" value="<?php echo $nome; ?>" required="" >
       </div>
       
       <div class="column">
       
           <div class="input-box">
             <label>CPF</label>
-            <input type="text" id="cpf" name="cpf" value="<?php echo $CPF; ?>" required="" >
+            <input type="text" id="cpf" name="cpf" placeholder="Digite o CPF no formato xxxxxxxxxxx ou xxx.xxx.xxx-xx"  value="<?php echo $CPF; ?>" required="" >
           </div>
       
           <div class="input-box">
             <label>Data de Nascimento</label>
-            <input type="date" name="data" placeholder="dd/mm/aaaa" value="<?php echo $data; ?>" >
+            <input type="date" id="data" name="data" placeholder="dd/mm/aaaa" value="<?php echo $data; ?>" >
           </div>
       
       </div>
@@ -61,12 +61,12 @@
       
           <div class="input-box">
             <label>Senha</label>
-            <input type="text" id="Senha" name="Senha" value="<?php echo $senha; ?>" required="" >
+            <input type="text" id="Senha" name="Senha" placeholder="Digite uma senha com 6 a 30 caracteres" value="<?php echo $senha; ?>" required="" >
           </div>
       
           <div class="input-box">
             <label>Confirme a senha</label>
-            <input type="text" id="confirmaSenha" name="confirmaSenha" value="<?php echo $senha; ?>" required="">
+            <input type="text" id="confirmaSenha" name="confirmaSenha"  placeholder="Confirme sua senha" value="<?php echo $senha; ?>" required="">
           </div>
       
       </div>
@@ -75,19 +75,19 @@
       
           <div class="input-box">
             <label>Altura</label>
-            <input type="text" id="alt" name="alt" value="<?php echo $alt; ?>" required="" >
+            <input type="text" id="alt" name="alt" placeholder="Digite a altura em metros"  value="<?php echo $alt; ?>" required="" >
           </div>
       
           <div class="input-box">
             <label>Peso</label>
-            <input type="text" id="pes" name="pes" value="<?php echo $pes; ?>" required="">
+            <input type="text" id="pes" name="pes"  placeholder="Digite o peso em Kg" value="<?php echo $pes; ?>" required="">
           </div>
       
       </div>
 
       <div class="input-box">
           <label>Telefone</label>
-          <input type="text" id="tel" name="telefone" value="<?php echo $tel; ?>" required="" >
+          <input type="text" id="tel" name="telefone" placeholder="Digite o telefone no formato xxxxx-xxxx ou xxxxxxxxx" value="<?php echo $tel; ?>" required="" >
       </div>
       <br>
       
@@ -133,14 +133,16 @@ function confirn(){
         let pes = document.getElementById('pes').value
         let alt = document.getElementById('alt').value
         let nome = document.getElementById('nome').value
+        let data = document.getElementById('data').value
         const testa_senha = /^.{6,30}$/;
         const testa_num = /^\d{2,10}(\.\d+)?$/;
         const letra = /^[A-Za-z ]{1,100}$/;
-
-
         if (!(testa_senha.test(senha))) {
             alert('Sua senha tem que ter de 6 a 30 caracteres.');
             return;
+        }
+        else if(!data){
+            alert("Preencha a data de nascimento.");
         }
         else if (!(letra.test(nome))){
             alert("Digite o nome completo.")
