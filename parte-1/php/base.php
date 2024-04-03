@@ -35,6 +35,10 @@ body {font-size:16px;}
     <a href="../php/cadastro.php" onclick="w3_close()" class="w3-bar-item w3-button w3-hover-white">Cadastro de Paciente</a> 
     <a href="../php/deslogar-se.php" class="w3-bar-item w3-button w3-hover-white">Sair</a>
   </div>
+  <?php echo"<section class='perfil'>
+                <p>$_SESSION[tipo_usuario]:<br>$_SESSION[nome]<br>$_SESSION[cpf]</p>
+              </section>"
+  ?>
 </nav>
 
 <!-- Top menu on small screens -->

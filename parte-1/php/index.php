@@ -31,7 +31,7 @@
             $senha = $_POST['senha'];
             $cpf = $_POST["cpf"];
 
-            $pesquisa_login = "SELECT cpf FROM usuario WHERE senha = '$senha' AND cpf = '$cpf'";
+            $pesquisa_login = "SELECT cpf, nome FROM usuario WHERE senha = '$senha' AND cpf = '$cpf'";
 
             $resultado_pesquisa = $conn->query($pesquisa_login);
             $row = $resultado_pesquisa->fetch_assoc();
@@ -47,15 +47,19 @@
 
                 session_start();
                 $_SESSION['cpf'] = $cpf;
+                $_SESSION['nome'] = $row['nome'];
 
                 if ($row_recepcionista !== null){
                     header('location: agenda_recepcionista.php');
+                    $_SESSION['tipo_usuario'] = 'Recepcionista';
                 }
                 else if ($row_medico !== null){
                     header('location: medico.php');
+                    $_SESSION['tipo_usuario'] = 'Médico(a)';
                 }
                 else {
                     header('location: paciente.php');
+                    $_SESSION['tipo_usuario'] = 'Paciente';
                 }
 
             }

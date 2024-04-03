@@ -48,3 +48,29 @@
         z-index: 3; /* Ajusta a ordem de empilhamento para garantir que o menu fique abaixo do cabeçalho */
     }
 }
+
+.perfil {
+    position: absolute;
+    width: 80%;
+    bottom: 3%;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: #6fb6e6; /* Azul da clínica médica */
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+    text-align: center;
+    transition: 1s ease;
+}
+
+.perfil:hover {
+    background-color: #68b2e4;
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.5);
+    transition: 1s ease;
+}
+
+.perfil p {
+    margin: 0;
+    font-size: 16px;
+    color: #e8f2f7; /* Texto branco para melhor contraste */
+}
