@@ -9,7 +9,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $senha = $_POST['senha'];
     $senha_conf = $_POST['senha_conf'];
 
-
     if (empty($nome) || empty($cpf) || empty($crm) || empty($especialidade_id) || empty($senha) || empty($senha_conf)) {
         echo "Por favor, preencha todos os campos.";
         exit();
@@ -20,13 +19,16 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         exit();
     }
 
-   
     if (!preg_match("/^\d{7}$/", $crm)) {
         echo "CRM inválido. Por favor, digite um CRM válido.";
         exit();
     }
 
-   
+    if ($senha !== $senha_conf) {
+        echo "As senhas não coincidem.";
+        exit();
+    }
+
     $verifica_cpf = "SELECT cpf FROM usuario WHERE cpf = '$cpf'";
     $resultado_verifica_cpf = $conn->query($verifica_cpf);
 
@@ -34,7 +36,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         echo "CPF já cadastrado.";
         exit();
     }
-
 
     $verifica_crm = "SELECT crm FROM medico WHERE crm = '$crm'";
     $resultado_verifica_crm = $conn->query($verifica_crm);
@@ -44,7 +45,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         exit();
     }
 
-   
     $verifica_especialidade = "SELECT id FROM especialidade WHERE id = '$especialidade_id'";
     $resultado_verifica_especialidade = $conn->query($verifica_especialidade);
 
@@ -53,7 +53,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         exit();
     }
 
-   
+
+    $senha_hash = password_hash($senha, PASSWORD_DEFAULT);
+
     $sql = "INSERT INTO medico (crm, medico_cpf, especialidade_id) VALUES ('$crm', '$cpf', '$especialidade_id')";
     if ($conn->query($sql) === TRUE) {
         echo "Cadastro de médico realizado com sucesso!";
