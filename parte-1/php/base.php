@@ -31,7 +31,7 @@ body {font-size:16px;}
     <a href="../php/agenda_recepcionista.php" onclick="w3_close()" class="w3-bar-item w3-button w3-hover-white">Agenda</a> 
     <a href="#" onclick="w3_close()" class="w3-bar-item w3-button w3-hover-white">Lista de Médicos</a> 
     <a href="lista_paciente.php" onclick="w3_close()" class="w3-bar-item w3-button w3-hover-white">Lista de Pacientes</a> 
-    <a href="#" onclick="w3_close()" class="w3-bar-item w3-button w3-hover-white">Cadastro de Médico</a> 
+    <a href="cadastromed.php" onclick="w3_close()" class="w3-bar-item w3-button w3-hover-white">Cadastro de Médico</a> 
     <a href="../php/cadastro.php" onclick="w3_close()" class="w3-bar-item w3-button w3-hover-white">Cadastro de Paciente</a> 
     <a href="../php/deslogar-se.php" class="w3-bar-item w3-button w3-hover-white">Sair</a>
   </div>
