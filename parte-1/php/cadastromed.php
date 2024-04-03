@@ -1,8 +1,7 @@
 <?php
    include("conexao.php");
    include("base.php");
-   include ("cadastromed_check.php")
-
+   include("cadastromed_check.php");
 ?>
 <!DOCTYPE html>
 <html lang="pt-br">
@@ -46,12 +45,12 @@
             </div>
             <div class="input-box">
                 <label>Senha</label>
-                <input type="text" id="senha" name="senha" placeholder="Digite sua senha" required="">
+                <input type="password" id="senha" name="senha" placeholder="Digite sua senha" required="">
             </div>
             <div class="input-box">
-            <label>Confirme a senha</label>
-            <input type="text" id="confirmaSenha" name="confirmaSenha" placeholder="Confirme sua senha" required="">
-           </div>
+                <label>Confirme a senha</label>
+                <input type="password" id="senha_conf" name="senha_conf" placeholder="Confirme sua senha" required="">
+            </div>
       
             <br>
             <input type="submit" id="Enviar" class="cadbot" value="Cadastrar">
