@@ -14,7 +14,7 @@
 <body>
     <br>
     <section class="caixa">
-        <form class="form" id="form" name="form" action="cadastrar_medico.php" method="post">
+        <form class="form" id="form" name="form" action="cadastromed_check.php" method="post">
             <div class="input-box">
                 <label>Nome</label>
                 <input type="text" id="nome" name="nome" placeholder="Digite o nome completo" required="">

@@ -7,7 +7,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="../css/lista_paciente.css">
+    <link rel="stylesheet" href="../css/agenda_recepcionista.css">
     <title>Lista de Médicos</title>
 </head>
 
@@ -25,7 +25,7 @@
                 $resultado_pesquisa_nome_medico = $conn->query($pesquisa_nome_medico);
                 $linha_pesquisa_nome_medico = $resultado_pesquisa_nome_medico->fetch_assoc(); 
                 echo"<section class='result-box'>
-                    <a href='../php/lista_medico_php.php.php?crm=$linha_pesquisa_medico[crm]'>$linha_pesquisa_nome_medico[nome]</a>
+                    <a href='../php/lista_medico_php.php?crm=$linha_pesquisa_medico[crm]'>$linha_pesquisa_nome_medico[nome]</a>
                 </section>";
             }
         }
