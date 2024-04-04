@@ -34,7 +34,9 @@ function verifica_crm($crm){
     <h1>Formulário de Cadastro de Médico</h1>
     <br>
     <section class="caixa">
+
         <form class="form" id="form" name="form" action="criar_cadastro.php" method="post">
+
             <div class="input-box">
                 <label>Nome completo</label>
                 <input type="text" id="nome" name="nome" placeholder="Digite o nome completo" required="">
