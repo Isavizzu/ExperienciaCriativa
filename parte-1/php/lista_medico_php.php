@@ -7,7 +7,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="../css/lista_paciente.css">
+    <link rel="stylesheet" href="../css/agenda_recepcionista.css">
     <title>Dados do médico</title>
 </head>
 
@@ -39,7 +39,7 @@
 
     <section class="caixa">
         <h1>Dados do médico</h1><br>
-        <form class="form" id="form" name="form" action="atualiza_cadastro_med.php" method="post">
+        <form class="form" id="form" name="form" action="atualizar_medico_php.php" method="post">
 
             <input type="hidden" id="CRM" name="CRM" value="<?php echo $CRM; ?>">
             <input type="hidden" id="verifica" name="verifica" value="0">
@@ -89,15 +89,15 @@
             </div>
 
             <!-- Caixas de aviso em PHP -->
-            <?php if(isset($_GET['error'])): ?>
+            <?php if(isset($_GET['erro'])): ?>
                 <div class="error-box">
-                    <?php echo $_GET['error']; ?>
+                    <?php echo $_GET['erro']; ?>
                 </div>
             <?php endif; ?>
             
-            <?php if(isset($_GET['success'])): ?>
+            <?php if(isset($_GET['successo'])): ?>
                 <div class="success-box">
-                    <?php echo $_GET['success']; ?>
+                    <?php echo $_GET['successo']; ?>
                 </div>
             <?php endif; ?>
 
@@ -110,7 +110,7 @@
             if (confirm("Tem certeza que deseja excluir este médico?")) {
                 var CRM = document.getElementById('crm').value;
                 var verifica = 1;
-                window.location.href = "excluir_medico.php?verifica=" +verifica + "&CRM=" +CRM;
+                window.location.href = "atualizar_medico_php.php?verifica=" +verifica + "&CRM=" +CRM;
             } 
         }
 
@@ -123,21 +123,22 @@
             const letra = /^[A-Za-z ]{1,100}$/;
             
             if (!(testa_senha.test(senha))) {
-                window.location.href = "lista_recepcionista_php.php?error=Sua senha tem que ter de 6 a 30 caracteres.";
+                window.location.href = "lista_medico.php?error=Sua senha tem que ter de 6 a 30 caracteres.";
                 return;
             } else if (senha != confirmaSenha){
-                window.location.href = "lista_recepcionista_php.php?error=As senhas não correspondem.";
+                window.location.href = "lista_medico.php?error=As senhas não correspondem.";
                 return;
             } else if (!(letra.test(nome))){
-                window.location.href = "lista_recepcionista_php.php?error=Digite o nome completo.";
+                window.location.href = "lista_medico.php?error=Digite o nome completo.";
                 return;
             } else if (CPFRegex.test(CRM) == false){
-                window.location.href = "lista_recepcionista_php.php?error=Digite um CPF Válido.";
+                window.location.href = "lista_medico.php?error=Digite um CPF Válido.";
                 return;
             } else{
                 form.submit();
             }
-        }
+         }
+
     </script>
 </body>
 </html>
