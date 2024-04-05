@@ -11,8 +11,7 @@
     <link rel="stylesheet" href="../css/cadastro.css">
 </head>
 <body>
-   
-<?php
+   <?php
         
         if(isset($_GET['verifica'])){
             $verifica = $_GET['verifica'];
@@ -47,18 +46,18 @@
             $Nome = $_POST['nome'];
             $dat = $_POST['data'];
             $Senha = $_POST['Senha'];
-            $Especialidade = $_POST['especialidade']
+            $Especialidade = $_POST['especialidade_id']
             $datformat = date('Y-m-d',strtotime($dat));
             $sql = "UPDATE usuario SET nome = '$Nome', data_nascimento = '$datformat', senha = '$Senha' WHERE cpf = '$CPF'";
-            $sql1 = "UPDATE medico SET crm = '$CRM', especialidade = '$Especialidade' WHERE medico_cpf = '$CPF'";
+            $sql1 = "UPDATE medico SET crm = '$CRM', especialidade_id = '$Especialidade' WHERE medico_cpf = '$CPF'";
             $conn->query($sql);
             $conn->query($sql1);
             echo '<section class="success-message">
             <h2>Cadastro foi atualizado com sucesso!</h2>
             <p>O cadastro do médico foi atualizado com sucesso em nosso sistema.</p>
-            <a href="../php/lista_medico.php" class="btn">Voltar para lista de pacientes</a>
+            <a href="../php/lista_medico.php" class="btn">Voltar para lista de médicos</a>
             </section>';
-        
+         
         }
 
     ?>
