@@ -1,36 +1,66 @@
+<?php
+    include("conexao.php");
+    include("base.php");
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
+    <meta charset="UTF-8"> 
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Atualizar Dados do Médico</title>
     <link rel="stylesheet" href="../css/cadastro.css">
 </head>
 <body>
-    <br>
-    <h1>Atualizar Dados do Médico</h1>
-    <br>
-    <section class="caixa">
-        <form class="form" id="form" name="form" action="atualizar_medico_php.php" method="post">
-            <div class="input-box">
-                <label>CRM</label>
-                <input type="text" id="CRM" name="CRM" placeholder="Digite o CRM" required="">
-            </div>
-            <div class="input-box">
-                <label>Nome completo</label>
-                <input type="text" id="nome" name="nome" placeholder="Digite o nome completo" required="">
-            </div>
-            <div class="input-box">
-                <label>Data de Nascimento</label>
-                <input type="date" id='data' name="data" placeholder="Digite a data de nascimento">
-            </div>
-            <div class="input-box">
-                <label>Senha</label>
-                <input type="password" id="senha" name="senha" placeholder="Digite uma senha com 6 a 30 caracteres" required="">
-            </div>
-            <input type="submit" class="cadbot" value="Atualizar" name="atualizar">
-            <input type="submit" class="cadbot" value="Excluir" name="excluir">
-        </form>
-    </section>
+   
+<?php
+        
+        if(isset($_GET['verifica'])){
+            $verifica = $_GET['verifica'];
+        }
+        if(isset($_POST['verifica'])){
+            $verifica = $_POST['verifica'];
+        }
+
+        if(isset($_GET['Cpf'])){
+            $Cpf = $_GET['Cpf'];
+        }
+        if(isset($_POST['Cpf'])){
+            $Cpf = $_POST['Cpf'];
+        }
+
+        
+        
+        
+        
+        if($verifica == 1){
+            $sql = "DELETE FROM usuario WHERE cpf = '$Cpf'";
+            $conn->query($sql);
+            echo '<section class="success-message">
+            <h2>Cadastro foi deletado com sucesso!</h2>
+            <p>O cadastro do médico foi deletado com sucesso em nosso sistema.</p>
+            <a href="../php/agenda_recepcionista.php" class="btn">Voltar à Agenda</a>
+            </section>';
+        }
+        else{
+            $CPF = $_POST['cpf'];
+            $CRM = $_POST['crm']
+            $Nome = $_POST['nome'];
+            $dat = $_POST['data'];
+            $Senha = $_POST['Senha'];
+            $Especialidade = $_POST['especialidade']
+            $datformat = date('Y-m-d',strtotime($dat));
+            $sql = "UPDATE usuario SET nome = '$Nome', data_nascimento = '$datformat', senha = '$Senha' WHERE cpf = '$CPF'";
+            $sql1 = "UPDATE medico SET crm = '$CRM', especialidade = '$Especialidade' WHERE medico_cpf = '$CPF'";
+            $conn->query($sql);
+            $conn->query($sql1);
+            echo '<section class="success-message">
+            <h2>Cadastro foi atualizado com sucesso!</h2>
+            <p>O cadastro do médico foi atualizado com sucesso em nosso sistema.</p>
+            <a href="../php/lista_medico.php" class="btn">Voltar para lista de pacientes</a>
+            </section>';
+        
+        }
+
+    ?>
 </body>
 </html>

@@ -13,12 +13,16 @@
 
 <body class="">
     <?php
+    $CPF= $_GET["crm"];
+    $pesquisa_cpf = "SELECT cpf, nome, data_nascimento, senha FROM usuario WHERE cpf = '$CPF'";
+    $resultado_pesquisa = $conn->query($pesquisa_cpf);
     $CRM = $_GET["crm"];
     $pesquisa_medico = "SELECT crm, medico_cpf, especialidade_id FROM medico WHERE crm = '$CRM'";
     $resultado_pesquisa_medico = $conn->query($pesquisa_medico);
     $row = $resultado_pesquisa_medico->fetch_assoc();
     $medico_cpf = $row['medico_cpf'];
     $especialidade_id = $row['especialidade_id'];
+    
 
     $pesquisa_nome_medico = "SELECT nome, data_nascimento, senha 
                              FROM usuario 
@@ -66,6 +70,11 @@
                     <label>Senha</label>
                     <input type="text" id="Senha" name="Senha" placeholder="Digite uma senha com 6 a 30 caracteres" value="<?php echo $senha; ?>" required="">
                 </div>
+
+                <div class="input-box">
+                <label>Confirme a senha</label>
+                <input type="text" id="confirmaSenha" name="confirmaSenha"  placeholder="Confirme sua senha" value="<?php echo $senha; ?>" required="">
+            </div>
             
                 <div class="input-box">
                     <label>Especialidade</label>
@@ -73,13 +82,11 @@
                 </div>
             </div>
 
-            <div class="input-box">
-                <label>Confirme a senha</label>
-                <input type="text" id="confirmaSenha" name="confirmaSenha"  placeholder="Confirme sua senha" value="<?php echo $senha; ?>" required="">
-            </div>
-
+            
             <div class="column">
+
                 <div class="input-box">
+
                     <input type="button" id="atualizar" class="cadbot" value="Atualizar" onclick="confirn()">
                 </div>
             
@@ -87,19 +94,6 @@
                     <input type="button" id="deletar" class="cadbot" value="Excluir" onclick="confirmarExclusao()">
                 </div>
             </div>
-
-            <!-- Caixas de aviso em PHP -->
-            <?php if(isset($_GET['erro'])): ?>
-                <div class="error-box">
-                    <?php echo $_GET['erro']; ?>
-                </div>
-            <?php endif; ?>
-            
-            <?php if(isset($_GET['successo'])): ?>
-                <div class="success-box">
-                    <?php echo $_GET['successo']; ?>
-                </div>
-            <?php endif; ?>
 
         </form>
     </section>    
@@ -110,7 +104,7 @@
             if (confirm("Tem certeza que deseja excluir este médico?")) {
                 var CRM = document.getElementById('crm').value;
                 var verifica = 1;
-                window.location.href = "atualizar_medico_php.php?verifica=" +verifica + "&CRM=" +CRM;
+                window.location.href = "atualiza_cadastro_php.php?verifica=" +verifica + "&CRM=" +CRM;
             } 
         }
 
