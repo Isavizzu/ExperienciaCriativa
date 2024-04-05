@@ -7,7 +7,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="../css/lista_paciente.css">
+    <link rel="stylesheet" href="../css/agenda_recepcionista.css">
     <title>Lista de Médicos</title>
 </head>
 
