@@ -1,3 +1,4 @@
+@ -1,121 +0,0 @@
 <?php
 include("base.php");
 include("conexao.php");
@@ -17,7 +18,7 @@ function verifica_crm($crm){
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Cadastro de Médico</title>
-    <link rel="stylesheet" href="../css/cadastro_teste.css">
+    <link rel="stylesheet" href="../css/cadastro.css">
     <script>
         function showPassword() {
             var senhaInput = document.getElementById("senha");

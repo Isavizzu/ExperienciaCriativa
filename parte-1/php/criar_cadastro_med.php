@@ -21,7 +21,7 @@ if($row == null){
     $sqlInsert1 = "INSERT INTO medico(crm, medico_cpf, especialidade_id) VALUES ('$CRM', '$Especialidade')";
     $conn->query($sqlInsert);
     $conn->query($sqlInsert1);
-    echo '<meta http-equiv="refresh" content="0; URL=cadastro_medico_sucesso.php">';
+    echo '<meta http-equiv="refresh" content="0; URL=criar_cadastro_med_php.php">';
 }
 else{
     echo "<script>alert('Esse CPF já foi cadastrado anteriormente!');</script>";
