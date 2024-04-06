@@ -108,7 +108,7 @@
             }
             else if(!preg_match('/^.{6,30}$/', $Senha)){
                 echo "<section class='section_invalido'><p>A senha precisa ter no mínimo 6 caracteres!</p></section>";
-            
+             }
             else{
                     $sqlInsertUsuario = "INSERT INTO usuario(cpf, nome, data_nascimento, senha) VALUES ('$cpf', '$Nome', '$datformat', '$Senha')";
                     $sqlInsertMedico = "INSERT INTO medico(crm, medico_cpf, especialidade_id) VALUES ('$crm', '$cpf', '$especialidade')";
@@ -118,12 +118,12 @@
             }
             
           }
-        }
+        
           
 
       ?>
 
-      <input type="submit" id="Enviar" class="cadbot" name="Cadastrar" value="Cadastrar" onclick="confirm()">
+        <input type="submit" id="Enviar" class="cadbot" name="Cadastrar" value="Cadastrar" onclick="">
   
     </form>
 

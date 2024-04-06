@@ -7,13 +7,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="../css/lista_paciente.css">
+    <link rel="stylesheet" href="../css/cadastro.css">
     <title>Dados do médico</title>
 </head>
 
 <body class="">
     <?php
-    $CPF= $_GET["crm"];
+    $CPF= $_GET["cpf"];
     $pesquisa_cpf = "SELECT cpf, nome, data_nascimento, senha FROM usuario WHERE cpf = '$CPF'";
     $resultado_pesquisa = $conn->query($pesquisa_cpf);
     $row = $resultado_pesquisa->fetch_assoc();
@@ -22,7 +22,7 @@
     $data_nascimento = $row['data_nascimento'];
     $senha = $row['senha'];
 
-    $pesquisa_medico_cpf = $conn->query($pesquisa_medico);
+    $pesquisa_medico_cpf =  "SELECT crm, medico_cpf, especialidade_id FROM medico WHERE medico_cpf = '$CPF'";
     $resultado_pesquisa_medico = $conn->query($pesquisa_medico_cpf);
     $row = $resultado_pesquisa_medico->fetch_assoc();
     $especialidade_id = $row['especialidade_id'];
@@ -31,15 +31,12 @@
 
   <section class="caixa">
         <h1>Dados do médico</h1><br>
-        <form class="form" id="form" name="form" action="atualiza_cadastro_med.php" method="post">
+        <form class="form" id="form" name="form" method="post">
 
-            <!Adiciona campos ocultos para armazenar as variáveis>
-            <input type="hidden" id="CRM" name="CRM" value="<?php echo $CRM; ?>">
-            <input type="hidden" id="verifica" name="verifica" value="0">
           
             <div class="input-box">
                 <label>Nome completo</label>
-                <input type="text" id="nome" name="nome" placeholder="Digite o nome completo" value="<?php echo $nome; ?>" required="">
+                <input type="text" id="nome" name="nome" placeholder="Digite o nome completo" value="<?php echo $nome; ?>"  pattern="^[A-Za-zÀ-úçÇ ]{1,100}$"  required="">
             </div>
             
             <div class="column">
@@ -78,79 +75,78 @@
                     <option value="5">Ortopedia</option>
                     <option value="6">Endocrinologia</option>
             </div>
+    <?php
+        if(isset($_POST['Atualizar'])) {
+            botao_atualizar($conn);
+        }
+        else if(isset($_POST['Excluir'])){
+            botao_excluir();
+        }
 
-            
-            <div class="column">
 
-                <div class="input-box">
-                <div class="input-box">
-            
-            <input type="button" id="atualizar" class="cadbot" value="Atualizar" onclick="confirn()">
-          </div>
+        function botao_atualizar($conn){
+            $CPF = $_POST['cpf'];
+            $Nome = $_POST['nome'];
+            $dat = $_POST['data'];
+            $CRM = $_POST['crm'];
+            $Senha = $_POST['Senha'];
+            $especialidade = $_POST['especialidade'];
+            $confirmasenha = $_POST['confirmaSenha'];
+            $datformat = date('Y-m-d',strtotime($dat));
+        
+            if ($Senha != $confirmasenha){
+                echo "<section class='section_invalido'><p>As senhas não correspondem!</p></section>";
+            }
+            else if (!preg_match('/^[0-9]{3}[\.]?[0-9]{3}[\.]?[0-9]{3}[-]?[0-9]{2}$/', $CPF)){
+                echo "<section class='section_invalido'><p>Digite um CPF válido!</p></section>";
+            }
+            else if (!preg_match('/^.{6,30}$/', $Senha)){
+                echo "<section class='section_invalido'><p>A senha precisa ter no mínimo 6 caracteres!</p></section>";
+            }
+            else if (empty($dat)){
+                echo "<section class='section_invalido'><p>Preencha a data de nascimento!</p></section>";
+            }
+            else if (!preg_match('/^[a-zA-Z\s]+$/', $Nome)){
+                echo "<section class='section_invalido'><p>Digite o nome completo!</p></section>";
+            }
+            else{
+                if (!preg_match('/^\d{7}$/', $CRM)){
+                    echo "<section class='section_invalido'><p>Digite um CRM válido (7 dígitos)!</p></section>";
+                }
+                else{
+                    $sql = "UPDATE usuario SET nome = '$Nome', data_nascimento = '$datformat', senha = '$Senha' WHERE cpf = '$CPF'";
+                    $sql1 = "UPDATE medico SET crm = '$CRM', especialidade = '$especialidade' WHERE medico_cpf = '$CPF'";
+                    $conn->query($sql);
+                    $conn->query($sql1);
+                    echo '<meta http-equiv="refresh" content="0; URL=cadastro_medico_php.php?val=2">';
+                }
+            }
+        }
+        
+        function botao_excluir(){
+            echo '<meta http-equiv="refresh" content="0; URL=cadastro_medico_php.php?val=2">';
+        }
+        ?>
+
+<div class="column">
       
-          <div class="input-box">
+      <div class="input-box">
+        
+        <input type="submit" id="Atualizar" nome="Atualizar" class="cadbot" value="Atualizar" >
+      </div>
+  
+      <div class="input-box">
 
-            
-            <input type="button" id="deletar" class="cadbot" value="Excluir" onclick="confirmarExclusao()">
-          </div>
-      
+        
+        <input type="submit" id="Excluir" nome="Excluir" class="cadbot" value="Excluir" >
       </div>
 
-    </form>
+      </div>
+
+</form>
 </section>    
 </body>
 
-<script>
 
-function confirmarExclusao() {
-    // Exibe uma caixa de diálogo de confirmação
-    if (confirm("Tem certeza que deseja excluir este usuário?")) {
-        // Se o usuário confirmar, redireciona para uma página PHP que realiza a exclusão
-        var Cpf = document.getElementById('cpf').value;
-        var verifica = 1;
-        window.location.href = "atualiza_cadastro_med.php?verifica=" +verifica + "&Cpf=" +Cpf;
-    } 
-}
-
-function confirn(){
-        var senha = document.getElementById('Senha').value
-        var confirmaSenha = document.getElementById('confirmaSenha').value;
-        var CpfRegex = /^[0-9]{3}[\.]?[0-9]{3}[\.]?[0-9]{3}[-]?[0-9]{2}$/i
-        var Cpf = document.getElementById('cpf').value
-        var Crm = document.getElementById('crm').value;
-        let nome = document.getElementById('nome').value
-        let data = document.getElementById('data').value
-        const testa_senha = /^.{6,30}$/;
-        const testa_num = /^\d{2,10}(\.\d+)?$/;
-        const letra = /^[A-Za-z ]{1,100}$/;
-        if (!(testa_senha.test(senha))) {
-            alert('Sua senha tem que ter de 6 a 30 caracteres.');
-            return;
-        }
-        else if(!data){
-            alert("Preencha a data de nascimento.");
-        }
-        else if (!(letra.test(nome))){
-            alert("Digite o nome completo.")
-            return;
-        }
-        else if (senha != confirmaSenha){
-            alert("As senhas não correspondem")
-            return;
-        }
-        else{
-           
-            if (CpfRegex.test(Cpf) == false){
-                alert('Digite um cpf Válido')
-                return
-            } else if (!/^\d{7}$/.test(crm)) {
-                alert('Digite um CRM válido (7 dígitos)');
-                return false;
-            } else{
-                form.submit();
-            }
-             
-        }
-     }
-</script>
 </html>
+        
