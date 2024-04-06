@@ -23,14 +23,14 @@
       
       <div class="input-box">
           <label>Nome completo</label>
-          <input type="text" id="nome" name="nome" placeholder="Digite o nome completo" pattern="^[A-Za-z ]{1,100}$" required="" >
+          <input type="text" id="nome" name="nome" placeholder="Digite o nome completo" pattern="^[A-Za-zÀ-úçÇ ]{1,100}$" required="" >
       </div>
       
       <div class="column">
       
           <div class="input-box">
             <label>CPF</label>
-            <input type="text" id="cpf" name="cpf" placeholder="Digite o CPF no formato xxxxxxxxxxx ou xxx.xxx.xxx-xx" pattern="^[0-9]{3}[\.]?[0-9]{3}[\.]?[0-9]{3}[-]?[0-9]{2}$" required="" >
+            <input type="text" id="cpf" name="cpf" placeholder="Digite o CPF no formato xxxxxxxxxxx ou xxx.xxx.xxx-xx"  required="" >
           </div>
       
           <div class="input-box">
@@ -44,7 +44,7 @@
       
           <div class="input-box">
             <label>Senha</label>
-            <input type="text" id="Senha" name="Senha" placeholder="Digite uma senha com 6 a 30 caracteres" pattern="^.{6,30}$" required="" >
+            <input type="text" id="Senha" name="Senha" placeholder="Digite uma senha com 6 a 30 caracteres"  required="" >
           </div>
       
           <div class="input-box">
@@ -58,12 +58,12 @@
       
           <div class="input-box">
             <label>Altura</label>
-            <input type="text" id="alt" name="alt" placeholder="Digite a altura em metros" pattern="^\d(\.\d{2})?$" required="" >
+            <input type="text" id="alt" name="alt" placeholder="Digite a altura em metros"  required="" >
           </div>
       
           <div class="input-box">
             <label>Peso</label>
-            <input type="text" id="pes" name="pes" placeholder="Digite o peso em Kg" pattern="^\d{1,3}(\.\d{2})?$" required="">
+            <input type="text" id="pes" name="pes" placeholder="Digite o peso em Kg"  required="">
           </div>
       
       </div>
@@ -93,7 +93,8 @@
         } 
 
         function botao_cadastrar(){
-
+            
+            global $conn;
             $cpf = $_POST['cpf'];
             $Nome = $_POST['nome'];
             $peso = $_POST['pes'];
@@ -103,25 +104,46 @@
             $confirmasenha = $_POST['confirmaSenha'];
             $telefone = $_POST['telefone'];
 
+            $datformat = date('Y-m-d',strtotime($dat));
+
             if(verifica_cpf($cpf) == true){
                 echo "<section class='section_invalido'><p>Esse CPF já foi cadastrado anteriormente!</p></section>";
             }
             else if($Senha != $confirmasenha){
                 echo "<section class='section_invalido'><p>As senhas não correspondem!</p></section>";
             }
+            else if(!preg_match('/^[0-9]{3}[\.]?[0-9]{3}[\.]?[0-9]{3}[-]?[0-9]{2}$/', $cpf)){
+                echo "<section class='section_invalido'><p>Digite um CPF válido!</p></section>";
+            }
+            else if(!preg_match('/^.{6,30}$/', $Senha)){
+                echo "<section class='section_invalido'><p>A senha precisa ter no mínimo 6 caracteres!</p></section>";
+            }
+            else if(!preg_match('/^\d(\.\d{2})?$/', $altura)){
+                echo "<section class='section_invalido'><p>Digite a altura em metros!</p></section>";
+            }
+            else if(!preg_match('/^\d{1,3}(\.\d{2})?$/', $peso)){
+                echo "<section class='section_invalido'><p>Digite o peso em KG!</p></section>";
+            }
+            else if(!preg_match('/^\d{9}$|^\d{5}-\d{4}$/', $telefone)){
+                echo "<section class='section_invalido'><p>Digite um telefone válido!</p></section>";
+            }
+            else{
+                $sqlInsert = "INSERT INTO usuario(cpf, nome, data_nascimento, senha) VALUES ('$cpf', '$Nome', '$datformat', '$Senha')";
+                $sqlInsert1 = "INSERT INTO paciente(telefone, paciente_cpf, altura, peso) VALUES ('$telefone', '$cpf', '$altura', '$peso')";
+                $conn->query($sqlInsert);
+                $conn->query($sqlInsert1);
+                echo '<meta http-equiv="refresh" content="0; URL=cadastro_paciente_php.php?val=1">';
+            }
             
 
         }
-
-
-
-
 
       ?>
 
       <input type="submit" id="Enviar" class="cadbot" name="Cadastrar" value="Cadastrar" onclick="confirm()">
   
     </form>
+
 </section>
 
 </div>
