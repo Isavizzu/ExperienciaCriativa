@@ -36,7 +36,7 @@ function verifica_crm($crm){
     <br>
     <section class="caixa">
 
-        <form class="form" id="form" name="form" action="criar_cadastro.php" method="post">
+        <form class="form" id="form" name="form" action="criar_cadastro_med.php" method="post">
 
             <div class="input-box">
                 <label>Nome completo</label>
