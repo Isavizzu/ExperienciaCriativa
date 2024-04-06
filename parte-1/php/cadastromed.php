@@ -1,18 +1,19 @@
-@ -1,121 +0,0 @@
 <?php
-    include("base.php");
-    include("conexao.php");
+include("base.php");
+include("conexao.php");
 
 ?>
 
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Cadastro de Médico</title>
     <link rel="stylesheet" href="../css/cadastro.css">
 </head>
+
 <body>
     <br>
     <h1>Formulário de Cadastro de Médico</h1>
@@ -41,6 +42,7 @@
                 <label>CRM</label>
                 <input type="text" id="crm" name="crm" placeholder="Digite o CRM" required="">
             </div>
+
             <div class="input-box">
                 <label>Especialidade</label>
                 <select id="especialidade" name="especialidade" required="">
@@ -53,82 +55,77 @@
                     <option value="6">Endocrinologia</option>
                 </select>
             </div>
+
             <div class="input-box">
                 <label>Senha</label>
                 <input type="password" id="senha" name="senha" placeholder="Digite uma senha com 6 a 30 caracteres" required="">
                 <span onclick="showPassword()"></span>
             </div>
+
             <div class="input-box">
                 <label>Confirme a senha</label>
                 <input type="password" id="confirmaSenha" name="confirmaSenha" placeholder="Confirme sua senha" required="">
             </div>
             <br>
-    <?php
-        if(isset($_POST['Cadastrar'])) {
-            botao_cadastrar();
-        }
-
-        function verifica_cpf($cpf){
-            global $conn;
-            $pesquisa_cpf = "SELECT cpf FROM usuario WHERE cpf = '$cpf'";
-            $resultado_pesquisa = $conn->query($pesquisa_cpf);
-            $row = $resultado_pesquisa->fetch_assoc();
-            if ($row == null){
-                return false;
+            <?php
+            if (isset($_POST['Cadastrar'])) {
+                botao_cadastrar();
             }
-            else{
-                return true; 
-            } 
-        } 
 
-        function botao_cadastrar(){
+            function verifica_cpf($cpf)
+            {
+                global $conn;
+                $pesquisa_cpf = "SELECT cpf FROM usuario WHERE cpf = '$cpf'";
+                $resultado_pesquisa = $conn->query($pesquisa_cpf);
+                $row = $resultado_pesquisa->fetch_assoc();
+                if ($row == null) {
+                    return false;
+                } else {
+                    return true;
+                }
+            }
 
-            global $conn;
-            $cpf = $_POST['cpf'];
-            $Nome = $_POST['nome'];
-            $dat = $_POST['data'];
-            $crm = $_POST['crm'];
-            $Senha = $_POST['Senha'];
-            $confirmasenha = $_POST['confirmaSenha'];
-            $especialidade = $_POST['especialidade'];
+            function botao_cadastrar()
+            {
 
-            $datformat = date('Y-m-d',strtotime($dat));
+                global $conn;
+                $cpf = $_POST['cpf'];
+                $Nome = $_POST['nome'];
+                $dat = $_POST['data'];
+                $crm = $_POST['crm'];
+                $Senha = $_POST['senha'];
+                $confirmasenha = $_POST['confirmaSenha'];
+                $especialidade = $_POST['especialidade'];
 
-            if(verifica_cpf($cpf) == true){
-                echo "<section class='section_invalido'><p>Esse CPF já foi cadastrado anteriormente!</p></section>";
-            }
-            else if(empty($crm) || !preg_match('/^[0-9]{3}[\.]?[0-9]{3}[\.]?[0-9]{3}[-]?[0-9]{2}$/', $crm)){
-                echo "<section class='section_invalido'><p>Digite um CRM válido!</p></section>";
-            }
-            else if($Senha != $confirmasenha){
-                echo "<section class='section_invalido'><p>As senhas não correspondem!</p></section>";
-            }
-            else if(!preg_match('/^[0-9]{3}[\.]?[0-9]{3}[\.]?[0-9]{3}[-]?[0-9]{2}$/', $cpf)){
-                echo "<section class='section_invalido'><p>Digite um CPF válido!</p></section>";
-            }
-            else if(!preg_match('/^.{6,30}$/', $Senha)){
-                echo "<section class='section_invalido'><p>A senha precisa ter no mínimo 6 caracteres!</p></section>";
-             }
-            else{
+                $datformat = date('Y-m-d', strtotime($dat));
+
+                if (verifica_cpf($cpf) == true) {
+                    echo "<section class='section_invalido'><p>Esse CPF já foi cadastrado anteriormente!</p></section>";
+                } else if (empty($crm) || !preg_match('/^[0-9]{3}[\.]?[0-9]{3}[\.]?[0-9]{3}[-]?[0-9]{2}$/', $crm)) {
+                    echo "<section class='section_invalido'><p>Digite um CRM válido!</p></section>";
+                } else if ($Senha != $confirmasenha) {
+                    echo "<section class='section_invalido'><p>As senhas não correspondem!</p></section>";
+                } else if (!preg_match('/^[0-9]{3}[\.]?[0-9]{3}[\.]?[0-9]{3}[-]?[0-9]{2}$/', $cpf)) {
+                    echo "<section class='section_invalido'><p>Digite um CPF válido!</p></section>";
+                } else if (!preg_match('/^.{6,30}$/', $Senha)) {
+                    echo "<section class='section_invalido'><p>A senha precisa ter no mínimo 6 caracteres!</p></section>";
+                } else {
                     $sqlInsertUsuario = "INSERT INTO usuario(cpf, nome, data_nascimento, senha) VALUES ('$cpf', '$Nome', '$datformat', '$Senha')";
                     $sqlInsertMedico = "INSERT INTO medico(crm, medico_cpf, especialidade_id) VALUES ('$crm', '$cpf', '$especialidade')";
                     $conn->query($sqlInsertUsuario);
                     $conn->query($sqlInsertMedico);
                     echo '<meta http-equiv="refresh" content="0; URL=cadastro_med_php.php?val=1">';
+                }
             }
-            
-          }
-        
-          
 
-      ?>
+            ?>
 
-        <input type="submit" id="Enviar" class="cadbot" name="Cadastrar" value="Cadastrar" onclick="">
-  
-    </form>
+            <input type="submit" id="Enviar" class="cadbot" name="Cadastrar" value="Cadastrar" onclick="">
 
-</section>
+        </form>
 
-</div>
-</body> 
+    </section>
+
+</body>
+
 </html>
