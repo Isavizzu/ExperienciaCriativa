@@ -3,11 +3,11 @@ include("conexao.php");
 include("cadastro.php");
 
 $CPF = $_POST['cpf'];
-$CRM = $_POST['crm']
+$CRM = $_POST['crm'];
 $Nome = $_POST['nome'];
 $dat = $_POST['data'];
 $Senha = $_POST['Senha'];
-$Especialidade = $_POST['especialidade_id']
+$Especialidade = $_POST['especialidade_id'];
 $mensagem = "Médico cadastrado com Sucesso!";
 
 $datformat = date('Y-m-d',strtotime($dat));

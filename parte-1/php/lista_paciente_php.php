@@ -145,7 +145,7 @@ function confirn(){
             alert("Preencha a data de nascimento.");
         }
         else if (!(letra.test(nome))){
-            alert("Digite o nome completo.")
+            alert("Digite um nome válido.")
             return;
         }
         else if (senha != confirmaSenha){
