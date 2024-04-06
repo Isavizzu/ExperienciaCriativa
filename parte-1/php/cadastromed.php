@@ -101,8 +101,8 @@ include("conexao.php");
 
                 if (verifica_cpf($cpf) == true) {
                     echo "<section class='section_invalido'><p>Esse CPF já foi cadastrado anteriormente!</p></section>";
-                } else if (empty($crm) || !preg_match('/^[0-9]{3}[\.]?[0-9]{3}[\.]?[0-9]{3}[-]?[0-9]{2}$/', $crm)) {
-                    echo "<section class='section_invalido'><p>Digite um CRM válido!</p></section>";
+                } else if (empty($crm) || !preg_match('/^\d{7}$/', $crm)) {
+                    echo "<section class='section_invalido'><p>Digite um CRM válido (7 dígitos)!</p></section>";
                 } else if ($Senha != $confirmasenha) {
                     echo "<section class='section_invalido'><p>As senhas não correspondem!</p></section>";
                 } else if (!preg_match('/^[0-9]{3}[\.]?[0-9]{3}[\.]?[0-9]{3}[-]?[0-9]{2}$/', $cpf)) {

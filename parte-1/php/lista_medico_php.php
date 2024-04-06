@@ -17,7 +17,7 @@
     $pesquisa_cpf = "SELECT cpf, nome, data_nascimento, senha FROM usuario WHERE cpf = '$CPF'";
     $resultado_pesquisa = $conn->query($pesquisa_cpf);
     $row = $resultado_pesquisa->fetch_assoc();
-    $CRM = isset($_GET["crm"]) ? $_GET["crm"] : ''; // Corrigindo a definição de $CRM
+    $CRM = isset($_GET["crm"]) ? $_GET["crm"] : '';
     $nome = $row['nome'];
     $data_nascimento = $row['data_nascimento'];
     $senha = $row['senha'];
