@@ -7,13 +7,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="../css/lista_paciente.css">
+    <link rel="stylesheet" href="../css/cadastro.css">
     <title>Dados do paciente</title>
 </head>
 
 <body class="">
     <?php
-    $CPF= $_GET["crm"];
+    $CPF= $_GET['cpf'];
     $pesquisa_cpf = "SELECT cpf, nome, data_nascimento, senha FROM usuario WHERE cpf = '$CPF'";
     $resultado_pesquisa = $conn->query($pesquisa_cpf);
     $row = $resultado_pesquisa->fetch_assoc();
@@ -32,15 +32,11 @@
     
    <section class="caixa">
         <h1>Dados do paciente</h2><br>
-        <form class="form" id="form" name="form" action="atualiza_cadastro.php" method="post">
+        <form class="form" id="form" name="form"  method="post">
 
-        <!Adiciona campos ocultos para armazenar as variáveis>
-        <input type="hidden" id="Cpf" name="cpf" value="">
-        <input type="hidden" id="verifica" name="verifica" value="0">
-      
       <div class="input-box">
           <label>Nome completo</label>
-          <input type="text" id="nome" name="nome" placeholder="Digite o nome completo" value="<?php echo $nome; ?>" required="" >
+          <input type="text" id="nome" name="nome" placeholder="Digite o nome completo" value="<?php echo $nome; ?>"  pattern="^[A-Za-zÀ-úçÇ ]{1,100}$"  required="" >
       </div>
       
       <div class="column">
@@ -87,21 +83,76 @@
 
       <div class="input-box">
           <label>Telefone</label>
-          <input type="text" id="tel" name="telefone" placeholder="Digite o telefone no formato xxxxx-xxxx ou xxxxxxxxx" value="<?php echo $tel; ?>" required="" >
+          <input type="text" id="telefone" name="telefone" placeholder="Digite o telefone no formato xxxxx-xxxx ou xxxxxxxxx" value="<?php echo $tel; ?>" required="" >
       </div>
       <br>
+
+      <?php
+        if(isset($_POST['Atualizar'])) {
+            botao_atualizar($conn);
+        }
+        else if(isset($_POST['Excluir'])){
+            botao_excluir();
+        }
+
+        function botao_atualizar($conn){
+            
+            $CPF = $_POST['cpf'];
+            $Nome = $_POST['nome'];
+            $peso = $_POST['pes'];
+            $altura = $_POST['alt'];
+            $dat = $_POST['data'];
+            $Senha = $_POST['Senha'];
+            $confirmasenha = $_POST['confirmaSenha'];
+            $telefone = $_POST['telefone'];
+            $datformat = date('Y-m-d',strtotime($dat));
+
+            if($Senha != $confirmasenha){
+                echo "<section class='section_invalido'><p>As senhas não correspondem!</p></section>";
+            }
+            else if(!preg_match('/^[0-9]{3}[\.]?[0-9]{3}[\.]?[0-9]{3}[-]?[0-9]{2}$/', $CPF)){
+                echo "<section class='section_invalido'><p>Digite um CPF válido!</p></section>";
+            }
+            else if(!preg_match('/^.{6,30}$/', $Senha)){
+                echo "<section class='section_invalido'><p>A senha precisa ter no mínimo 6 caracteres!</p></section>";
+            }
+            else if(!preg_match('/^\d(\.\d{2})?$/', $altura)){
+                echo "<section class='section_invalido'><p>Digite a altura em metros!</p></section>";
+            }
+            else if(!preg_match('/^\d{1,3}(\.\d{2})?$/', $peso)){
+                echo "<section class='section_invalido'><p>Digite o peso em KG!</p></section>";
+            }
+            else if(!preg_match('/^\d{9}$|^\d{5}-\d{4}$/', $telefone)){
+                echo "<section class='section_invalido'><p>Digite um telefone válido!</p></section>";
+            }
+            else{
+                $sql = "UPDATE usuario SET nome = '$Nome', data_nascimento = '$datformat', senha = '$Senha' WHERE cpf = '$CPF'";
+                $sql1 = "UPDATE paciente SET telefone = '$telefone', altura = '$altura', peso = '$peso' WHERE paciente_cpf = '$CPF'";
+                $conn->query($sql);
+                $conn->query($sql1);
+                echo '<meta http-equiv="refresh" content="0; URL=cadastro_paciente_php.php?val=2">';
+            }
+        }
+
+        function botao_excluir(){
+            echo '<meta http-equiv="refresh" content="0; URL=cadastro_paciente_php.php?val=2">';
+        }
+
+
+
+      ?>
       
       <div class="column">
       
           <div class="input-box">
             
-            <input type="button" id="atualizar" class="cadbot" value="Atualizar" onclick="confirn()">
+            <input type="submit" id="Atualizar" nome="Atualizar" class="cadbot" value="Atualizar" >
           </div>
       
           <div class="input-box">
 
             
-            <input type="button" id="deletar" class="cadbot" value="Excluir" onclick="confirmarExclusao()">
+            <input type="submit" id="Excluir" nome="Excluir" class="cadbot" value="Excluir" >
           </div>
       
       </div>
@@ -109,74 +160,5 @@
     </form>
 </section>    
 </body>
-
-<script>
-
-// Função para exibir confirmação antes de excluir o usuário
-function confirmarExclusao() {
-    // Exibe uma caixa de diálogo de confirmação
-    if (confirm("Tem certeza que deseja excluir este usuário?")) {
-        // Se o usuário confirmar, redireciona para uma página PHP que realiza a exclusão
-        var Cpf = document.getElementById('cpf').value;
-        var verifica = 1;
-        window.location.href = "atualiza_cadastro.php?verifica=" +verifica + "&Cpf=" +Cpf;
-    } 
-}
-
-function confirn(){
-        var senha = document.getElementById('Senha').value
-        var confirmaSenha = document.getElementById('confirmaSenha').value;
-        var CpfRegex = /^[0-9]{3}[\.]?[0-9]{3}[\.]?[0-9]{3}[-]?[0-9]{2}$/i
-        var TelRegex = /^\d{9}$|^\d{5}-\d{4}$/;
-        var Cpf = document.getElementById('cpf').value
-        var Tel = document.getElementById('tel').value
-        let pes = document.getElementById('pes').value
-        let alt = document.getElementById('alt').value
-        let nome = document.getElementById('nome').value
-        let data = document.getElementById('data').value
-        const testa_senha = /^.{6,30}$/;
-        const testa_num = /^\d{2,10}(\.\d+)?$/;
-        const letra = /^[A-Za-z ]{1,100}$/;
-        if (!(testa_senha.test(senha))) {
-            alert('Sua senha tem que ter de 6 a 30 caracteres.');
-            return;
-        }
-        else if(!data){
-            alert("Preencha a data de nascimento.");
-        }
-        else if (!(letra.test(nome))){
-            alert("Digite um nome válido.")
-            return;
-        }
-        else if (senha != confirmaSenha){
-            alert("As senhas não correspondem")
-            return;
-        }
-        else if (!(testa_num.test(alt))){
-            alert("Digite sua altura em metros")
-            return;
-        }
-        else if (!(testa_num.test(pes))){
-            alert("Digite seu peso em kg")
-            return;
-        }
-        
-        else{
-
-            if (TelRegex.test(Tel) == false){
-                alert('Digite um telefone Válido')
-                return
-            }
-           
-            if (CpfRegex.test(Cpf) == false){
-                alert('Digite um cpf Válido')
-                return
-            }
-            else{
-                form.submit();
-            }
-             
-        }
-    }
 </script>
 </html>

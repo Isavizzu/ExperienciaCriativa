@@ -1,7 +1,7 @@
 <?php
     include("base.php");
 ?>
-
+ 
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -25,7 +25,7 @@
                 $resultado_pesquisa_nome_paciente = $conn->query($pesquisa_nome_paciente);
                 $linha_pesquisa_nome_paciente = $resultado_pesquisa_nome_paciente->fetch_assoc(); 
                 echo"<section class='result-box'>
-                    <a href='../php/lista_paciente_php.php?crm=$linha_pesquisa_paciente[paciente_cpf]'>$linha_pesquisa_nome_paciente[nome]</a>
+                    <a href='../php/lista_paciente_php.php?cpf=$linha_pesquisa_paciente[paciente_cpf]'>$linha_pesquisa_nome_paciente[nome]</a>
                 </section>";
             }
         }
