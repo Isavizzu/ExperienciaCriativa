@@ -22,7 +22,7 @@
     $data_nascimento = $row['data_nascimento'];
     $senha = $row['senha'];
 
-    $pesquisa_medico_cpf = $conn->query($pesquisa_medico);
+    $pesquisa_medico_cpf = $conn->query($pesquisa_cpf);
     $resultado_pesquisa_medico = $conn->query($pesquisa_medico_cpf);
     $row = $resultado_pesquisa_medico->fetch_assoc();
     $especialidade_id = $row['especialidade_id'];
