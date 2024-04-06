@@ -114,8 +114,7 @@
                     $sqlInsertMedico = "INSERT INTO medico(crm, medico_cpf, especialidade_id) VALUES ('$crm', '$cpf', '$especialidade')";
                     $conn->query($sqlInsertUsuario);
                     $conn->query($sqlInsertMedico);
-                
-                echo '<meta http-equiv="refresh" content="0; URL=cadastro_med_php.php?val=1">';
+                    echo '<meta http-equiv="refresh" content="0; URL=cadastro_med_php.php?val=1">';
             }
             
           }
