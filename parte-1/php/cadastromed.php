@@ -74,33 +74,48 @@ function verifica_crm($crm){
                 <label>Confirme a senha</label>
                 <input type="password" id="confirmaSenha" name="confirmaSenha" placeholder="Confirme sua senha" required="">
             </div>
-            <input type="submit" id="Enviar" class="cadbot" value="Cadastrar">
         </form>
     </section>
 
     <?php
-    if ($_SERVER["REQUEST_METHOD"] == "POST") {
-        $nome = $_POST['nome'];
-        $cpf = $_POST['cpf'];
-        $data = $_POST['data'];
-        $crm = $_POST['crm'];
-        $especialidade = $_POST['especialidade'];
-        $senha = $_POST['senha'];
-        $confirmaSenha = $_POST['confirmaSenha'];
 
-        if (strlen($senha) < 6 || strlen($senha) > 30 || $senha !== $confirmaSenha) {
-            echo "<div class='message-box error'><span>A senha deve ter entre 6 e 30 caracteres e as senhas devem ser iguais!</span></div>";
-        } elseif (!preg_match("/^[0-9]{3}\.?[0-9]{3}\.?[0-9]{3}-?[0-9]{2}$/", $cpf)) {
-            echo "<div class='message-box error'><span>CPF inválido! Digite no formato xxxxxxxxxxx ou xxx.xxx.xxx-xx</span></div>";
-        } elseif (!preg_match("/^[0-9]{7}$/", $crm)) {
-            echo "<div class='message-box error'><span>CRM inválido! Digite exatamente 7 dígitos.</span></div>";
-        } elseif (verifica_crm($crm)) {
-            echo "<div class='message-box error'><span>CRM já cadastrado!</span></div>";
-        } else {
-            echo "<div class='message-box success'><span>Médico cadastrado com sucesso!</span></div>";
+        if(isset($_POST['Cadastrar'])) {
+            botao_cadastrar();
         }
-    }
-    ?>
+
+        function verifica_cpf($cpf){
+            global $conn;
+            $pesquisa_cpf = "SELECT cpf FROM usuario WHERE cpf = '$cpf'";
+            $resultado_pesquisa = $conn->query($pesquisa_cpf);
+            $row = $resultado_pesquisa->fetch_assoc();
+            if ($row == null){
+                return false;
+            }
+            else{
+                return true; 
+            } 
+        } 
+
+        function botao_cadastrar(){
+
+            $cpf = $_POST['cpf'];
+            $Nome = $_POST['nome'];
+            $dat = $_POST['data'];
+            $crm = $_POST['crm'];
+            $especialidade = $_POST['especialidade'];
+            $Senha = $_POST['Senha'];
+            $confirmasenha = $_POST['confirmaSenha'];
+
+            if(verifica_cpf($cpf) == true){
+                echo "<section class='section_invalido'><p>Esse CPF já foi cadastrado anteriormente!</p></section>";
+            }
+            else if($Senha != $confirmasenha){
+                echo "<section class='section_invalido'><p>As senhas não correspondem!</p></section>";
+            }
+        }
+        ?>
+
+        <input type="submit" id="Enviar" class="cadbot" name="Cadastrar" value="Cadastrar" onclick="confirm()">
 
 </body>
 </html>
