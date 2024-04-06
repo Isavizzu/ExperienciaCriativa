@@ -209,3 +209,36 @@ h1 {
   margin: 0;
   font-weight: bold;
 }
+
+
+.div_comcoluna {
+  background-color: #f0f7ff;
+  border: 2px solid  #3498db;
+  padding: 10px 20px;
+  border-radius: 5px;
+  margin-bottom: 20px;
+  color: #000000;
+  font-size: 18px;
+  width: 50%;
+}
+
+.div_comcoluna p {
+  margin: 0;
+  font-weight: bold;
+}
+
+
+.div_semcoluna {
+  background-color: #f0f7ff;
+  border: 2px solid  #3498db;
+  padding: 10px 20px;
+  border-radius: 5px;
+  margin-bottom: 20px;
+  color: #000000;
+  font-size: 18px;
+}
+
+.div_semcoluna p {
+  margin: 0;
+  font-weight: bold;
+}

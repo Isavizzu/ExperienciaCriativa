@@ -89,13 +89,15 @@
 
       <?php
         if(isset($_POST['Atualizar'])) {
-            botao_atualizar($conn);
+            botao_atualizar();
         }
         else if(isset($_POST['Excluir'])){
-            botao_excluir();
+            botao_excluir($CPF);
         }
 
-        function botao_atualizar($conn){
+        function botao_atualizar(){
+
+            global $conn;
             
             $CPF = $_POST['cpf'];
             $Nome = $_POST['nome'];
@@ -134,25 +136,19 @@
             }
         }
 
-        function botao_excluir(){
-            echo '<meta http-equiv="refresh" content="0; URL=cadastro_paciente_php.php?val=2">';
+        function botao_excluir($CPF){
+            echo "<meta http-equiv='refresh' content='0; URL=lista_paciente_excluir.php?cpf=$CPF'>";
         }
-
-
-
       ?>
       
       <div class="column">
       
           <div class="input-box">
-            
-            <input type="submit" id="Atualizar" nome="Atualizar" class="cadbot" value="Atualizar" >
+            <input type="submit" id="Atualizar" name="Atualizar" class="cadbot" value="Atualizar" >
           </div>
       
           <div class="input-box">
-
-            
-            <input type="submit" id="Excluir" nome="Excluir" class="cadbot" value="Excluir" >
+            <input type="submit" id="Excluir" name="Excluir" class="cadbot" value="Excluir" >
           </div>
       
       </div>
@@ -160,5 +156,5 @@
     </form>
 </section>    
 </body>
-</script>
+
 </html>

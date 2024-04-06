@@ -73,7 +73,7 @@
           <input type="text" id="tel" name="telefone" placeholder="Digite o telefone no formato xxxxx-xxxx ou xxxxxxxxx"  required="" >
       </div>
 
-      <br>
+      <br> 
       <?php
         if(isset($_POST['Cadastrar'])) {
             botao_cadastrar();
