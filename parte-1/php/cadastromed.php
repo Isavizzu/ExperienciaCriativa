@@ -123,7 +123,7 @@
 
       ?>
 
-      <input type="submit" id="Enviar" class="cadbot" name="Cadastrar" value="Cadastrar" onclick="confirm()">
+        <input type="submit" id="Enviar" class="cadbot" name="Cadastrar" value="Cadastrar" onclick="">
   
     </form>
 
