@@ -42,11 +42,11 @@
         }
         else{
             $CPF = $_POST['cpf'];
-            $CRM = $_POST['crm']
+            $CRM = $_POST['crm'];
             $Nome = $_POST['nome'];
             $dat = $_POST['data'];
             $Senha = $_POST['Senha'];
-            $Especialidade = $_POST['especialidade_id']
+            $Especialidade = $_POST['especialidade_id'];
             $datformat = date('Y-m-d',strtotime($dat));
             $sql = "UPDATE usuario SET nome = '$Nome', data_nascimento = '$datformat', senha = '$Senha' WHERE cpf = '$CPF'";
             $sql1 = "UPDATE medico SET crm = '$CRM', especialidade_id = '$Especialidade' WHERE medico_cpf = '$CPF'";

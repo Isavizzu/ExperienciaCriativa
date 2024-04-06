@@ -12,6 +12,7 @@
 </head>
 
 <body class="agenda-body">
+    <br>
     
     <section class="container">
         <?php
@@ -26,7 +27,7 @@
                 $resultado_pesquisa_nome_medico = $conn->query($pesquisa_nome_medico);
                 $linha_pesquisa_nome_medico = $resultado_pesquisa_nome_medico->fetch_assoc();
                 echo"<section class='result-box'>
-                    <a href='../php/agenda_recepcionista_php.php?crm=$linha_pesquisa_medico[crm]'>$linha_pesquisa_nome_medico[nome]</a>
+                    <a href='../php/agenda_recepcionista_php.php?crm=$linha_pesquisa_medico[crm]&nome=$linha_pesquisa_nome_medico[nome]'>$linha_pesquisa_nome_medico[nome]</a>
                 </section>";
             }
         }

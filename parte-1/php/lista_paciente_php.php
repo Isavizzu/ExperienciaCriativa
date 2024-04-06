@@ -1,7 +1,7 @@
 <?php
     include("base.php");
 ?>
- 
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -13,7 +13,7 @@
 
 <body class="">
     <?php
-    $CPF= $_GET["cpf"];
+    $CPF= $_GET['cpf'];
     $pesquisa_cpf = "SELECT cpf, nome, data_nascimento, senha FROM usuario WHERE cpf = '$CPF'";
     $resultado_pesquisa = $conn->query($pesquisa_cpf);
     $row = $resultado_pesquisa->fetch_assoc();
@@ -160,6 +160,5 @@
     </form>
 </section>    
 </body>
-
-
+</script>
 </html>
