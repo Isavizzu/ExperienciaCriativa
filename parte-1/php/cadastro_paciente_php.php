@@ -12,7 +12,7 @@
 <body>
     <section class='success-message'>
         <h2>Cadastro realizado com sucesso!</h2>
-        <p>O médico foi cadastrado com sucesso em nosso sistema.</p>
+        <p>O paciente foi cadastrado com sucesso em nosso sistema.</p>
         <a href="../php/agenda_recepcionista.php" class="btn">Voltar à Agenda</a>
     </section>
     
