@@ -70,7 +70,7 @@
 
       <div class="input-box">
           <label>Telefone</label>
-          <input type="text" id="tel" name="telefone" placeholder="Digite o telefone no formato xxxxx-xxxx ou xxxxxxxxx" pattern="^\d{9}$|^\d{5}-\d{4}$" required="" >
+          <input type="text" id="tel" name="telefone" placeholder="Digite o telefone no formato xxxxx-xxxx ou xxxxxxxxx"  required="" >
       </div>
 
       <br>
@@ -140,7 +140,7 @@
 
       ?>
 
-      <input type="submit" id="Enviar" class="cadbot" name="Cadastrar" value="Cadastrar" onclick="confirm()">
+      <input type="submit" id="Enviar" class="cadbot" name="Cadastrar" value="Cadastrar" onclick="">
   
     </form>
 
