@@ -44,7 +44,12 @@ include("conexao.php");
             </div>
 
             <div class="input-box">
-                <label>Especialidade</label>
+
+            <label>Especialidade</label>
+
+            <div class="column">
+
+            <div class="select-box">
                 <select id="especialidade" name="especialidade" required="">
                     <option value="">Selecione a especialidade</option>
                     <option value="1">Cardiologia</option>
@@ -54,6 +59,8 @@ include("conexao.php");
                     <option value="5">Ortopedia</option>
                     <option value="6">Endocrinologia</option>
                 </select>
+            </div>
+            </div>
             </div>
 
             <div class="input-box">
