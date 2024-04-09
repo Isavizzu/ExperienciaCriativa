@@ -140,6 +140,7 @@ include("session_start.php");
                     echo '<meta http-equiv="refresh" content="0; URL=cadastro_med_php.php?val=1">';
                 }
             }
+        }
 
             ?>
 
