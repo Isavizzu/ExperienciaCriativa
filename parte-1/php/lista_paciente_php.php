@@ -29,6 +29,28 @@
     $pes= $row['peso'];
     $tel= $row['telefone'];
 
+    if($_SESSION['verificar'] == false){
+      $_SESSION['nome_paciente_atualiza'] = $nome;
+      $_SESSION['cpf_paciente_atualiza'] = $CPF;
+      $_SESSION['senha_paciente_atualiza'] = $senha;
+      $_SESSION['conf_senha_paciente_atualiza'] = $senha;
+      $_SESSION['altura_paciente_atualiza'] = $alt;
+      $_SESSION['peso_paciente_atualiza'] = $pes;
+      $_SESSION['telefone_paciente_atualiza'] = $tel;
+      $_SESSION['data_paciente_atualiza'] = $data;
+      $_SESSION['verificar'] = true;
+    }
+    else{
+      $_SESSION['nome_paciente_atualiza'] = $_POST['nome'];
+          $_SESSION['cpf_paciente_atualiza'] = $_POST['cpf'];
+          $_SESSION['senha_paciente_atualiza'] = $_POST['Senha'];
+          $_SESSION['conf_senha_paciente_atualiza'] =  $_POST['confirmaSenha'];
+          $_SESSION['altura_paciente_atualiza'] = $_POST['alt'];
+          $_SESSION['peso_paciente_atualiza'] = $_POST['pes'];
+          $_SESSION['telefone_paciente_atualiza'] = $_POST['telefone'];
+          $_SESSION['data_paciente_atualiza'] = $_POST['data'];
+    }
+
     ?>
     
    <section class="caixa">
@@ -37,7 +59,7 @@
 
       <div class="input-box">
           <label>Nome completo</label>
-          <input type="text" id="nome" name="nome" placeholder="Digite o nome completo" value="<?php echo $nome; ?>"  pattern="^[A-Za-zÀ-úçÇ ]{1,100}$"  required="" >
+          <input type="text" id="nome" name="nome" placeholder="Digite o nome completo" value="<?php echo $_SESSION['nome_paciente_atualiza']; ?>"  pattern="^[A-Za-zÀ-úçÇ ]{1,100}$"  required="" >
       </div>
       
       <div class="column">
@@ -90,21 +112,23 @@
 
       <?php
         if(isset($_POST['Atualizar'])) {
-            botao_atualizar();
+            botao_atualizar($CPF);
         }
         else if(isset($_POST['Excluir'])){
             botao_excluir($CPF);
         }
 
-        function verifica_cpf($cpf){
+        function verifica_cpf(){
+
           global $conn;
-          $pesquisa_cpf = "SELECT cpf FROM usuario WHERE cpf = '$cpf'";
+          $Cpf = $_POST['cpf'];
+          $pesquisa_cpf = "SELECT cpf FROM usuario WHERE cpf = '$CPF'";
           $resultado_pesquisa = $conn->query($pesquisa_cpf);
           $row = $resultado_pesquisa->fetch_assoc();
           if($row == null){
             return true;
           }
-          else if ($row['cpf'] == $cpf){
+          else if ($row['cpf'] == $CPF){
               return true;
           }
           else{
@@ -112,11 +136,21 @@
           }
       } 
 
-        function botao_atualizar(){
+
+        function botao_atualizar($CPF){
+
+            $_SESSION['nome_paciente_atualiza'] = $_POST['nome'];
+            $_SESSION['cpf_paciente_atualiza'] = $_POST['cpf'];
+            $_SESSION['senha_paciente_atualiza'] = $_POST['Senha'];
+            $_SESSION['conf_senha_paciente_atualiza'] =  $_POST['confirmaSenha'];
+            $_SESSION['altura_paciente_atualiza'] = $_POST['alt'];
+            $_SESSION['peso_paciente_atualiza'] = $_POST['pes'];
+            $_SESSION['telefone_paciente_atualiza'] = $_POST['telefone'];
+            $_SESSION['data_paciente_atualiza'] = $_POST['data'];
 
             global $conn;
             
-            $CPF = $_POST['cpf'];
+            $Cpf = $_POST['cpf'];
             $Nome = $_POST['nome'];
             $peso = $_POST['pes'];
             $altura = $_POST['alt'];
@@ -129,10 +163,10 @@
             if($Senha != $confirmasenha){
                 echo "<section class='section_invalido'><p>As senhas não correspondem!</p></section>";
             }
-            else if(verifica_cpf($cpf) == false){
+            else if(verifica_cpf() == false){
               echo "<section class='section_invalido'><p>Esse CPF já foi cadastrado anteriormente!</p></section>";
             }
-            else if(!preg_match('/^[0-9]{3}[\.]?[0-9]{3}[\.]?[0-9]{3}[-]?[0-9]{2}$/', $CPF)){
+            else if(!preg_match('/^[0-9]{3}[\.]?[0-9]{3}[\.]?[0-9]{3}[-]?[0-9]{2}$/', $Cpf)){
                 echo "<section class='section_invalido'><p>Digite um CPF válido!</p></section>";
             }
             else if(!preg_match('/^.{6,30}$/', $Senha)){
@@ -148,10 +182,11 @@
                 echo "<section class='section_invalido'><p>Digite um telefone válido!</p></section>";
             }
             else{
-                $sql = "UPDATE usuario SET nome = '$Nome', data_nascimento = '$datformat', senha = '$Senha' WHERE cpf = '$CPF'";
-                $sql1 = "UPDATE paciente SET telefone = '$telefone', altura = '$altura', peso = '$peso' WHERE paciente_cpf = '$CPF'";
+                $sql = "UPDATE usuario SET cpf = '$Cpf', nome = '$Nome', data_nascimento = '$datformat', senha = '$Senha' WHERE cpf = '$CPF'";
+                $sql1 = "UPDATE paciente SET telefone = '$telefone', altura = '$altura', peso = '$peso', paciente_cpf = '$Cpf' WHERE paciente_cpf = '$CPF'";
                 $conn->query($sql);
                 $conn->query($sql1);
+                $_SESSION['verificar'] = false;
                 echo '<meta http-equiv="refresh" content="0; URL=cadastro_paciente_php.php?val=2">';
             }
         }
