@@ -36,19 +36,24 @@ CREATE TABLE paciente (
 ALTER TABLE medico ADD CONSTRAINT FK_medico_2
     FOREIGN KEY (medico_cpf)
     REFERENCES usuario (cpf)
-    ON DELETE CASCADE;
+    ON DELETE CASCADE
+    ON UPDATE CASCADE;
  
 ALTER TABLE medico ADD CONSTRAINT FK_medico_3
     FOREIGN KEY (especialidade_id)
     REFERENCES especialidade (id)
-    ON DELETE CASCADE;
- 
+	ON DELETE CASCADE
+    ON UPDATE CASCADE;
+  
 ALTER TABLE recepcionista ADD CONSTRAINT FK_recepcionista_2
     FOREIGN KEY (recepcionista_cpf)
     REFERENCES usuario (cpf)
-    ON DELETE CASCADE;
+	ON DELETE CASCADE
+    ON UPDATE CASCADE;
  
 ALTER TABLE paciente ADD CONSTRAINT FK_paciente_2
     FOREIGN KEY (paciente_cpf)
     REFERENCES usuario (cpf)
-    ON DELETE CASCADE;
+	ON DELETE CASCADE
+    ON UPDATE CASCADE;
+ 
