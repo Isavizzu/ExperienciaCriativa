@@ -9,6 +9,7 @@
 <body>
     <?php
     include("base.php");
+    include("session_start.php");
     $crm = $_GET['crm'];
     $nome = $_GET['nome'];
     ?>

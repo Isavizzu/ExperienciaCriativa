@@ -1,6 +1,7 @@
 <?php
 include("base.php");
 include("conexao.php");
+include("session_start.php");
 
 ?>
 
