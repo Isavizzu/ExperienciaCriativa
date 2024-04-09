@@ -58,7 +58,7 @@
             <div class="column">
 
                 <div class="div_comcoluna">
-                    <label>Senha: <?php echo $senha; ?></label>
+                    <label>Senha: ****** </label>
                 </div>
                 <div class="div_comcoluna">
                     <label>Data de Nascimento: <?php echo $data_nascimento; ?></label>
