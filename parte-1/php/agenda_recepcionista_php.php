@@ -214,7 +214,7 @@
     </div>
     <?php
         if ($resul_horario_inicio_tarde->num_rows > 0 || $resul_horario_inicio_manha->num_rows > 0){
-            echo "<form action='adicionar_consulta.php' method='POST'>
+            echo "<form action='adicionar_consulta.php' method='GET'>
                         <input type='submit' name='adicionar' class='botao_adicionar' value='Adicionar Nova Consulta'>
                         <input type='hidden' name='crm' value='$crm'>
                         <input type='hidden' name='nome' value='$nome_medico'>
