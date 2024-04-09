@@ -25,7 +25,7 @@ include("conexao.php");
 
             <div class="input-box">
                 <label>Nome completo</label>
-                <input type="text" id="nome" name="nome" placeholder="Digite o nome completo" required="">
+                <input type="text" id="nome" name="nome" placeholder="Digite o nome completo" pattern="^[A-Za-zÀ-úçÇ ]{1,100}$" required="">
             </div>
 
             <div class="input-box">
