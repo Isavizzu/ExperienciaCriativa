@@ -51,14 +51,7 @@
 
                 //Variáveis de session que ajudam no cadastro
 
-                $_SESSION['nome_paciente'] = '';
-                $_SESSION['cpf_paciente'] = '';
-                $_SESSION['senha_paciente'] = '';
-                $_SESSION['conf_senha_paciente'] = '';
-                $_SESSION['altura_paciente'] = '';
-                $_SESSION['peso_paciente'] = '';
-                $_SESSION['telefone_paciente'] = '';
-                $_SESSION['data_paciente'] = '';
+                $_SESSION['pagina_visitada'] = false;
 
                 if ($row_recepcionista !== null){
                     header('location: agenda_recepcionista.php');

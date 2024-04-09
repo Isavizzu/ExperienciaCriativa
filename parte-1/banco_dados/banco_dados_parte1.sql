@@ -5,13 +5,15 @@ CREATE DATABASE clinical_here;
 USE clinical_here;
 
 CREATE TABLE medico (
-    crm varchar(7) PRIMARY KEY,
-    medico_cpf varchar(15),
-    especialidade_id int
+    crm varchar(7) UNIQUE NOT NULL,
+    medico_cpf varchar(15) PRIMARY KEY,
+    especialidade_id int,
+    ativo boolean
 );
 
 CREATE TABLE recepcionista (
-    recepcionista_cpf varchar(15) PRIMARY KEY
+    recepcionista_cpf varchar(15) PRIMARY KEY,
+    ativo boolean
 );
 
 CREATE TABLE especialidade (
@@ -30,7 +32,8 @@ CREATE TABLE paciente (
     telefone varchar(14),
     paciente_cpf varchar(15) PRIMARY KEY,
     altura varchar(10),
-    peso varchar(10)
+    peso varchar(10),
+    sexo varchar(10)
 );
  
 ALTER TABLE medico ADD CONSTRAINT FK_medico_2

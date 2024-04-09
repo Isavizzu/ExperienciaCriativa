@@ -2,6 +2,21 @@
     include("base.php");
     include("conexao.php"); 
     include("session_start.php");
+
+    if($_SESSION['pagina_visitada'] == false || !isset($_SESSION['pagina_visitada'])){
+        $_SESSION['nome_paciente'] = '';
+        $_SESSION['cpf_paciente'] = '';
+        $_SESSION['senha_paciente'] = '';
+        $_SESSION['conf_senha_paciente'] = '';
+        $_SESSION['altura_paciente'] = '';
+        $_SESSION['peso_paciente'] = '';
+        $_SESSION['telefone_paciente'] = '';
+        $_SESSION['data_paciente'] = '';
+        $_SESSION['pagina_visitada'] = true;
+    }
+    if(isset($_POST['Cadastrar'])){
+        botao_cadastrar();
+    }
 ?>
 
 <!DOCTYPE html>
@@ -24,19 +39,19 @@
       
       <div class="input-box">
           <label>Nome completo</label>
-          <input type="text" id="nome" name="nome" value="<?php echo $_SESSION['nome_paciente']?>" placeholder="Digite o nome completo" pattern="^[A-Za-zÀ-úçÇ ]{1,100}$" required="" >
+          <input type="text" id="nome" name="nome" value="<?php echo $_SESSION['nome_paciente']?>" placeholder="Digite o nome completo" pattern="^[A-Za-zÀ-úçÇ ]{3,100}$" required="" >
       </div>
       
       <div class="column">
       
           <div class="input-box">
             <label>CPF</label>
-            <input type="text" id="cpf" name="cpf" placeholder="Digite o CPF no formato xxxxxxxxxxx ou xxx.xxx.xxx-xx"  required="" >
+            <input type="text" id="cpf" name="cpf" value="<?php echo $_SESSION['cpf_paciente']?>" placeholder="Digite o CPF no formato xxxxxxxxxxx ou xxx.xxx.xxx-xx"  required="" >
           </div>
       
           <div class="input-box">
             <label>Data de Nascimento</label>
-            <input type="date" id='data' name="data" placeholder="Digite a data de nascimento" required="" >
+            <input type="date" id='data' name="data" value="<?php echo $_SESSION['data_paciente']?>" placeholder="Digite a data de nascimento" required="" >
           </div>
       
       </div>
@@ -45,13 +60,13 @@
       
           <div class="input-box">
             <label>Senha</label>
-            <input type="password" id="Senha" name="Senha" placeholder="Digite uma senha com 6 a 30 caracteres"  required="" >
+            <input type="password" id="Senha" name="Senha" value="<?php echo $_SESSION['senha_paciente']?>" placeholder="Digite uma senha com 6 a 30 caracteres"  required="" >
             <span onclick="showPassword()"></span>
           </div>
       
           <div class="input-box">
             <label>Confirme a senha</label>
-            <input type="password" id="confirmaSenha" name="confirmaSenha" placeholder="Confirme sua senha" required="">
+            <input type="password" id="confirmaSenha" name="confirmaSenha" value="<?php echo $_SESSION['conf_senha_paciente']?>" placeholder="Confirme sua senha" required="">
             <span onclick="showPassword()"></span>
           </div>
       
@@ -61,19 +76,19 @@
       
           <div class="input-box">
             <label>Altura</label>
-            <input type="text" id="alt" name="alt" placeholder="Digite a altura em metros"  required="" >
+            <input type="text" id="alt" name="alt" value="<?php echo $_SESSION['altura_paciente']?>" placeholder="Digite a altura em metros"  required="" >
           </div>
       
           <div class="input-box">
             <label>Peso</label>
-            <input type="text" id="pes" name="pes" placeholder="Digite o peso em Kg"  required="">
+            <input type="number" id="pes" name="pes" value="<?php echo $_SESSION['peso_paciente']?>" placeholder="Digite o peso em Kg"  required="">
           </div>
       
       </div>
 
       <div class="input-box">
           <label>Telefone</label>
-          <input type="text" id="tel" name="telefone" placeholder="Digite o telefone no formato xxxxx-xxxx ou xxxxxxxxx"  required="" >
+          <input type="text" id="tel" value="<?php echo $_SESSION['telefone_paciente']?>" name="telefone" placeholder="Digite o telefone no formato xxxxx-xxxx ou xxxxxxxxx"  required="" >
       </div>
 
       <br> 
@@ -96,14 +111,6 @@
         } 
 
         function botao_cadastrar(){
-            $_SESSION['nome_paciente'] = $_POST['nome'];
-            $_SESSION['cpf_paciente'] = $_POST['cpf'];
-            $_SESSION['senha_paciente'] = $_POST['Senha'];
-            $_SESSION['conf_senha_paciente'] = $_POST['confirmaSenha'];
-            $_SESSION['altura_paciente'] = $_POST['alt'];
-            $_SESSION['peso_paciente'] = $_POST['pes'];
-            $_SESSION['telefone_paciente'] = $_POST['telefone'];
-            $_SESSION['data_paciente'] =$_POST['data'];
             
             global $conn;
             $cpf = $_POST['cpf'];
@@ -114,6 +121,15 @@
             $Senha = $_POST['Senha'];
             $confirmasenha = $_POST['confirmaSenha'];
             $telefone = $_POST['telefone'];
+            
+            $_SESSION['nome_paciente'] = $Nome;
+            $_SESSION['cpf_paciente'] = $cpf;
+            $_SESSION['senha_paciente'] = $Senha;
+            $_SESSION['conf_senha_paciente'] = $confirmasenha;
+            $_SESSION['altura_paciente'] = $altura;
+            $_SESSION['peso_paciente'] = $peso;
+            $_SESSION['telefone_paciente'] = $telefone;
+            $_SESSION['data_paciente'] =$dat;
 
             $datformat = date('Y-m-d',strtotime($dat));
 
@@ -129,6 +145,9 @@
             else if(!preg_match('/^.{6,30}$/', $Senha)){
                 echo "<section class='section_invalido'><p>A senha precisa ter no mínimo 6 caracteres!</p></section>";
             }
+            else if($datformat > date('Y-m-d')){
+                echo "<section class='section_invalido'><p>Digite uma data válida!</p></section>";
+            }
             else if(!preg_match('/^\d(\.\d{2})?$/', $altura)){
                 echo "<section class='section_invalido'><p>Digite a altura em metros!</p></section>";
             }
@@ -143,6 +162,7 @@
                 $sqlInsert1 = "INSERT INTO paciente(telefone, paciente_cpf, altura, peso) VALUES ('$telefone', '$cpf', '$altura', '$peso')";
                 $conn->query($sqlInsert);
                 $conn->query($sqlInsert1);
+                $_SESSION['pagina_visitada'] = false;
                 echo '<meta http-equiv="refresh" content="0; URL=cadastro_paciente_php.php?val=1">';
             }
             

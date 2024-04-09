@@ -2,22 +2,21 @@ DROP DATABASE clinical_here;
 CREATE DATABASE clinical_here;
 USE clinical_here;
 
+CREATE TABLE medico (
+    crm varchar(7) UNIQUE NOT NULL,
+    medico_cpf varchar(15) PRIMARY KEY,
+    especialidade_id int,
+    ativo boolean
+);
 
 CREATE TABLE recepcionista (
-    recepcionista_cpf varchar(15) PRIMARY KEY
+    recepcionista_cpf varchar(15) PRIMARY KEY,
+    ativo boolean
 );
 
-CREATE TABLE medico (
-    crm varchar(7) PRIMARY KEY,
-    medico_cpf varchar(15),
-    especialidade_id int
-);
-
-CREATE TABLE paciente (
-    telefone varchar(14),
-    peso varchar(10),
-    altura varchar(10),
-    paciente_cpf varchar(15) PRIMARY KEY
+CREATE TABLE especialidade (
+    id int PRIMARY KEY,
+    nome_especialidade varchar(100)
 );
 
 CREATE TABLE usuario (
@@ -27,9 +26,12 @@ CREATE TABLE usuario (
     senha varchar(20)
 );
 
-CREATE TABLE especialidade (
-    id int PRIMARY KEY,
-    nome_especialidade varchar(100)
+CREATE TABLE paciente (
+    telefone varchar(14),
+    paciente_cpf varchar(15) PRIMARY KEY,
+    altura varchar(10),
+    peso varchar(10),
+    sexo varchar(10)
 );
 
 CREATE TABLE agenda (
@@ -119,23 +121,23 @@ VALUES
     ('56789012345', 'Recepcionista 1', 'senha5', '1970-01-01');
 
 -- Inserir pacientes
-INSERT INTO paciente (telefone, peso, altura, paciente_cpf)
+INSERT INTO paciente (telefone, peso, altura, paciente_cpf, sexo)
 VALUES 
-    ('(11) 1111-1111', '54', '1.64', '12345678901'),
-    ('(22) 2222-2222', '55', '1.54', '23456789012'),
-    ('(33) 1111-1111', '56', '1.64', '99345678901'),
-    ('(44) 2222-2222', '57', '1.94', '99456789012'),
-    ('(55) 1111-1111', '58', '1.84', '98345678901');
+    ('(11) 1111-1111', '54', '1.64', '12345678901', 'Feminino'),
+    ('(22) 2222-2222', '55', '1.54', '23456789012', 'Feminino'),
+    ('(33) 1111-1111', '56', '1.64', '99345678901', 'Feminino'),
+    ('(44) 2222-2222', '57', '1.94', '99456789012', 'Feminino'),
+    ('(55) 1111-1111', '58', '1.84', '98345678901', 'Feminino');
 
 -- Inserir médicos
-INSERT INTO medico (crm, medico_cpf, especialidade_id)
+INSERT INTO medico (crm, medico_cpf, especialidade_id, ativo)
 VALUES 
-    ('1234567', '34567890123', 1),
-    ('2345678', '45678901234', 2);
+    ('1234567', '34567890123', 1, 1),
+    ('2345678', '45678901234', 2, 1);
 
 -- Inserir recepcionista
-INSERT INTO recepcionista (recepcionista_cpf)
-VALUES ('56789012345');
+INSERT INTO recepcionista (recepcionista_cpf, ativo)
+VALUES ('56789012345', 1);
 
 -- Adicionar os sete dias da semana na tabela agenda para um único médico (supondo que o médico tenha CRM '1234567')
 -- Deixando sábado e domingo livres
