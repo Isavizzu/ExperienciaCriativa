@@ -131,7 +131,7 @@
                         else if (empty($dat)){
                             echo "<section class='section_invalido'><p>Preencha a data de nascimento!</p></section>";
                         }
-                        else if (!preg_match('/^[a-zA-Z\s]+$/', $Nome)){
+                        else if (!preg_match('/^[A-Za-zÀ-úçÇ ]{1,100}$/', $Nome)){
                             echo "<section class='section_invalido'><p>Digite o nome completo!</p></section>";
                         }
                         else if (!preg_match('/^\d{7}$/', $CRM)){
