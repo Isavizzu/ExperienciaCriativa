@@ -110,15 +110,15 @@
                         botao_excluir($CPF);
                     }
 
-                    function verifica_cpf($cpf){
+                    function verifica_cpf($CPF){
                         global $conn;
-                        $pesquisa_cpf = "SELECT cpf FROM usuario WHERE cpf = '$cpf'";
+                        $pesquisa_cpf = "SELECT cpf FROM usuario WHERE cpf = '$CPF'";
                         $resultado_pesquisa = $conn->query($pesquisa_cpf);
                         $row = $resultado_pesquisa->fetch_assoc();
                         if($row == null){
                           return true;
                         }
-                        else if ($row['cpf'] == $cpf){
+                        else if ($row['cpf'] == $CPF){
                             return true;
                         }
                         else{
@@ -126,15 +126,15 @@
                         }
                     }
 
-                    function verifica_crm($crm){
+                    function verifica_crm($CRM){
                         global $conn;
-                        $pesquisa_crm = "SELECT crm FROM medico WHERE crm = '$crm'";
+                        $pesquisa_crm = "SELECT crm FROM medico WHERE crm = '$CRM'";
                         $resultado_pesquisa_crm = $conn->query($pesquisa_crm);
                         $row = $resultado_pesquisa_crm->fetch_assoc();
                         if($row == null){
                           return true;
                         }
-                        else if ($row['crm'] == $crm){
+                        else if ($row['crm'] == $CRM){
                             return true;
                         }
                         else{
