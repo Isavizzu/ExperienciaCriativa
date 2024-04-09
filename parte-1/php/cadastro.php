@@ -24,7 +24,7 @@
       
       <div class="input-box">
           <label>Nome completo</label>
-          <input type="text" id="nome" name="nome" placeholder="Digite o nome completo" pattern="^[A-Za-zÀ-úçÇ ]{1,100}$" required="" >
+          <input type="text" id="nome" name="nome" value="<?php echo $_SESSION['nome_paciente']?>" placeholder="Digite o nome completo" pattern="^[A-Za-zÀ-úçÇ ]{1,100}$" required="" >
       </div>
       
       <div class="column">
@@ -96,6 +96,14 @@
         } 
 
         function botao_cadastrar(){
+            $_SESSION['nome_paciente'] = $_POST['nome'];
+            $_SESSION['cpf_paciente'] = $_POST['cpf'];
+            $_SESSION['senha_paciente'] = $_POST['Senha'];
+            $_SESSION['conf_senha_paciente'] = $_POST['confirmaSenha'];
+            $_SESSION['altura_paciente'] = $_POST['alt'];
+            $_SESSION['peso_paciente'] = $_POST['pes'];
+            $_SESSION['telefone_paciente'] = $_POST['telefone'];
+            $_SESSION['data_paciente'] =$_POST['data'];
             
             global $conn;
             $cpf = $_POST['cpf'];
