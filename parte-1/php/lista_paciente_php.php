@@ -58,12 +58,12 @@
       
           <div class="input-box">
             <label>Senha</label>
-            <input type="text" id="Senha" name="Senha" placeholder="Digite uma senha com 6 a 30 caracteres" value="<?php echo $senha; ?>" required="" >
+            <input type="password" id="Senha" name="Senha" placeholder="Digite uma senha com 6 a 30 caracteres" value="<?php echo $senha; ?>" required="" >
           </div>
       
           <div class="input-box">
             <label>Confirme a senha</label>
-            <input type="text" id="confirmaSenha" name="confirmaSenha"  placeholder="Confirme sua senha" value="<?php echo $senha; ?>" required="">
+            <input type="password" id="confirmaSenha" name="confirmaSenha"  placeholder="Confirme sua senha" value="<?php echo $senha; ?>" required="">
           </div>
       
       </div>

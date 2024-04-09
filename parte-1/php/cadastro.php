@@ -45,7 +45,7 @@
       
           <div class="input-box">
             <label>Senha</label>
-            <input type="passoword" id="Senha" name="Senha" placeholder="Digite uma senha com 6 a 30 caracteres"  required="" >
+            <input type="password" id="Senha" name="Senha" placeholder="Digite uma senha com 6 a 30 caracteres"  required="" >
             <span onclick="showPassword()"></span>
           </div>
       
