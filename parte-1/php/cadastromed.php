@@ -41,7 +41,7 @@ include("session_start.php");
 
             <div class="input-box">
                 <label>CRM</label>
-                <input type="text" id="crm" name="crm" placeholder="Digite o CRM" required="">
+                <input type="text" id="crm" name="crm" placeholder="Digite o CRM no formato xxxxxxx" required="">
             </div>
 
             <div class="input-box">
