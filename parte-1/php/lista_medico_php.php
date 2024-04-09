@@ -110,6 +110,38 @@
                         botao_excluir($CPF);
                     }
 
+                    function verifica_cpf($cpf){
+                        global $conn;
+                        $pesquisa_cpf = "SELECT cpf FROM usuario WHERE cpf = '$cpf'";
+                        $resultado_pesquisa = $conn->query($pesquisa_cpf);
+                        $row = $resultado_pesquisa->fetch_assoc();
+                        if($row == null){
+                          return true;
+                        }
+                        else if ($row['cpf'] == $cpf){
+                            return true;
+                        }
+                        else{
+                            return false; 
+                        }
+                    }
+
+                    function verifica_crm($crm){
+                        global $conn;
+                        $pesquisa_crm = "SELECT crm FROM medico WHERE crm = '$crm'";
+                        $resultado_pesquisa_crm = $conn->query($pesquisa_crm);
+                        $row = $resultado_pesquisa_crm->fetch_assoc();
+                        if($row == null){
+                          return true;
+                        }
+                        else if ($row['crm'] == $crm){
+                            return true;
+                        }
+                        else{
+                            return false; 
+                        }
+                    }
+
                     function botao_atualizar($conn){
                         $CPF = $_POST['cpf'];
                         $Nome = $_POST['nome'];
