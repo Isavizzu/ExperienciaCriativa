@@ -1,5 +1,6 @@
 <?php
     include("conexao.php");
+    include("session_start.php");
 ?>
 
 <!DOCTYPE html>
@@ -36,7 +37,7 @@ body {font-size:16px;}
   </div>
   <?php echo"<section class='perfil'>
                 <p>$_SESSION[tipo_usuario]:<br>$_SESSION[nome]<br>$_SESSION[cpf]</p>
-              </section>"
+              </section>";
   ?>
 </nav>
 
