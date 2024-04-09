@@ -41,7 +41,7 @@ include("session_start.php");
 
             <div class="input-box">
                 <label>CRM</label>
-                <input type="text" id="crm" name="crm" placeholder="Digite o CRM" required="">
+                <input type="text" id="crm" name="crm" placeholder="Digite o CRM no formato xxxxxxx" required="">
             </div>
 
             <div class="input-box">
@@ -93,6 +93,19 @@ include("session_start.php");
                 }
             }
 
+            function verifica_crm($crm)
+            {
+                global $conn;
+                $pesquisa_crm = "SELECT crm FROM medico WHERE crm = '$crm'";
+                $resultado_pesquisa_crm = $conn->query($pesquisa_crm);
+                $row = $resultado_pesquisa_crm->fetch_assoc();
+                if ($row == null) {
+                    return false;
+                } else {
+                    return true;
+                }
+            }
+
             function botao_cadastrar()
             {
 
@@ -109,6 +122,8 @@ include("session_start.php");
 
                 if (verifica_cpf($cpf) == true) {
                     echo "<section class='section_invalido'><p>Esse CPF já foi cadastrado anteriormente!</p></section>";
+                if (verifica_crm($crm) == true) {
+                    echo "<section class='section_invalido'><p>Esse CRM já foi cadastrado anteriormente!</p></section>";
                 } else if (empty($crm) || !preg_match('/^\d{7}$/', $crm)) {
                     echo "<section class='section_invalido'><p>Digite um CRM válido (7 dígitos)!</p></section>";
                 } else if ($Senha != $confirmasenha) {
@@ -125,6 +140,7 @@ include("session_start.php");
                     echo '<meta http-equiv="refresh" content="0; URL=cadastro_med_php.php?val=1">';
                 }
             }
+        }
 
             ?>
 

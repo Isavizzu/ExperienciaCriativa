@@ -51,10 +51,10 @@
       <div class="column">
       
           <div class="div_comcoluna">
-            <label>Senha: <?php echo $senha; ?></label>
+            <label>Senha: ******</label>
           </div>
           <div class="div_comcoluna">
-            <label>Telefone: <?php echo $tel; ?>"</label>
+            <label>Telefone: <?php echo $tel; ?></label>
           </div>
       
       </div>

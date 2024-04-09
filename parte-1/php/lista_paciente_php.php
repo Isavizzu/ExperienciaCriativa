@@ -58,12 +58,12 @@
       
           <div class="input-box">
             <label>Senha</label>
-            <input type="text" id="Senha" name="Senha" placeholder="Digite uma senha com 6 a 30 caracteres" value="<?php echo $senha; ?>" required="" >
+            <input type="password" id="Senha" name="Senha" placeholder="Digite uma senha com 6 a 30 caracteres" value="<?php echo $senha; ?>" required="" >
           </div>
       
           <div class="input-box">
             <label>Confirme a senha</label>
-            <input type="text" id="confirmaSenha" name="confirmaSenha"  placeholder="Confirme sua senha" value="<?php echo $senha; ?>" required="">
+            <input type="password" id="confirmaSenha" name="confirmaSenha"  placeholder="Confirme sua senha" value="<?php echo $senha; ?>" required="">
           </div>
       
       </div>
@@ -96,6 +96,22 @@
             botao_excluir($CPF);
         }
 
+        function verifica_cpf($cpf){
+          global $conn;
+          $pesquisa_cpf = "SELECT cpf FROM usuario WHERE cpf = '$cpf'";
+          $resultado_pesquisa = $conn->query($pesquisa_cpf);
+          $row = $resultado_pesquisa->fetch_assoc();
+          if($row == null){
+            return true;
+          }
+          else if ($row['cpf'] == $cpf){
+              return true;
+          }
+          else{
+              return false; 
+          }
+      } 
+
         function botao_atualizar(){
 
             global $conn;
@@ -112,6 +128,9 @@
 
             if($Senha != $confirmasenha){
                 echo "<section class='section_invalido'><p>As senhas não correspondem!</p></section>";
+            }
+            else if(verifica_cpf($cpf) == false){
+              echo "<section class='section_invalido'><p>Esse CPF já foi cadastrado anteriormente!</p></section>";
             }
             else if(!preg_match('/^[0-9]{3}[\.]?[0-9]{3}[\.]?[0-9]{3}[-]?[0-9]{2}$/', $CPF)){
                 echo "<section class='section_invalido'><p>Digite um CPF válido!</p></section>";
