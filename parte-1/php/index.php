@@ -49,10 +49,7 @@
                 $_SESSION['cpf'] = $cpf;
                 $_SESSION['nome'] = $row['nome'];
 
-                //Variáveis de session que ajudam no cadastro
-
-                $_SESSION['pagina_visitada'] = false;
-
+               
                 if ($row_recepcionista !== null){
                     header('location: agenda_recepcionista.php');
                     $_SESSION['tipo_usuario'] = 'Recepcionista';

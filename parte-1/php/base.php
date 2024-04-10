@@ -1,6 +1,10 @@
 <?php
     include("conexao.php");
     include("session_start.php");
+
+    //Variáveis de session que ajudam no cadastro
+    $_SESSION['pagina_visitada'] = false;
+
 ?>
 
 <!DOCTYPE html>
