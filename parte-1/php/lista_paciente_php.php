@@ -1,5 +1,6 @@
 <?php
     include("base.php");
+    include("conexao.php"); 
     include("session_start.php");
 ?>
 
@@ -14,43 +15,35 @@
 
 <body class="">
     <?php
-    $CPF= $_GET['cpf'];
-    $pesquisa_cpf = "SELECT cpf, nome, data_nascimento, senha FROM usuario WHERE cpf = '$CPF'";
-    $resultado_pesquisa = $conn->query($pesquisa_cpf);
-    $row = $resultado_pesquisa->fetch_assoc();
-    $nome = $row['nome'];
-    $data= $row['data_nascimento'];
-    $senha = $row['senha'];
+        $CPF= $_GET['cpf'];
+        $pesquisa_cpf = "SELECT cpf, nome, data_nascimento, senha FROM usuario WHERE cpf = '$CPF'";
+        $resultado_pesquisa = $conn->query($pesquisa_cpf);
+        $row = $resultado_pesquisa->fetch_assoc();
+        $nome = $row['nome'];
+        $data= $row['data_nascimento'];
+        $senha = $row['senha'];
 
-    $pesquisa_paciente_cpf = "SELECT telefone, paciente_cpf, altura, peso FROM paciente WHERE paciente_cpf = '$CPF'";
-    $resultado_pesquisa_paciente = $conn->query($pesquisa_paciente_cpf);
-    $row = $resultado_pesquisa_paciente->fetch_assoc();
-    $alt= $row['altura'];
-    $pes= $row['peso'];
-    $tel= $row['telefone'];
+        $pesquisa_paciente_cpf = "SELECT telefone, paciente_cpf, altura, peso FROM paciente WHERE paciente_cpf = '$CPF'";
+        $resultado_pesquisa_paciente = $conn->query($pesquisa_paciente_cpf);
+        $row = $resultado_pesquisa_paciente->fetch_assoc();
+        $alt= $row['altura'];
+        $pes= $row['peso'];
+        $tel= $row['telefone'];
 
-    if($_SESSION['verificar'] == false){
-      $_SESSION['nome_paciente_atualiza'] = $nome;
-      $_SESSION['cpf_paciente_atualiza'] = $CPF;
-      $_SESSION['senha_paciente_atualiza'] = $senha;
-      $_SESSION['conf_senha_paciente_atualiza'] = $senha;
-      $_SESSION['altura_paciente_atualiza'] = $alt;
-      $_SESSION['peso_paciente_atualiza'] = $pes;
-      $_SESSION['telefone_paciente_atualiza'] = $tel;
-      $_SESSION['data_paciente_atualiza'] = $data;
-      $_SESSION['verificar'] = true;
-    }
-    else{
-      $_SESSION['nome_paciente_atualiza'] = $_POST['nome'];
-          $_SESSION['cpf_paciente_atualiza'] = $_POST['cpf'];
-          $_SESSION['senha_paciente_atualiza'] = $_POST['Senha'];
-          $_SESSION['conf_senha_paciente_atualiza'] =  $_POST['confirmaSenha'];
-          $_SESSION['altura_paciente_atualiza'] = $_POST['alt'];
-          $_SESSION['peso_paciente_atualiza'] = $_POST['pes'];
-          $_SESSION['telefone_paciente_atualiza'] = $_POST['telefone'];
-          $_SESSION['data_paciente_atualiza'] = $_POST['data'];
-    }
-
+        if($_SESSION['pagina_visitada'] == false ){
+            $_SESSION['nome_paciente_atualiza'] = $nome;
+            $_SESSION['cpf_paciente_atualiza'] = $CPF;
+            $_SESSION['senha_paciente_atualiza'] = $senha;
+            $_SESSION['conf_senha_paciente_atualiza'] = $senha;
+            $_SESSION['altura_paciente_atualiza'] = $alt;
+            $_SESSION['peso_paciente_atualiza'] = $pes;
+            $_SESSION['telefone_paciente_atualiza'] = $tel;
+            $_SESSION['data_paciente_atualiza'] = $data;
+            $_SESSION['pagina_visitada'] = true;
+        }
+        if(isset($_POST['Atualizar'])){
+            mudar_variaveis();
+        }
     ?>
     
    <section class="caixa">
@@ -59,19 +52,19 @@
 
       <div class="input-box">
           <label>Nome completo</label>
-          <input type="text" id="nome" name="nome" placeholder="Digite o nome completo" value="<?php echo $_SESSION['nome_paciente_atualiza']; ?>"  pattern="^[A-Za-zÀ-úçÇ ]{1,100}$"  required="" >
+          <input type="text" id="nome" name="nome" placeholder="Digite o nome completo" value="<?php echo $_SESSION['nome_paciente_atualiza']; ?>"  pattern="^[A-Za-zÀ-úçÇ ]{3,100}$"  required="" >
       </div>
       
       <div class="column">
       
           <div class="input-box">
             <label>CPF</label>
-            <input type="text" id="cpf" name="cpf" placeholder="Digite o CPF no formato xxxxxxxxxxx ou xxx.xxx.xxx-xx"  value="<?php echo $CPF; ?>" required="" >
+            <input type="text" id="cpf" name="cpf" placeholder="Digite o CPF no formato xxxxxxxxxxx ou xxx.xxx.xxx-xx"  value="<?php echo $_SESSION['cpf_paciente_atualiza']; ?>" required="" >
           </div>
       
           <div class="input-box">
             <label>Data de Nascimento</label>
-            <input type="date" id="data" name="data" placeholder="dd/mm/aaaa" value="<?php echo $data; ?>" >
+            <input type="date" id="data" name="data" placeholder="dd/mm/aaaa" value="<?php echo $_SESSION['data_paciente_atualiza']; ?>" >
           </div>
       
       </div>
@@ -80,12 +73,14 @@
       
           <div class="input-box">
             <label>Senha</label>
-            <input type="password" id="Senha" name="Senha" placeholder="Digite uma senha com 6 a 30 caracteres" value="<?php echo $senha; ?>" required="" >
+            <input type="password" id="Senha" name="Senha" placeholder="Digite uma senha com 6 a 30 caracteres" value="<?php echo $_SESSION['senha_paciente_atualiza']; ?>" required="" >
+            <span onclick="showPassword()"></span>
           </div>
       
           <div class="input-box">
             <label>Confirme a senha</label>
-            <input type="password" id="confirmaSenha" name="confirmaSenha"  placeholder="Confirme sua senha" value="<?php echo $senha; ?>" required="">
+            <input type="password" id="confirmaSenha" name="confirmaSenha"  placeholder="Confirme sua senha" value="<?php echo $_SESSION['conf_senha_paciente_atualiza']; ?>" required="">
+            <span onclick="showPassword()"></span>
           </div>
       
       </div>
@@ -94,19 +89,19 @@
       
           <div class="input-box">
             <label>Altura</label>
-            <input type="text" id="alt" name="alt" placeholder="Digite a altura em metros"  value="<?php echo $alt; ?>" required="" >
+            <input type="text" id="alt" name="alt" placeholder="Digite a altura em metros"  value="<?php echo $_SESSION['altura_paciente_atualiza']; ?>" required="" >
           </div>
       
           <div class="input-box">
             <label>Peso</label>
-            <input type="text" id="pes" name="pes"  placeholder="Digite o peso em Kg" value="<?php echo $pes; ?>" required="">
+            <input type="text" id="pes" name="pes"  placeholder="Digite o peso em Kg" value="<?php echo $_SESSION['peso_paciente_atualiza']; ?>" required="">
           </div>
       
       </div>
 
       <div class="input-box">
           <label>Telefone</label>
-          <input type="text" id="telefone" name="telefone" placeholder="Digite o telefone no formato xxxxx-xxxx ou xxxxxxxxx" value="<?php echo $tel; ?>" required="" >
+          <input type="text" id="telefone" name="telefone" placeholder="Digite o telefone no formato xxxxx-xxxx ou xxxxxxxxx" value="<?php echo $_SESSION['telefone_paciente_atualiza']; ?>" required="" >
       </div>
       <br>
 
@@ -118,11 +113,10 @@
             botao_excluir($CPF);
         }
 
-        function verifica_cpf(){
+        function verifica_cpf($Cpf, $CPF){
 
           global $conn;
-          $Cpf = $_POST['cpf'];
-          $pesquisa_cpf = "SELECT cpf FROM usuario WHERE cpf = '$CPF'";
+          $pesquisa_cpf = "SELECT cpf FROM usuario WHERE cpf = '$Cpf'";
           $resultado_pesquisa = $conn->query($pesquisa_cpf);
           $row = $resultado_pesquisa->fetch_assoc();
           if($row == null){
@@ -137,16 +131,19 @@
       } 
 
 
-        function botao_atualizar($CPF){
+      function mudar_variaveis(){
+          $_SESSION['nome_paciente_atualiza'] = $_POST['nome'];
+          $_SESSION['cpf_paciente_atualiza'] = $_POST['cpf'];
+          $_SESSION['senha_paciente_atualiza'] = $_POST['Senha'];
+          $_SESSION['conf_senha_paciente_atualiza'] =  $_POST['confirmaSenha'];
+          $_SESSION['altura_paciente_atualiza'] = $_POST['alt'];
+          $_SESSION['peso_paciente_atualiza'] = $_POST['pes'];
+          $_SESSION['telefone_paciente_atualiza'] = $_POST['telefone'];
+          $_SESSION['data_paciente_atualiza'] = $_POST['data'];
+      }
 
-            $_SESSION['nome_paciente_atualiza'] = $_POST['nome'];
-            $_SESSION['cpf_paciente_atualiza'] = $_POST['cpf'];
-            $_SESSION['senha_paciente_atualiza'] = $_POST['Senha'];
-            $_SESSION['conf_senha_paciente_atualiza'] =  $_POST['confirmaSenha'];
-            $_SESSION['altura_paciente_atualiza'] = $_POST['alt'];
-            $_SESSION['peso_paciente_atualiza'] = $_POST['pes'];
-            $_SESSION['telefone_paciente_atualiza'] = $_POST['telefone'];
-            $_SESSION['data_paciente_atualiza'] = $_POST['data'];
+
+        function botao_atualizar($CPF){
 
             global $conn;
             
@@ -158,13 +155,17 @@
             $Senha = $_POST['Senha'];
             $confirmasenha = $_POST['confirmaSenha'];
             $telefone = $_POST['telefone'];
+
             $datformat = date('Y-m-d',strtotime($dat));
 
             if($Senha != $confirmasenha){
                 echo "<section class='section_invalido'><p>As senhas não correspondem!</p></section>";
             }
-            else if(verifica_cpf() == false){
+            else if(verifica_cpf($Cpf, $CPF) == false){
               echo "<section class='section_invalido'><p>Esse CPF já foi cadastrado anteriormente!</p></section>";
+            }
+            else if($datformat > date('Y-m-d')){
+              echo "<section class='section_invalido'><p>Digite uma data válida!</p></section>";
             }
             else if(!preg_match('/^[0-9]{3}[\.]?[0-9]{3}[\.]?[0-9]{3}[-]?[0-9]{2}$/', $Cpf)){
                 echo "<section class='section_invalido'><p>Digite um CPF válido!</p></section>";
@@ -183,15 +184,16 @@
             }
             else{
                 $sql = "UPDATE usuario SET cpf = '$Cpf', nome = '$Nome', data_nascimento = '$datformat', senha = '$Senha' WHERE cpf = '$CPF'";
-                $sql1 = "UPDATE paciente SET telefone = '$telefone', altura = '$altura', peso = '$peso', paciente_cpf = '$Cpf' WHERE paciente_cpf = '$CPF'";
+                $sql1 = "UPDATE paciente SET telefone = '$telefone', altura = '$altura', peso = '$peso' WHERE paciente_cpf = '$CPF'";
                 $conn->query($sql);
                 $conn->query($sql1);
-                $_SESSION['verificar'] = false;
+                $_SESSION['pagina_visitada'] = false;
                 echo '<meta http-equiv="refresh" content="0; URL=cadastro_paciente_php.php?val=2">';
             }
         }
 
         function botao_excluir($CPF){
+            $_SESSION['pagina_visitada'] = false;
             echo "<meta http-equiv='refresh' content='0; URL=lista_paciente_excluir.php?cpf=$CPF'>";
         }
       ?>

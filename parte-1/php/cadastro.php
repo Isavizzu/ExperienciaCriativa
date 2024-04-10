@@ -15,7 +15,7 @@
         $_SESSION['pagina_visitada'] = true;
     }
     if(isset($_POST['Cadastrar'])){
-        botao_cadastrar();
+        mudar_variaveis();
     }
 ?>
 
@@ -29,12 +29,8 @@
 </head>
 <body>
 <br>
-<h1>Formulário de Cadastro de Paciente</h1>
-
-
-<br>
-
 <section class="caixa">
+<h1>Formulário de Cadastro de Paciente</h1><br>
 <form class="form" id="form" name="form" method="post">
       
       <div class="input-box">
@@ -110,9 +106,21 @@
             }
         } 
 
-        function botao_cadastrar(){
-            
+        function mudar_variaveis(){
+            $_SESSION['nome_paciente'] = $_POST['nome'];
+            $_SESSION['cpf_paciente'] = $_POST['cpf'];
+            $_SESSION['senha_paciente'] = $_POST['Senha'];
+            $_SESSION['conf_senha_paciente'] = $_POST['confirmaSenha'];
+            $_SESSION['altura_paciente'] = $_POST['alt'];
+            $_SESSION['peso_paciente'] = $_POST['pes'];
+            $_SESSION['telefone_paciente'] = $_POST['telefone'];
+            $_SESSION['data_paciente'] = $_POST['data'];
+        }
+
+        function botao_cadastrar(){    
+
             global $conn;
+
             $cpf = $_POST['cpf'];
             $Nome = $_POST['nome'];
             $peso = $_POST['pes'];
@@ -122,15 +130,6 @@
             $confirmasenha = $_POST['confirmaSenha'];
             $telefone = $_POST['telefone'];
             
-            $_SESSION['nome_paciente'] = $Nome;
-            $_SESSION['cpf_paciente'] = $cpf;
-            $_SESSION['senha_paciente'] = $Senha;
-            $_SESSION['conf_senha_paciente'] = $confirmasenha;
-            $_SESSION['altura_paciente'] = $altura;
-            $_SESSION['peso_paciente'] = $peso;
-            $_SESSION['telefone_paciente'] = $telefone;
-            $_SESSION['data_paciente'] =$dat;
-
             $datformat = date('Y-m-d',strtotime($dat));
 
             if(verifica_cpf($cpf) == true){
@@ -164,9 +163,7 @@
                 $conn->query($sqlInsert1);
                 $_SESSION['pagina_visitada'] = false;
                 echo '<meta http-equiv="refresh" content="0; URL=cadastro_paciente_php.php?val=1">';
-            }
-            
-
+            } 
         }
 
       ?>
