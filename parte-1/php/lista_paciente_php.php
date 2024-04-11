@@ -165,7 +165,7 @@
 
         function botao_atualizar($CPF){
 
-            global $conn;
+            global $conn; 
             
             $Cpf = $_POST['cpf'];
             $Nome = $_POST['nome'];
