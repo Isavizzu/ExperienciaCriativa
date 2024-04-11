@@ -12,6 +12,7 @@
         $_SESSION['peso_paciente'] = '';
         $_SESSION['telefone_paciente'] = '';
         $_SESSION['data_paciente'] = '';
+        $_SESSION['sexo_paciente'] = 'Selecione o gênero';
         $_SESSION['pagina_visitada'] = true;
     }
     if(isset($_POST['Cadastrar'])){
@@ -87,6 +88,23 @@
           <input type="text" id="tel" value="<?php echo $_SESSION['telefone_paciente']?>" name="telefone" placeholder="Digite o telefone no formato xxxxx-xxxx ou xxxxxxxxx"  required="" >
       </div>
 
+      <div class="input-box">
+
+            <label>Gênero</label>
+
+            <div class="column">
+
+            <div class="select-box">
+                <select id="sexo" name="sexo"  required="">
+                    <option value=""><?php echo $_SESSION['sexo_paciente']?></option>
+                    <option value="Feminino">Feminino</option>
+                    <option value="Masculino">Masculino</option>
+                    <option value="Outros">Outros</option>
+                </select>
+            </div>
+            </div>
+            </div> 
+
       <br> 
       <?php
         if(isset($_POST['Cadastrar'])) {
@@ -115,6 +133,7 @@
             $_SESSION['peso_paciente'] = $_POST['pes'];
             $_SESSION['telefone_paciente'] = $_POST['telefone'];
             $_SESSION['data_paciente'] = $_POST['data'];
+            $_SESSION['sexo_paciente'] =  $_POST['sexo'];
         }
 
         function botao_cadastrar(){    
@@ -129,6 +148,7 @@
             $Senha = $_POST['Senha'];
             $confirmasenha = $_POST['confirmaSenha'];
             $telefone = $_POST['telefone'];
+            $sexo = $_POST['sexo'];
             
             $datformat = date('Y-m-d',strtotime($dat));
 
@@ -158,7 +178,7 @@
             }
             else{
                 $sqlInsert = "INSERT INTO usuario(cpf, nome, data_nascimento, senha) VALUES ('$cpf', '$Nome', '$datformat', '$Senha')";
-                $sqlInsert1 = "INSERT INTO paciente(telefone, paciente_cpf, altura, peso) VALUES ('$telefone', '$cpf', '$altura', '$peso')";
+                $sqlInsert1 = "INSERT INTO paciente(telefone, paciente_cpf, altura, peso, sexo) VALUES ('$telefone', '$cpf', '$altura', '$peso', '$sexo')";
                 $conn->query($sqlInsert);
                 $conn->query($sqlInsert1);
                 $_SESSION['pagina_visitada'] = false;

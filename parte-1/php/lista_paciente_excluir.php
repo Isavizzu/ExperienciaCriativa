@@ -22,12 +22,13 @@
     $data= $row['data_nascimento'];
     $senha = $row['senha'];
 
-    $pesquisa_paciente_cpf = "SELECT telefone, paciente_cpf, altura, peso FROM paciente WHERE paciente_cpf = '$CPF'";
+    $pesquisa_paciente_cpf = "SELECT telefone, paciente_cpf, altura, peso, sexo FROM paciente WHERE paciente_cpf = '$CPF'";
     $resultado_pesquisa_paciente = $conn->query($pesquisa_paciente_cpf);
     $row = $resultado_pesquisa_paciente->fetch_assoc();
     $alt= $row['altura'];
     $pes= $row['peso'];
     $tel= $row['telefone'];
+    $sexo= $row['sexo'];
     ?>
     
    <section class="caixa">
@@ -70,6 +71,10 @@
           </div>
       
       </div>
+
+      <div class="div_semcoluna">
+          <label>Gênero: <?php echo $sexo; ?></label>
+      </div> 
 
       
       <br>

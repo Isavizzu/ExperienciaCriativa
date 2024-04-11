@@ -23,12 +23,13 @@
         $data= $row['data_nascimento'];
         $senha = $row['senha'];
 
-        $pesquisa_paciente_cpf = "SELECT telefone, paciente_cpf, altura, peso FROM paciente WHERE paciente_cpf = '$CPF'";
+        $pesquisa_paciente_cpf = "SELECT telefone, paciente_cpf, altura, peso, sexo FROM paciente WHERE paciente_cpf = '$CPF'";
         $resultado_pesquisa_paciente = $conn->query($pesquisa_paciente_cpf);
         $row = $resultado_pesquisa_paciente->fetch_assoc();
         $alt= $row['altura'];
         $pes= $row['peso'];
         $tel= $row['telefone'];
+        $sexo= $row['sexo'];
 
         if($_SESSION['pagina_visitada'] == false ){
             $_SESSION['nome_paciente_atualiza'] = $nome;
@@ -39,6 +40,7 @@
             $_SESSION['peso_paciente_atualiza'] = $pes;
             $_SESSION['telefone_paciente_atualiza'] = $tel;
             $_SESSION['data_paciente_atualiza'] = $data;
+            $_SESSION['sexo_paciente_atualiza'] = $sexo;
             $_SESSION['pagina_visitada'] = true;
         }
         if(isset($_POST['Atualizar'])){
@@ -103,6 +105,23 @@
           <label>Telefone</label>
           <input type="text" id="telefone" name="telefone" placeholder="Digite o telefone no formato xxxxx-xxxx ou xxxxxxxxx" value="<?php echo $_SESSION['telefone_paciente_atualiza']; ?>" required="" >
       </div>
+
+      <div class="input-box">
+
+            <label>Gênero</label>
+
+            <div class="column">
+
+            <div class="select-box">
+                <select id="sexo" name="sexo"  required="">
+                    <option value="<?php echo $_SESSION['sexo_paciente_atualiza']; ?>"><?php echo $_SESSION['sexo_paciente_atualiza']; ?></option>
+                    <option value="Feminino">Feminino</option>
+                    <option value="Masculino">Masculino</option>
+                    <option value="Outros">Outros</option>
+                </select>
+              </div>
+            </div>
+      </div>
       <br>
 
       <?php
@@ -140,6 +159,7 @@
           $_SESSION['peso_paciente_atualiza'] = $_POST['pes'];
           $_SESSION['telefone_paciente_atualiza'] = $_POST['telefone'];
           $_SESSION['data_paciente_atualiza'] = $_POST['data'];
+          $_SESSION['sexo_paciente_atualiza'] = $_POST['sexo'];
       }
 
 
@@ -155,6 +175,7 @@
             $Senha = $_POST['Senha'];
             $confirmasenha = $_POST['confirmaSenha'];
             $telefone = $_POST['telefone'];
+            $sexo = $_POST['sexo'];
 
             $datformat = date('Y-m-d',strtotime($dat));
 
@@ -182,9 +203,9 @@
             else if(!preg_match('/^\d{9}$|^\d{5}-\d{4}$/', $telefone)){
                 echo "<section class='section_invalido'><p>Digite um telefone válido!</p></section>";
             }
-            else{
+            else{ 
                 $sql = "UPDATE usuario SET cpf = '$Cpf', nome = '$Nome', data_nascimento = '$datformat', senha = '$Senha' WHERE cpf = '$CPF'";
-                $sql1 = "UPDATE paciente SET telefone = '$telefone', altura = '$altura', peso = '$peso' WHERE paciente_cpf = '$CPF'";
+                $sql1 = "UPDATE paciente SET telefone = '$telefone', altura = '$altura', peso = '$peso', sexo = '$sexo' WHERE paciente_cpf = '$CPF'";
                 $conn->query($sql);
                 $conn->query($sql1);
                 $_SESSION['pagina_visitada'] = false;
