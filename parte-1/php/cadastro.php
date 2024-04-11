@@ -97,7 +97,7 @@
 
             <div class="select-box">
                 <select id="sexo" name="sexo"  required="">
-                    <option value="<?php echo $_SESSION['valor_sexo_paciente'] = ''; ?>"><?php echo $_SESSION['sexo_paciente']?></option>
+                    <option value="<?php echo $_SESSION['valor_sexo_paciente']; ?>"><?php echo $_SESSION['sexo_paciente']?></option>
                     <option value="Feminino">Feminino</option>
                     <option value="Masculino">Masculino</option>
                     <option value="Outros">Outros</option>
