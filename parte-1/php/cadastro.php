@@ -13,6 +13,7 @@
         $_SESSION['telefone_paciente'] = '';
         $_SESSION['data_paciente'] = '';
         $_SESSION['sexo_paciente'] = 'Selecione o gênero';
+        $_SESSION['valor_sexo_paciente'] = '';
         $_SESSION['pagina_visitada'] = true;
     }
     if(isset($_POST['Cadastrar'])){
@@ -96,7 +97,7 @@
 
             <div class="select-box">
                 <select id="sexo" name="sexo"  required="">
-                    <option value=""><?php echo $_SESSION['sexo_paciente']?></option>
+                    <option value="<?php echo $_SESSION['valor_sexo_paciente'] = ''; ?>"><?php echo $_SESSION['sexo_paciente']?></option>
                     <option value="Feminino">Feminino</option>
                     <option value="Masculino">Masculino</option>
                     <option value="Outros">Outros</option>
@@ -134,6 +135,7 @@
             $_SESSION['telefone_paciente'] = $_POST['telefone'];
             $_SESSION['data_paciente'] = $_POST['data'];
             $_SESSION['sexo_paciente'] =  $_POST['sexo'];
+            $_SESSION['valor_sexo_paciente'] = $_POST['sexo'];
         }
 
         function botao_cadastrar(){    
