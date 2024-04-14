@@ -48,6 +48,14 @@
         mudar_variaveis();
     }
 
+    function verifica_idade_minima($data_nascimento)
+    {
+        $idade_minima = 25; // Definindo a idade mínima como 25 anos
+        $data_atual = new DateTime();
+        $data_nascimento = new DateTime($data_nascimento);
+        $diferenca_anos = $data_nascimento->diff($data_atual)->y;
+        return $diferenca_anos >= $idade_minima;
+    }
     
     ?>
 
@@ -227,6 +235,9 @@
                         }
                         else if (!preg_match('/^[A-Za-zÀ-úçÇ ]{1,100}$/', $Nome)){
                             echo "<section class='section_invalido'><p>Digite o nome completo!</p></section>";
+                        }
+                        else if (!verifica_idade_minima($datformat)){
+                            echo "<section class='section_invalido'><p>O médico precisa ter no mínimo 25 anos de idade!</p></section>";
                         }
                         else if (!preg_match('/^\d{7}$/', $crm)){
                                 echo "<section class='section_invalido'><p>Digite um CRM válido (7 dígitos)!</p></section>";    
