@@ -50,7 +50,7 @@
 
     function verifica_idade_minima($data_nascimento)
     {
-        $idade_minima = 25; // Definindo a idade mínima como 25 anos
+        $idade_minima = 25; // Alterando a idade mínima para 25 anos
         $data_atual = new DateTime();
         $data_nascimento = new DateTime($data_nascimento);
         $diferenca_anos = $data_nascimento->diff($data_atual)->y;
@@ -61,7 +61,7 @@
 
   <section class="caixa">
         <h1>Dados do médico</h1><br>
-        <form class="form" id="form" name="form" method="post">
+        <form class="form" id="form" name="form" method="post" onsubmit="return verificaIdade()">
 
             <input type="hidden" id="crm" name="crm" value="<?php echo $CRM; ?>"> <!-- Adicionando campo oculto para CRM -->
 
