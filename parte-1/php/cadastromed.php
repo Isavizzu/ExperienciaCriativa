@@ -2,41 +2,74 @@
     include("base.php");
     include("session_start.php");
 
-    $CPF = $_GET['cpf'];
-    $pesquisa_cpf = "SELECT cpf, nome, data_nascimento, senha FROM usuario WHERE cpf = '$CPF'";
-    $resultado_pesquisa = $conn->query($pesquisa_cpf);
-    $row = $resultado_pesquisa->fetch_assoc();
-    $nome = $row['nome'];
-    $data_nascimento = date('Y-m-d', strtotime($row['data_nascimento'])); // Alteração aqui
-    $senha = $row['senha'];
+    // Verifica se o parâmetro 'cpf' está definido na URL
+    if (isset($_GET['cpf'])) {
+        $CPF = $_GET['cpf'];
 
-    $pesquisa_medico_cpf =  "SELECT crm, medico_cpf, especialidade_id FROM medico WHERE medico_cpf = '$CPF'";
-    $resultado_pesquisa_medico = $conn->query($pesquisa_medico_cpf);
-    $row = $resultado_pesquisa_medico->fetch_assoc();
-    $especialidade_id = $row['especialidade_id'];
-    $CRM = $row['crm'];
+        // Consulta o banco de dados para obter os dados do usuário
+        $pesquisa_cpf = "SELECT cpf, nome, data_nascimento, senha FROM usuario WHERE cpf = '$CPF'";
+        $resultado_pesquisa = $conn->query($pesquisa_cpf);
 
-    $pesquisa_especialidade = "SELECT nome_especialidade FROM especialidade WHERE id = $especialidade_id";
-    $resultado_especialidade = $conn->query($pesquisa_especialidade);
-    $row = $resultado_especialidade->fetch_assoc();
-    $especialidade_nome = $row['nome_especialidade'];
+        // Verifica se a consulta retornou resultados
+        if ($resultado_pesquisa && $resultado_pesquisa->num_rows > 0) {
+            $row = $resultado_pesquisa->fetch_assoc();
+            $nome = $row['nome'];
+            $data_nascimento = date('Y-m-d', strtotime($row['data_nascimento']));
+            $senha = $row['senha'];
 
-    if ($_SESSION['pagina_visitada'] == false || !isset($_SESSION['pagina_visitada'])) {
-        $_SESSION['nome_medico_atualiza'] = $nome;
-        $_SESSION['cpf_medico_atualiza'] = $CPF;
-        $_SESSION['senha_medico_atualiza'] = $senha;
-        $_SESSION['conf_senha_medico_atualiza'] = $senha;
-        $_SESSION['data_medico_atualiza'] = $data_nascimento;
-        $_SESSION['crm_medico_atualiza'] = $CRM;
-        $_SESSION['especialidade_medico_atualiza'] = $especialidade_nome;
-        $_SESSION['valor_especialidade_medico_atualiza'] = $especialidade_id;
-        $_SESSION['pagina_visitada_atualiza'] = true;
+            // Verifica se a data de nascimento é futura ou o médico é muito jovem
+            if (strtotime($data_nascimento) > strtotime('-25 years')) {
+                // Define a data de nascimento para uma data que garanta que o médico tenha pelo menos 25 anos
+                $data_nascimento = date('Y-m-d', strtotime('-25 years'));
+            }
+
+            // Consulta o banco de dados para obter os dados do médico
+            $pesquisa_medico_cpf = "SELECT crm, medico_cpf, especialidade_id FROM medico WHERE medico_cpf = '$CPF'";
+            $resultado_pesquisa_medico = $conn->query($pesquisa_medico_cpf);
+
+            // Verifica se a consulta retornou resultados
+            if ($resultado_pesquisa_medico && $resultado_pesquisa_medico->num_rows > 0) {
+                $row = $resultado_pesquisa_medico->fetch_assoc();
+                $especialidade_id = $row['especialidade_id'];
+                $CRM = $row['crm'];
+
+                // Consulta o banco de dados para obter o nome da especialidade
+                $pesquisa_especialidade = "SELECT nome_especialidade FROM especialidade WHERE id = $especialidade_id";
+                $resultado_especialidade = $conn->query($pesquisa_especialidade);
+
+                // Verifica se a consulta retornou resultados
+                if ($resultado_especialidade && $resultado_especialidade->num_rows > 0) {
+                    $row = $resultado_especialidade->fetch_assoc();
+                    $especialidade_nome = $row['nome_especialidade'];
+
+                    // Define as variáveis de sessão apenas se não estiverem definidas
+                    if (!isset($_SESSION['pagina_visitada']) || $_SESSION['pagina_visitada'] == false) {
+                        $_SESSION['nome_medico_atualiza'] = $nome;
+                        $_SESSION['cpf_medico_atualiza'] = $CPF;
+                        $_SESSION['senha_medico_atualiza'] = $senha;
+                        $_SESSION['conf_senha_medico_atualiza'] = $senha;
+                        $_SESSION['data_medico_atualiza'] = $data_nascimento;
+                        $_SESSION['crm_medico_atualiza'] = $CRM;
+                        $_SESSION['especialidade_medico_atualiza'] = $especialidade_nome;
+                        $_SESSION['valor_especialidade_medico_atualiza'] = $especialidade_id;
+                        $_SESSION['pagina_visitada_atualiza'] = true;
+                    }
+                } else {
+                    echo "Erro ao obter o nome da especialidade.";
+                }
+            } else {
+                echo "Médico não encontrado.";
+            }
+        } else {
+            echo "Usuário não encontrado.";
+        }
+    } else {
+        echo "Parâmetro 'cpf' não encontrado na URL.";
     }
 
     if (isset($_POST['Atualizar'])) {
         mudar_variaveis();
-    }
-?>
+ }
 
 <!DOCTYPE html>
 <html lang="en">
