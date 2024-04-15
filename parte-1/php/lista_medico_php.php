@@ -249,7 +249,34 @@ function mudar_variaveis(){
                     }
 
                     function mudar_variaveis(){
-                        // Código para atualizar as variáveis de sessão...
+                        $especialidade = $_POST['especialidade'];
+
+                        if($especialidade == 1){
+                            $_SESSION['especialidade_medico_atualiza'] = 'Cardiologia';
+                        }
+                        else if($especialidade == 2){
+                            $_SESSION['especialidade_medico_atualiza'] = 'Dermatologia';
+                        }
+                        else if($especialidade == 3){
+                            $_SESSION['especialidade_medico_atualiza'] = 'Pediatria';
+                        }
+                        else if($especialidade == 4){
+                            $_SESSION['especialidade_medico_atualiza'] = 'Neurologia';
+                        }
+                        else if($especialidade == 5){
+                            $_SESSION['especialidade_medico_atualiza'] = 'Ortopedia';
+                        }
+                        else if($especialidade == 6){
+                            $_SESSION['especialidade_medico_atualiza'] = 'Endocrinologia';
+                        }
+
+                        $_SESSION['nome_medico_atualiza'] = $_POST['nome'];
+                        $_SESSION['cpf_medico_atualiza'] = $_POST['cpf'];
+                        $_SESSION['senha_medicoat_atualiza'] = $_POST['Senha'];
+                        $_SESSION['conf_senha_medico_atualiza'] = $_POST['confirmaSenha'];
+                        $_SESSION['data_medico_atualiza'] = $_POST['data'];
+                        $_SESSION['crm_medico_atualiza'] = $_POST['crm'];
+                        $_SESSION['valor_especialidade_medico_atualiza'] = $_POST['especialidade'];
                     }
 
                     function botao_atualizar($CRM,$CPF){
