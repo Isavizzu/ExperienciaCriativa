@@ -79,7 +79,7 @@
       
           <div class="input-box">
             <label>Peso</label>
-            <input type="number" id="pes" name="pes" value="<?php echo $_SESSION['peso_paciente']?>" placeholder="Digite o peso em Kg"  required="">
+            <input type="text" id="pes" name="pes" value="<?php echo $_SESSION['peso_paciente']?>" placeholder="Digite o peso em Kg"  required="">
           </div>
       
       </div>
@@ -172,7 +172,7 @@
             else if(!preg_match('/^\d(\.\d{2})?$/', $altura)){
                 echo "<section class='section_invalido'><p>Digite a altura em metros!</p></section>";
             }
-            else if(!preg_match('/^\d{1,3}(\.\d{2})?$/', $peso)){
+            else if(!preg_match('/^\d{2,3}(?:\.\d{1,2})?$/', $peso)){
                 echo "<section class='section_invalido'><p>Digite o peso em KG!</p></section>";
             }
             else if(!preg_match('/^\d{9}$|^\d{5}-\d{4}$/', $telefone)){
