@@ -1,21 +1,84 @@
 <?php
-    include("base.php");
-    include("conexao.php"); 
-    include("session_start.php");
+include("base.php");
+include("session_start.php");
 
-    if($_SESSION['pagina_visitada'] == false || !isset($_SESSION['pagina_visitada'])){
-        $_SESSION['nome_medico_atualiza'] = '';
-        $_SESSION['cpf_medico_atualiza'] = '';
-        $_SESSION['senha_medico_atualiza'] = '';
-        $_SESSION['conf_senha_medico_atualiza'] = '';
-        $_SESSION['data_medico_atualiza'] = '';
-        $_SESSION['crm_medico_atualiza'] = '';
-        $_SESSION['especialidade_medico_atualiza'] = '';
-        $_SESSION['valor_especialidade_medico_atualiza'] = '';
-        $_SESSION['pagina_visitada_atualiza'] = true;
+function verifica_idade_minima($data_nascimento)
+{
+    $idade_minima = 25; // Alterando a idade mínima para 25 anos
+    $data_atual = new DateTime();
+    $data_nascimento = new DateTime($data_nascimento);
+
+    // Calculando a diferença em anos
+    $diferenca_anos = $data_nascimento->diff($data_atual)->y;
+
+    if ($data_nascimento > $data_atual) {
+        // Data no futuro
+        return 1;
+    } elseif ($diferenca_anos < $idade_minima) {
+        // Menos de 25 anos
+        return 2;
+    } else {
+        // Data válida
+        return 0;
     }
-?>
+}
 
+if($_SESSION['pagina_visitada'] == false || !isset($_SESSION['pagina_visitada'])){
+    $_SESSION['nome_medico_atualiza'] = $nome;
+    $_SESSION['cpf_medico_atualiza'] = $CPF;
+    $_SESSION['senha_medico_atualiza'] = $senha;
+    $_SESSION['conf_senha_medico_atualiza'] = $senha;
+    $_SESSION['data_medico_atualiza'] = $data_nascimento;
+    $_SESSION['crm_medico_atualiza'] = $CRM;
+    $_SESSION['especialidade_medico_atualiza'] = $especialidade_nome;
+    $_SESSION['valor_especialidade_medico_atualiza'] = $especialidade_id;
+    $_SESSION['pagina_visitada_atualiza'] = true;
+}
+
+if(isset($_POST['Atualizar'])){
+    // Verifica se a data de nascimento é válida
+    $resultado_verificacao = verifica_idade_minima($_POST['data']);
+    if ($resultado_verificacao == 1) {
+        echo "<script>alert('A data de nascimento não pode ser no futuro.');</script>";
+    } elseif ($resultado_verificacao == 2) {
+        echo "<script>alert('O médico precisa ter no mínimo 25 anos de idade.');</script>";
+    } else {
+        // Se a data for válida, continua com o processo de atualização...
+        mudar_variaveis();
+    }
+}
+
+function mudar_variaveis(){
+    $especialidade = $_POST['especialidade'];
+
+    if($especialidade == 1){
+        $_SESSION['especialidade_medico_atualiza'] = 'Cardiologia';
+    }
+    else if($especialidade == 2){
+        $_SESSION['especialidade_medico_atualiza'] = 'Dermatologia';
+    }
+    else if($especialidade == 3){
+        $_SESSION['especialidade_medico_atualiza'] = 'Pediatria';
+    }
+    else if($especialidade == 4){
+        $_SESSION['especialidade_medico_atualiza'] = 'Neurologia';
+    }
+    else if($especialidade == 5){
+        $_SESSION['especialidade_medico_atualiza'] = 'Ortopedia';
+    }
+    else if($especialidade == 6){
+        $_SESSION['especialidade_medico_atualiza'] = 'Endocrinologia';
+    }
+
+    $_SESSION['nome_medico_atualiza'] = $_POST['nome'];
+    $_SESSION['cpf_medico_atualiza'] = $_POST['cpf'];
+    $_SESSION['senha_medicoat_atualiza'] = $_POST['Senha'];
+    $_SESSION['conf_senha_medico_atualiza'] = $_POST['confirmaSenha'];
+    $_SESSION['data_medico_atualiza'] = $_POST['data'];
+    $_SESSION['crm_medico_atualiza'] = $_POST['crm'];
+    $_SESSION['valor_especialidade_medico_atualiza'] = $_POST['especialidade'];
+}
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -23,6 +86,25 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../css/cadastro.css">
     <title>Dados do médico</title>
+    <script>
+        function verificaIdade() {
+            var dataNascimento = document.getElementById("data").value;
+            var hoje = new Date().toISOString().slice(0, 10);
+
+            if (dataNascimento > hoje) {
+                alert("A data de nascimento não pode ser no futuro.");
+                return false;
+            }
+
+            var idade = new Date(hoje).getFullYear() - new Date(dataNascimento).getFullYear();
+            if (idade < 25) {
+                alert("O médico precisa ter no mínimo 25 anos de idade.");
+                return false;
+            }
+
+            return true;
+        }
+    </script>
 </head> 
 
 <body class="">
@@ -46,22 +128,21 @@
     $row = $resultado_especialidade->fetch_assoc();
     $especialidade_nome = $row['nome_especialidade'];
 
-    if(isset($_POST['Atualizar'])){
-        mudar_variaveis();
+    if($_SESSION['pagina_visitada'] == false || !isset($_SESSION['pagina_visitada'])){
+        $_SESSION['nome_medico_atualiza'] = $nome;
+        $_SESSION['cpf_medico_atualiza'] = $CPF;
+        $_SESSION['senha_medico_atualiza'] = $senha;
+        $_SESSION['conf_senha_medico_atualiza'] = $senha;
+        $_SESSION['data_medico_atualiza'] = $data_nascimento;
+        $_SESSION['crm_medico_atualiza'] = $CRM;
+        $_SESSION['especialidade_medico_atualiza'] = $especialidade_nome;
+        $_SESSION['valor_especialidade_medico_atualiza'] = $especialidade_id;
+        $_SESSION['pagina_visitada_atualiza'] = true;
     }
-
-    function calcular_idade($data_nascimento) {
-        $data_atual = new DateTime();
-        $data_nascimento = new DateTime($data_nascimento);
-        $idade = $data_atual->diff($data_nascimento);
-        return $idade->y;
-    }
-    
     ?>
-
-  <section class="caixa">
+    <section class="caixa">
         <h1>Dados do médico</h1><br>
-        <form class="form" id="form" name="form" method="post">
+        <form class="form" id="form" name="form" method="post" onsubmit="return verificaIdade()">
 
             <input type="hidden" id="crm" name="crm" value="<?php echo $CRM; ?>"> <!-- Adicionando campo oculto para CRM -->
 
@@ -168,35 +249,7 @@
                     }
 
                     function mudar_variaveis(){
-
-                        $especialidade = $_POST['especialidade'];
-
-                        if($especialidade == 1){
-                            $_SESSION['especialidade_medico_atualiza'] = 'Cardiologia';
-                        }
-                        else if($especialidade == 2){
-                            $_SESSION['especialidade_medico_atualiza'] = 'Dermatologia';
-                        }
-                        else if($especialidade == 3){
-                            $_SESSION['especialidade_medico_atualiza'] = 'Pediatria';
-                        }
-                        else if($especialidade == 4){
-                            $_SESSION['especialidade_medico_atualiza'] = 'Neurologia';
-                        }
-                        else if($especialidade == 5){
-                            $_SESSION['especialidade_medico_atualiza'] = 'Ortopedia';
-                        }
-                        else if($especialidade == 6){
-                            $_SESSION['especialidade_medico_atualiza'] = 'Endocrinologia';
-                        }
-
-                        $_SESSION['nome_medico_atualiza'] = $_POST['nome'];
-                        $_SESSION['cpf_medico_atualiza'] = $_POST['cpf'];
-                        $_SESSION['senha_medicoat_atualiza'] = $_POST['Senha'];
-                        $_SESSION['conf_senha_medico_atualiza'] = $_POST['confirmaSenha'];
-                        $_SESSION['data_medico_atualiza'] = $_POST['data'];
-                        $_SESSION['crm_medico_atualiza'] = $_POST['crm'];
-                        $_SESSION['valor_especialidade_medico_atualiza'] = $_POST['especialidade'];
+                        // Código para atualizar as variáveis de sessão...
                     }
 
                     function botao_atualizar($CRM,$CPF){
@@ -236,14 +289,13 @@
                         else if (!preg_match('/^[A-Za-zÀ-úçÇ ]{1,100}$/', $Nome)){
                             echo "<section class='section_invalido'><p>Digite o nome completo!</p></section>";
                         }
+                        else if (!verifica_idade_minima($datformat)){
+                            echo "<section class='section_invalido'><p>O médico precisa ter no mínimo 25 anos de idade!</p></section>";
+                        }
                         else if (!preg_match('/^\d{7}$/', $crm)){
                                 echo "<section class='section_invalido'><p>Digite um CRM válido (7 dígitos)!</p></section>";    
                         }
-                        else {
-                            $idade = calcular_idade($dat);
-                            if ($idade < 25) {
-                                echo "<section class='section_invalido'><p>O médico deve ter no mínimo 25 anos de idade!</p></section>";
-                            } else {
+                        else{
                                 $sql = "UPDATE usuario SET cpf = '$Cpf', nome = '$Nome', data_nascimento = '$datformat', senha = '$Senha' WHERE cpf = '$CPF'";
                                 $sql1 = "UPDATE medico SET crm = '$crm', especialidade_id = $especialidade WHERE medico_cpf = '$CPF'";
                                 $conn->query($sql);
@@ -252,7 +304,7 @@
                                 echo '<meta http-equiv="refresh" content="0; URL=cadastro_med_php.php?val=2">';
                             }
                         }
-                    }
+                    
                     
                     function botao_excluir($CPF){
                         $_SESSION['pagina_visitada'] = false;
