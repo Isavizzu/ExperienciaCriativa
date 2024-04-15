@@ -43,7 +43,7 @@ if(isset($_POST['Atualizar'])){
     } elseif ($resultado_verificacao == 2) {
         echo "<script>alert('O médico precisa ter no mínimo 25 anos de idade.');</script>";
     } else {
-        // Se a data for válida, continua com o processo de atualização...
+        // Se a data for válida, continua 
         mudar_variaveis();
     }
 }
