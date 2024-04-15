@@ -2,6 +2,18 @@
     include("base.php");
     include("conexao.php"); 
     include("session_start.php");
+
+    if($_SESSION['pagina_visitada'] == false || !isset($_SESSION['pagina_visitada'])){
+        $_SESSION['nome_medico_atualiza'] = '';
+        $_SESSION['cpf_medico_atualiza'] = '';
+        $_SESSION['senha_medico_atualiza'] = '';
+        $_SESSION['conf_senha_medico_atualiza'] = '';
+        $_SESSION['data_medico_atualiza'] = '';
+        $_SESSION['crm_medico_atualiza'] = '';
+        $_SESSION['especialidade_medico_atualiza'] = '';
+        $_SESSION['valor_especialidade_medico_atualiza'] = '';
+        $_SESSION['pagina_visitada_atualiza'] = true;
+    }
 ?>
 
 <!DOCTYPE html>
@@ -34,35 +46,22 @@
     $row = $resultado_especialidade->fetch_assoc();
     $especialidade_nome = $row['nome_especialidade'];
 
-    if($_SESSION['pagina_visitada'] == false || !isset($_SESSION['pagina_visitada'])){
-        $_SESSION['nome_medico_atualiza'] = $nome;
-        $_SESSION['cpf_medico_atualiza'] = $CPF;
-        $_SESSION['senha_medico_atualiza'] = $senha;
-        $_SESSION['conf_senha_medico_atualiza'] = $senha;
-        $_SESSION['data_medico_atualiza'] = $data_nascimento;
-        $_SESSION['crm_medico_atualiza'] = $CRM;
-        $_SESSION['especialidade_medico_atualiza'] = $especialidade_nome;
-        $_SESSION['valor_especialidade_medico_atualiza'] = $especialidade_id;
-        $_SESSION['pagina_visitada_atualiza'] = true;
-    }
     if(isset($_POST['Atualizar'])){
         mudar_variaveis();
     }
 
-    function verifica_idade_minima($data_nascimento)
-    {
-        $idade_minima = 25; // Alterando a idade mínima para 25 anos
+    function calcular_idade($data_nascimento) {
         $data_atual = new DateTime();
         $data_nascimento = new DateTime($data_nascimento);
-        $diferenca_anos = $data_nascimento->diff($data_atual)->y;
-        return $diferenca_anos >= $idade_minima;
+        $idade = $data_atual->diff($data_nascimento);
+        return $idade->y;
     }
     
     ?>
 
   <section class="caixa">
         <h1>Dados do médico</h1><br>
-        <form class="form" id="form" name="form" method="post" onsubmit="return verificaIdade()">
+        <form class="form" id="form" name="form" method="post">
 
             <input type="hidden" id="crm" name="crm" value="<?php echo $CRM; ?>"> <!-- Adicionando campo oculto para CRM -->
 
@@ -237,13 +236,14 @@
                         else if (!preg_match('/^[A-Za-zÀ-úçÇ ]{1,100}$/', $Nome)){
                             echo "<section class='section_invalido'><p>Digite o nome completo!</p></section>";
                         }
-                        else if (!verifica_idade_minima($datformat)){
-                            echo "<section class='section_invalido'><p>O médico precisa ter no mínimo 25 anos de idade!</p></section>";
-                        }
                         else if (!preg_match('/^\d{7}$/', $crm)){
                                 echo "<section class='section_invalido'><p>Digite um CRM válido (7 dígitos)!</p></section>";    
                         }
-                        else{
+                        else {
+                            $idade = calcular_idade($dat);
+                            if ($idade < 25) {
+                                echo "<section class='section_invalido'><p>O médico deve ter no mínimo 25 anos de idade!</p></section>";
+                            } else {
                                 $sql = "UPDATE usuario SET cpf = '$Cpf', nome = '$Nome', data_nascimento = '$datformat', senha = '$Senha' WHERE cpf = '$CPF'";
                                 $sql1 = "UPDATE medico SET crm = '$crm', especialidade_id = $especialidade WHERE medico_cpf = '$CPF'";
                                 $conn->query($sql);
@@ -252,7 +252,7 @@
                                 echo '<meta http-equiv="refresh" content="0; URL=cadastro_med_php.php?val=2">';
                             }
                         }
-                    
+                    }
                     
                     function botao_excluir($CPF){
                         $_SESSION['pagina_visitada'] = false;

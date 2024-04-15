@@ -20,7 +20,6 @@
         mudar_variaveis();
     }
 
-
 ?>
 
 <!DOCTYPE html>
