@@ -5,6 +5,9 @@
     $dbname = "clinical_here";
 
     $conn = new mysqli($servername, $username, $password, $dbname);
+
+    $SESSION['cpf_login'] = "";
+
     if ($conn->connect_error) {
 ?>
         <section>

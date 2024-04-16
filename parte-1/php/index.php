@@ -10,6 +10,8 @@
 <body>
 
     <?php 
+        include("conexao.php");
+
         if(isset($_POST['botao_login'])) {
             $SESSION['cpf_login'] = $_POST["cpf"];
         }
