@@ -188,7 +188,7 @@
                 } 
                 else {
                     $sqlInsertUsuario = "INSERT INTO usuario(cpf, nome, data_nascimento, senha) VALUES ('$cpf', '$Nome', '$datformat', '$Senha')";
-                    $sqlInsertMedico = "INSERT INTO medico(crm, medico_cpf, especialidade_id) VALUES ('$crm', '$cpf', '$especialidade')";
+                    $sqlInsertMedico = "INSERT INTO medico(crm, medico_cpf, especialidade_id, ativo) VALUES ('$crm', '$cpf', '$especialidade', 1)";
                     $conn->query($sqlInsertUsuario);
                     $conn->query($sqlInsertMedico);
                     $_SESSION['pagina_visitada'] = false;

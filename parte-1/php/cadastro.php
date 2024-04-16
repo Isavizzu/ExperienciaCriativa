@@ -79,7 +79,7 @@
       
           <div class="input-box">
             <label>Peso</label>
-            <input type="number" id="pes" name="pes" value="<?php echo $_SESSION['peso_paciente']?>" placeholder="Digite o peso em Kg"  required="">
+            <input type="text" id="pes" name="pes" value="<?php echo $_SESSION['peso_paciente']?>" placeholder="Digite o peso em Kg"  required="">
           </div>
       
       </div>
