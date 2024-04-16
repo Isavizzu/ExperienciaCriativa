@@ -1,5 +1,6 @@
 <?php
     include("base.php");
+    include("conexao.php"); 
     include("session_start.php");
 ?>
 <!DOCTYPE html>
@@ -139,6 +140,7 @@
                     } 
 
                     function verifica_crm($crm, $CRM){
+
                         global $conn;
                         $pesquisa_crm = "SELECT crm FROM medico WHERE crm = '$crm'";
                         $resultado_pesquisa_crm = $conn->query($pesquisa_crm);
@@ -211,8 +213,8 @@
                         else if(verifica_cpf($Cpf, $CPF) == false){
                             echo "<section class='section_invalido'><p>Esse CPF já foi cadastrado anteriormente!</p></section>";
                         }
-                        else if(verifica_cpf($crm, $CRM) == false){
-                            echo "<section class='section_invalido'><p>Esse CPF já foi cadastrado anteriormente!</p></section>";
+                        else if(verifica_crm($crm, $CRM) == false){
+                            echo "<section class='section_invalido'><p>Esse CRM já foi cadastrado anteriormente!</p></section>";
                         }
                         else if (!preg_match('/^[0-9]{3}[\.]?[0-9]{3}[\.]?[0-9]{3}[-]?[0-9]{2}$/', $Cpf)){
                             echo "<section class='section_invalido'><p>Digite um CPF válido!</p></section>";

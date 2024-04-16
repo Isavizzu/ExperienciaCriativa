@@ -16,7 +16,8 @@
             <input type="text" id="cpf" name="cpf" placeholder="Seu CPF">
 
             <label for="id">Senha:</label>
-            <input type="text" id="senha" name="senha" placeholder="Sua senha">
+            <input type="password" id="senha" name="senha" placeholder="Sua senha">
+            <span onclick="showPassword()"></span>
 
     <!-- É a função em php para validar o login -->
     <?php
