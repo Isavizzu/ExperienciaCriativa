@@ -1,7 +1,7 @@
 <?php
-    include("base.php");
-    include("conexao.php"); 
     include("session_start.php");
+    include("base.php");
+    include("conexao.php");
 
     if($_SESSION['pagina_visitada'] == false || !isset($_SESSION['pagina_visitada'])){
         $_SESSION['nome_paciente'] = '';

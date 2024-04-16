@@ -1,7 +1,7 @@
 <?php
     include("base.php");
     include("conexao.php"); 
-    require("session_start.php");
+    include("session_start.php");
 ?>
 <!DOCTYPE html>
 <html lang="en">

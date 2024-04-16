@@ -8,12 +8,18 @@
 </head>
 
 <body>
+
+    <?php 
+        if(isset($_POST['botao_login'])) {
+            $SESSION['cpf_login'] = $_POST["cpf"];
+        }
+    ?>
     <!-- É o formulário de entrado do cpf e senha -->
     <div class="login-container">
         <h1>Clinical Here</h1>
         <form method="post">
             <label for="cpf">CPF:</label>
-            <input type="text" id="cpf" name="cpf" placeholder="Seu CPF">
+            <input type="text" id="cpf" name="cpf" placeholder="Seu CPF" value="<?php echo $SESSION['cpf_login']?>">
 
             <label for="id">Senha:</label>
             <input type="password" id="senha" name="senha" placeholder="Sua senha">

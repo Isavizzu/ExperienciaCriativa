@@ -33,11 +33,11 @@ body {font-size:16px;}
   </div>
   <div class="w3-bar-block">
     <a href="../php/agenda_recepcionista.php" onclick="w3_close()" class="w3-bar-item w3-button w3-hover-white">Agenda</a> 
-    <a href="lista_medico.php" onclick="w3_close()" class="w3-bar-item w3-button w3-hover-white">Lista de Médicos</a> 
-    <a href="lista_paciente.php" onclick="w3_close()" class="w3-bar-item w3-button w3-hover-white">Lista de Pacientes</a> 
-    <a href="cadastromed.php" onclick="w3_close()" class="w3-bar-item w3-button w3-hover-white">Cadastro de Médico</a> 
+    <a href="../php/lista_medico.php" onclick="w3_close()" class="w3-bar-item w3-button w3-hover-white">Lista de Médicos</a> 
+    <a href="../php/lista_paciente.php" onclick="w3_close()" class="w3-bar-item w3-button w3-hover-white">Lista de Pacientes</a> 
+    <a href="../php/cadastromed.php" onclick="w3_close()" class="w3-bar-item w3-button w3-hover-white">Cadastro de Médico</a> 
     <a href="../php/cadastro.php" onclick="w3_close()" class="w3-bar-item w3-button w3-hover-white">Cadastro de Paciente</a> 
-    <a href="../php/deslogar-se.php" class="w3-bar-item w3-button w3-hover-white">Sair</a>
+    <a href="../php/deslogar_se.php" class="w3-bar-item w3-button w3-hover-white">Sair</a>
   </div>
   <?php echo"<section class='perfil'>
                 <p>$_SESSION[tipo_usuario]:<br>$_SESSION[nome]<br>$_SESSION[cpf]</p>
