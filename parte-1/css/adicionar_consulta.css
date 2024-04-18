@@ -1,3 +1,43 @@
+.agenda {
+  margin: 20px auto;
+  width: 80%;
+  margin-top: 50px; /* Reduzindo a margem superior */
+}
+
+.agenda h2 {
+  text-align: center; /* Centralizando o texto */
+  margin-bottom: 10px; /* Reduzindo a margem inferior */
+}
+
+.agenda_dia {
+  background-color: #e7f0f7; /* Azul claro */
+  border: 1px solid #b8daff; /* Tom mais escuro de azul */
+  border-radius: 8px;
+  padding: 10px; /* Reduzindo o preenchimento */
+  margin: 10px 0; /* Reduzindo a margem */
+  text-align: center; /* Centralizando o texto */
+}
+
+
+.section_invalido {
+  margin-top: 1%;
+  background-color: #f8d7da;
+  border: 2px solid #f5c6cb;
+  padding: 10px 20px;
+  border-radius: 5px;
+  margin-bottom: 1%;
+  color: #721c24;
+  font-size: 14px;
+}
+
+.section_invalido p {
+  text-align: center;
+  margin: 0;
+  font-weight: bold;
+}
+
+
+
 .caixa{
     max-width: 95%;
     margin-left: auto;
