@@ -13,7 +13,13 @@
 </head> 
 
 <body class="">
-    <?php 
+    <?php     
+        // Verifica se o formulário foi submetido (se o botão "Atualizar" foi clicado)
+        if(isset($_POST['Atualizar'])){
+            mudar_variaveis();
+        }
+        
+        // Recupera os valores do banco de dados e atualiza as variáveis de sessão apenas se necessário
         $CPF= $_GET['cpf'];
         $pesquisa_cpf = "SELECT cpf, nome, data_nascimento, senha FROM usuario WHERE cpf = '$CPF'";
         $resultado_pesquisa = $conn->query($pesquisa_cpf);
@@ -21,18 +27,18 @@
         $nome = $row['nome'];
         $data_nascimento = $row['data_nascimento'];
         $senha = $row['senha'];
-
+    
         $pesquisa_medico_cpf =  "SELECT crm, medico_cpf, especialidade_id FROM medico WHERE medico_cpf = '$CPF'";
         $resultado_pesquisa_medico = $conn->query($pesquisa_medico_cpf);
         $row = $resultado_pesquisa_medico->fetch_assoc();
         $especialidade_id = $row['especialidade_id'];
         $CRM = $row['crm'];
-
+    
         $pesquisa_especialidade = "SELECT nome_especialidade FROM especialidade WHERE id = $especialidade_id";
         $resultado_especialidade = $conn->query($pesquisa_especialidade);
         $row = $resultado_especialidade->fetch_assoc();
         $especialidade_nome = $row['nome_especialidade'];
-
+    
         if($_SESSION['pagina_visitada'] == false || !isset($_SESSION['pagina_visitada'])){
             $_SESSION['nome_medico_atualiza'] = $nome;
             $_SESSION['cpf_medico_atualiza'] = $CPF;
@@ -43,10 +49,6 @@
             $_SESSION['especialidade_medico_atualiza'] = $especialidade_nome;
             $_SESSION['valor_especialidade_medico_atualiza'] = $especialidade_id;
             $_SESSION['pagina_visitada_atualiza'] = true;
-        }
-
-        if(isset($_POST['Atualizar'])){
-            mudar_variaveis();
         }
     ?>
     <section class="caixa">
@@ -100,13 +102,16 @@
 
             <div class="select-box">
                 <select id="especialidade" name="especialidade" required="">
-                    <option value="<?php echo $_SESSION['valor_especialidade_medico_atualiza']; ?>"><?php echo $_SESSION['especialidade_medico_atualiza']; ?></option>
-                    <option value="1">Cardiologia</option>
-                    <option value="2">Dermatologia</option>
-                    <option value="3">Pediatria</option>
-                    <option value="4">Neurologia</option>
-                    <option value="5">Ortopedia</option>
-                    <option value="6">Endocrinologia</option>
+                    <?php 
+                    echo "<option value='{$_SESSION['valor_especialidade_medico_atualiza']}'>{$_SESSION['especialidade_medico_atualiza']}</option>";
+                    $sql = "SELECT * FROM especialidade";
+                    $result = $conn->query($sql);
+                    if ($result->num_rows > 0){
+                        while($row = $result->fetch_assoc()){
+                            echo "<option value='{$row['id']}'>{$row['nome_especialidade']}</option>";
+                        }
+                    }
+                    ?>
                 </select>
             </div>
             </div>
@@ -157,35 +162,30 @@
                     }
 
                     function mudar_variaveis(){
+                        include("conexao.php");
                         $especialidade = $_POST['especialidade'];
-
-                        if($especialidade == 1){
-                            $_SESSION['especialidade_medico_atualiza'] = 'Cardiologia';
+                    
+                        // Atualiza a especialidade na sessão com base no valor selecionado no formulário
+                        $sql = "SELECT * FROM especialidade";
+                        $result = $conn->query($sql);
+                        if ($result->num_rows > 0){
+                            while($row = $result->fetch_assoc()){
+                                if ($especialidade == $row['id']){
+                                    $_SESSION['especialidade_medico_atualiza'] = $row['nome_especialidade'];
+                                }
+                            }
                         }
-                        else if($especialidade == 2){
-                            $_SESSION['especialidade_medico_atualiza'] = 'Dermatologia';
-                        }
-                        else if($especialidade == 3){
-                            $_SESSION['especialidade_medico_atualiza'] = 'Pediatria';
-                        }
-                        else if($especialidade == 4){
-                            $_SESSION['especialidade_medico_atualiza'] = 'Neurologia';
-                        }
-                        else if($especialidade == 5){
-                            $_SESSION['especialidade_medico_atualiza'] = 'Ortopedia';
-                        }
-                        else if($especialidade == 6){
-                            $_SESSION['especialidade_medico_atualiza'] = 'Endocrinologia';
-                        }
-
+                    
+                        // Atualiza as demais variáveis de sessão
                         $_SESSION['nome_medico_atualiza'] = $_POST['nome'];
                         $_SESSION['cpf_medico_atualiza'] = $_POST['cpf'];
-                        $_SESSION['senha_medicoat_atualiza'] = $_POST['Senha'];
+                        $_SESSION['senha_medico_atualiza'] = $_POST['Senha'];
                         $_SESSION['conf_senha_medico_atualiza'] = $_POST['confirmaSenha'];
                         $_SESSION['data_medico_atualiza'] = $_POST['data'];
                         $_SESSION['crm_medico_atualiza'] = $_POST['crm'];
                         $_SESSION['valor_especialidade_medico_atualiza'] = $_POST['especialidade'];
                     }
+                    
 
                     function calcularIdade($datformat) {
                         $datformat = new DateTime($datformat);
@@ -225,7 +225,7 @@
                         else if (!preg_match('/^.{6,30}$/', $Senha)){
                             echo "<section class='section_invalido'><p>A senha precisa ter no mínimo 6 caracteres!</p></section>";
                         }
-                        else if (!preg_match('/^[A-Za-zÀ-úçÇ ]{1,100}$/', $Nome)){
+                        else if (!preg_match('/^[A-Za-zÀ-úçÇ ]{3,100}$/', $Nome)){
                             echo "<section class='section_invalido'><p>Digite o nome completo!</p></section>";
                         }
                         else if(calcularIdade($datformat) < 25){

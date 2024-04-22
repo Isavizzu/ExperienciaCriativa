@@ -35,7 +35,7 @@
         <form class="form" id="form" name="form" method="post">
         <div class="input-box">
                 <label>Nome completo</label>
-                <input type="text" id="nome" name="nome" value="<?php echo $_SESSION['nome_medico']; ?>" placeholder="Digite o nome completo" pattern="^[A-Za-zÀ-úçÇ ]{1,100}$" required="">
+                <input type="text" id="nome" name="nome" value="<?php echo $_SESSION['nome_medico']; ?>" placeholder="Digite o nome completo" pattern="^[A-Za-zÀ-úçÇ ]{3,100}$" required="">
         </div>
         <div class="input-box">
                 <label>CPF</label>
@@ -55,13 +55,16 @@
             <div class="column">
             <div class="select-box">
                 <select id="especialidade" name="especialidade" required="">
-                <option value="<?php echo $_SESSION['valor_especialidade_medico']; ?>"><?php echo $_SESSION['especialidade_medico']; ?></option>
-                    <option value="1">Cardiologia</option>
-                    <option value="2">Dermatologia</option>
-                    <option value="3">Pediatria</option>
-                    <option value="4">Neurologia</option>
-                    <option value="5">Ortopedia</option>
-                    <option value="6">Endocrinologia</option>
+                    <?php 
+                    echo "<option value='{$_SESSION['valor_especialidade_medico']}'>{$_SESSION['especialidade_medico']}</option>";
+                    $sql = "SELECT * FROM especialidade";
+                    $result = $conn->query($sql);
+                    if ($result->num_rows > 0){
+                        while($row = $result->fetch_assoc()){
+                            echo "<option value='{$row['id']}'>{$row['nome_especialidade']}</option>";
+                        }
+                    }
+                    ?>
                 </select>
             </div>
             </div>
@@ -111,25 +114,17 @@
 
             function mudar_variaveis(){
 
+                include("conexao.php");
                 $especialidade = $_POST['especialidade'];
 
-                if($especialidade == 1){
-                    $_SESSION['especialidade_medico'] = 'Cardiologia';
-                }
-                else if($especialidade == 2){
-                    $_SESSION['especialidade_medico'] = 'Dermatologia';
-                }
-                else if($especialidade == 3){
-                    $_SESSION['especialidade_medico'] = 'Pediatria';
-                }
-                else if($especialidade == 4){
-                    $_SESSION['especialidade_medico'] = 'Neurologia';
-                }
-                else if($especialidade == 5){
-                    $_SESSION['especialidade_medico'] = 'Ortopedia';
-                }
-                else if($especialidade == 6){
-                    $_SESSION['especialidade_medico'] = 'Endocrinologia';
+                $sql = "SELECT * FROM especialidade";
+                $result = $conn->query($sql);
+                if ($result->num_rows > 0){
+                    while($row = $result->fetch_assoc()){
+                        if ($especialidade == $row['id']){
+                            $_SESSION['especialidade_medico'] = $row['nome_especialidade'];
+                        }
+                    }
                 }
 
                 $_SESSION['nome_medico'] = $_POST['nome'];

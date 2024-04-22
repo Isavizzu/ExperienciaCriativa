@@ -78,7 +78,7 @@
             }
         }
     ?>
-            <input type="submit" value="Login" name="botao_login">
+            <input type="submit" value="Entrar" name="botao_login">
         </form>
         <p>Não tem uma conta? <a href="#">Crie aqui!</a></p>
     </div>
