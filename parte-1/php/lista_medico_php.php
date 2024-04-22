@@ -14,10 +14,6 @@
 
 <body class="">
     <?php     
-        // Verifica se o formulário foi submetido (se o botão "Atualizar" foi clicado)
-        if(isset($_POST['Atualizar'])){
-            mudar_variaveis();
-        }
         
         // Recupera os valores do banco de dados e atualiza as variáveis de sessão apenas se necessário
         $CPF= $_GET['cpf'];
@@ -48,7 +44,11 @@
             $_SESSION['crm_medico_atualiza'] = $CRM;
             $_SESSION['especialidade_medico_atualiza'] = $especialidade_nome;
             $_SESSION['valor_especialidade_medico_atualiza'] = $especialidade_id;
-            $_SESSION['pagina_visitada_atualiza'] = true;
+            $_SESSION['pagina_visitada'] = true;
+        }
+        // Verifica se o formulário foi submetido (se o botão "Atualizar" foi clicado)
+         if(isset($_POST['Atualizar'])){
+            mudar_variaveis();
         }
     ?>
     <section class="caixa">
@@ -209,7 +209,7 @@
                     
                         if ($Senha != $confirmasenha){
                             echo "<section class='section_invalido'><p>As senhas não correspondem!</p></section>";
-                        }
+                        } 
                         else if(verifica_cpf($Cpf, $CPF) == false){
                             echo "<section class='section_invalido'><p>Esse CPF já foi cadastrado anteriormente!</p></section>";
                         }

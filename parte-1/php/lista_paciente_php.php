@@ -205,7 +205,7 @@
             }
             else{ 
                 $sql = "UPDATE usuario SET cpf = '$Cpf', nome = '$Nome', data_nascimento = '$datformat', senha = '$Senha' WHERE cpf = '$CPF'";
-                $sql1 = "UPDATE paciente SET telefone = '$telefone', altura = '$altura', peso = '$peso', sexo = '$sexo' WHERE paciente_cpf = '$CPF'";
+                $sql1 = "UPDATE paciente SET telefone = '$telefone', altura = '$altura', peso = '$peso', sexo = '$sexo' WHERE paciente_cpf = '$Cpf'";
                 $conn->query($sql);
                 $conn->query($sql1);
                 $_SESSION['pagina_visitada'] = false;
