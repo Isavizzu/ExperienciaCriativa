@@ -5,7 +5,7 @@ USE clinical_here;
 CREATE TABLE medico (
     crm varchar(7) UNIQUE NOT NULL,
     medico_cpf varchar(15) PRIMARY KEY,
-    especialidade_id int,
+    especialidade_id int NOT NULL,
     ativo boolean
 );
 
