@@ -44,3 +44,33 @@
     font-size: 18px;
     color: #333;
 }
+
+.agenda_titulo {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.agenda_titulo p {
+    font-size: 28px; /* Aumentando um pouco o tamanho da fonte */
+    color: #333;
+    margin: 0;
+    padding: 10px 0;
+    position: relative;
+    display: inline-block;
+}
+
+.agenda_titulo p::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0; /* Mudando a posição inicial para 0 para manter a linha fixa */
+    width: 100%; /* Definindo a largura para 100% para que a linha cubra toda a largura */
+    height: 2px;
+    background-color: #3498db;
+    transition: none; /* Removendo a transição para manter a linha fixa */
+}
+
+.agenda_titulo p:hover {
+    text-shadow: 0px 2px 4px rgba(0, 0, 0, 0.2); /* Efeito de sombra */
+}
+

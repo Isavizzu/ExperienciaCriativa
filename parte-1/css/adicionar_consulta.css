@@ -7,6 +7,23 @@
 .agenda h2 {
   text-align: center; /* Centralizando o texto */
   margin-bottom: 10px; /* Reduzindo a margem inferior */
+  position: relative; /* Posição relativa para o h2 */
+}
+
+.agenda h2::after {
+  content: '';
+  position: absolute;
+  bottom: -1px;
+  left: 50%; /* Centralizando o início da linha */
+  transform: translateX(-50%); /* Movendo a linha para a esquerda em 50% da largura do título */
+  width: 100%; /* A linha terá 100% de largura */
+  height: 2px;
+  background-color: #3498db; /* Cor da linha azul */
+  transition: all 0.3s ease; /* Adicionando transição suave */
+}
+
+.agenda h2:hover::after {
+  transform: translateX(-50%) scaleX(1); /* Movendo a linha e expandindo ao ser hover */
 }
 
 .agenda_dia {
@@ -36,55 +53,68 @@
   font-weight: bold;
 }
 
-
-
-.caixa{
-    max-width: 95%;
-    margin-left: auto;
-    margin-right: auto;
-    padding: 3%;
-    background-color: #fff;
-    border-radius: 8px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    margin-bottom: 5%;
+.titulo {
+  text-align: center; /* Centralizando o texto */
+  margin-bottom: 1%;
 }
 
-h1 {
-    text-align: center;
+.titulo h1 {
+  font-size: 28px;
+  color: #333;
+  margin-bottom: 10px;
+  position: relative;
+  display: inline-block;
 }
 
-.container-form {
+.titulo h1::after {
+  content: '';
+  position: absolute;
+  bottom: -1px;
+  left: 50%; /* Centralizando o início da linha */
+  transform: translateX(-50%); /* Movendo a linha para a esquerda em 50% da largura do título */
+  width: 100%; /* A linha terá 100% de largura */
+  height: 2px;
+  background-color: #3498db;
+  transition: all 0.3s ease;
+}
 
-    position: relative;
-    max-width: 500px;
-    width: 100%;
-    margin: auto;
-    background: #FFF;
-    padding: 25px;
-    border-radius: 8px;
-    box-shadow: 0 0 8px rgba(0, 0, 0, 0.1);
-  
-  }
-  
-  .container-form .title-form {
-    font-size: 1.2em;
-    color: #000;
-    font-weight: 600;
-    text-align: center;
-  }
-  
-  .container-form .form {
-    margin-top: 15px;
-  }
-  
-  .form .input-box {
-    width: 100%;
-    margin-top: 10px;
-  }
-  
-  .input-box label {
-    color: #000;
-  }
+.titulo h1:hover::after {
+  transform: translateX(-50%) scaleX(1); /* Movendo a linha e expandindo ao ser hover */
+}
+
+
+.form {
+
+  position: relative;
+  max-width: 500px;
+  width: 100%;
+  margin: auto;
+  background: #FFF;
+  padding: 25px;
+  border-radius: 8px;
+  box-shadow: 0 0 8px rgba(0, 0, 0, 0.1);
+
+}
+
+.form .title-form {
+  font-size: 1.2em;
+  color: #000;
+  font-weight: 600;
+  text-align: center;
+}
+
+.form .form {
+  margin-top: 15px;
+}
+
+.form .input-box {
+  width: 100%;
+  margin-top: 10px;
+}
+
+.input-box label {
+  color: #000;
+}
   
   .form :where(.input-box input, .select-box) {
     

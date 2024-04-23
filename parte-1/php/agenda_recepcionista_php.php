@@ -13,6 +13,7 @@
 </head>
 
 <body>
+    <br>
     <section class="caixa_titulo">
         <h1 class="titulo">
         Agenda do(a) Médico(a): 
@@ -121,7 +122,7 @@
                             echo "<tr>";
                             echo "<td>$horario</td>"; // Aqui são os horários
                             for ($i = 0; $i <= 6; $i++) { // Aqui são as consultas para os 7 dias da semana de acordo com cada horário
-                                $consulta_manha = "SELECT paciente_cpf  
+                                $consulta_manha = "SELECT paciente_cpf, id 
                                                     FROM agendamento
                                                     WHERE data='$data_atual' AND horario='$horario' AND medico_crm='$crm'";
                                 $resultado_consulta_manha = $conn->query($consulta_manha);
@@ -136,7 +137,7 @@
                                     $linha_consulta_paciente_manha = $resultado_consulta_paciente_manha->fetch_assoc();
                                     $nome_paciente = $linha_consulta_paciente_manha['nome'];
 
-                                    echo "<td>$nome_paciente</td>";
+                                    echo "<td><a href='../php/atualizar_consulta.php?id=$linha_consulta_paciente_manha[id]'>$nome_paciente</a></td>";
                                 }
                                 else { // Aqui mostarará uma caixa vazia se não houver consulta
                                     echo "<td></td>";
@@ -175,7 +176,7 @@
                             echo "<tr>";
                             echo "<td>$horario</td>"; // Aqui são os horários
                             for ($i = 0; $i <= 6; $i++) { // Aqui são as consultas para os 7 dias da semana de acordo com cada horário
-                                $consulta_tarde = "SELECT paciente_cpf  
+                                $consulta_tarde = "SELECT paciente_cpf, id  
                                                     FROM agendamento
                                                     WHERE data='$data_atual' AND horario='$horario' AND medico_crm='$crm'";
                                 $resultado_consulta_tarde = $conn->query($consulta_tarde);
@@ -190,7 +191,7 @@
                                     $linha_consulta_paciente_tarde = $resultado_consulta_paciente_tarde->fetch_assoc();
                                     $nome_paciente = $linha_consulta_paciente_tarde['nome'];
 
-                                    echo "<td>$nome_paciente</td>";
+                                    echo "<td><a href='../php/atualizar_consulta.php?id=$linha_consulta_paciente_tarde[id]&crm=$crm&nome=$nome_medico'>$nome_paciente</a></td>";
                                 }
                                 else { // Aqui mostarará uma caixa vazia se não houver consulta
                                     echo "<td></td>";

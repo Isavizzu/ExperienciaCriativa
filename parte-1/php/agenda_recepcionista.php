@@ -15,6 +15,10 @@
 <body class="agenda-body">
     <br>
     
+    <section class="agenda_titulo">
+        <p>Agendas</p>
+    </section>
+    
     <section class="container">
         <?php
         $pesquisa_medico = "SELECT medico_cpf, crm 
