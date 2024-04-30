@@ -271,8 +271,10 @@ INSERT INTO registro (descricao, data, horario, med_crm, paci_cpf) VALUES
 -- Registro para o médico 2 e paciente 1
 ('Consulta de acompanhamento', '2024-04-05', '14:00:00', '2222222', '12121212121');
 
-
-
-
-
+INSERT INTO prescricao (medicamento, orientacao, id_registro) VALUES
+('Paracetamol', 'Tomar 1 comprimido a cada 6 horas', 1),
+('Dipirona', 'Tomar 1 comprimido após as refeições', 2),
+('Amoxicilina', 'Tomar 1 comprimido de 8 em 8 horas', 3),
+('Dexametasona', 'Tomar 1 comprimido pela manhã', 4),
+('Omeprazol', 'Tomar 1 comprimido antes do café da manhã', 5);
 
