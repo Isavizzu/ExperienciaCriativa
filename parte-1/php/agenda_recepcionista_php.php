@@ -55,13 +55,21 @@
                         $nomes_dias = array('Sábado','Domingo','Segunda-feira','Terça-feira','Quarta-feira','Quinta-feira','Sexta-feira');
                     }
 
-                    $data_atual = date('d/m/y');
-                    $data_atual2 = date('d/m/y', strtotime($data_atual . ' +1 day'));
-                    $data_atual3 = date('d/m/y', strtotime($data_atual2 . ' +1 day'));
-                    $data_atual4 = date('d/m/y', strtotime($data_atual3 . ' +1 day'));
-                    $data_atual5 = date('d/m/y', strtotime($data_atual4 . ' +1 day'));
-                    $data_atual6 = date('d/m/y', strtotime($data_atual5 . ' +1 day'));
-                    $data_atual7 = date('d/m/y', strtotime($data_atual6 . ' +1 day'));
+                    $data_atual = date('Y-m-d');
+                    $data_atual2 = date('Y-m-d', strtotime($data_atual . ' +1 day'));
+                    $data_atual3 = date('Y-m-d', strtotime($data_atual2 . ' +1 day'));
+                    $data_atual4 = date('Y-m-d', strtotime($data_atual3 . ' +1 day'));
+                    $data_atual5 = date('Y-m-d', strtotime($data_atual4 . ' +1 day'));
+                    $data_atual6 = date('Y-m-d', strtotime($data_atual5 . ' +1 day'));
+                    $data_atual7 = date('Y-m-d', strtotime($data_atual6 . ' +1 day'));
+
+                    $data_atual = date('d/m/y', strtotime($data_atual));
+                    $data_atual2 = date('d/m/y', strtotime($data_atual2));
+                    $data_atual3 = date('d/m/y', strtotime($data_atual3));
+                    $data_atual4 = date('d/m/y', strtotime($data_atual4));
+                    $data_atual5 = date('d/m/y', strtotime($data_atual5));
+                    $data_atual6 = date('d/m/y', strtotime($data_atual6));
+                    $data_atual7 = date('d/m/y', strtotime($data_atual7));
                     echo"<th></th>
                     <th>$nomes_dias[0]  $data_atual</th>
                     <th>$nomes_dias[1]  $data_atual2</th>
@@ -137,7 +145,7 @@
                                     $linha_consulta_paciente_manha = $resultado_consulta_paciente_manha->fetch_assoc();
                                     $nome_paciente = $linha_consulta_paciente_manha['nome'];
 
-                                    echo "<td><a href='../php/atualizar_consulta.php?id=$linha_consulta_paciente_manha[id]'>$nome_paciente</a></td>";
+                                    echo "<td><a class='link' href='../php/atualizar_consulta.php?id=$linha_consulta_manha[id]&crm=$crm&nome=$nome_medico'>$nome_paciente</a></td>";
                                 }
                                 else { // Aqui mostarará uma caixa vazia se não houver consulta
                                     echo "<td></td>";
@@ -191,7 +199,7 @@
                                     $linha_consulta_paciente_tarde = $resultado_consulta_paciente_tarde->fetch_assoc();
                                     $nome_paciente = $linha_consulta_paciente_tarde['nome'];
 
-                                    echo "<td><a href='../php/atualizar_consulta.php?id=$linha_consulta_paciente_tarde[id]&crm=$crm&nome=$nome_medico'>$nome_paciente</a></td>";
+                                    echo "<td><a class='link' href='../php/atualizar_consulta.php?id=$linha_consulta_tarde[id]&crm=$crm&nome=$nome_medico'>$nome_paciente</a></td>";
                                 }
                                 else { // Aqui mostarará uma caixa vazia se não houver consulta
                                     echo "<td></td>";

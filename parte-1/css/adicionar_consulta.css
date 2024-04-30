@@ -1,38 +1,53 @@
 .agenda {
   margin: 20px auto;
   width: 80%;
-  margin-top: 50px; /* Reduzindo a margem superior */
+  margin-top: 50px;
+  /* Reduzindo a margem superior */
 }
 
 .agenda h2 {
-  text-align: center; /* Centralizando o texto */
-  margin-bottom: 10px; /* Reduzindo a margem inferior */
-  position: relative; /* Posição relativa para o h2 */
+  text-align: center;
+  /* Centralizando o texto */
+  margin-bottom: 10px;
+  /* Reduzindo a margem inferior */
+  position: relative;
+  /* Posição relativa para o h2 */
 }
 
 .agenda h2::after {
   content: '';
   position: absolute;
   bottom: -1px;
-  left: 50%; /* Centralizando o início da linha */
-  transform: translateX(-50%); /* Movendo a linha para a esquerda em 50% da largura do título */
-  width: 100%; /* A linha terá 100% de largura */
+  left: 50%;
+  /* Centralizando o início da linha */
+  transform: translateX(-50%);
+  /* Movendo a linha para a esquerda em 50% da largura do título */
+  width: 100%;
+  /* A linha terá 100% de largura */
   height: 2px;
-  background-color: #3498db; /* Cor da linha azul */
-  transition: all 0.3s ease; /* Adicionando transição suave */
+  background-color: #3498db;
+  /* Cor da linha azul */
+  transition: all 0.3s ease;
+  /* Adicionando transição suave */
 }
 
 .agenda h2:hover::after {
-  transform: translateX(-50%) scaleX(1); /* Movendo a linha e expandindo ao ser hover */
+  transform: translateX(-50%) scaleX(1);
+  /* Movendo a linha e expandindo ao ser hover */
 }
 
 .agenda_dia {
-  background-color: #e7f0f7; /* Azul claro */
-  border: 1px solid #b8daff; /* Tom mais escuro de azul */
+  background-color: #e7f0f7;
+  /* Azul claro */
+  border: 1px solid #b8daff;
+  /* Tom mais escuro de azul */
   border-radius: 8px;
-  padding: 10px; /* Reduzindo o preenchimento */
-  margin: 10px 0; /* Reduzindo a margem */
-  text-align: center; /* Centralizando o texto */
+  padding: 10px;
+  /* Reduzindo o preenchimento */
+  margin: 10px 0;
+  /* Reduzindo a margem */
+  text-align: center;
+  /* Centralizando o texto */
 }
 
 
@@ -54,7 +69,8 @@
 }
 
 .titulo {
-  text-align: center; /* Centralizando o texto */
+  text-align: center;
+  /* Centralizando o texto */
   margin-bottom: 1%;
 }
 
@@ -70,16 +86,20 @@
   content: '';
   position: absolute;
   bottom: -1px;
-  left: 50%; /* Centralizando o início da linha */
-  transform: translateX(-50%); /* Movendo a linha para a esquerda em 50% da largura do título */
-  width: 100%; /* A linha terá 100% de largura */
+  left: 50%;
+  /* Centralizando o início da linha */
+  transform: translateX(-50%);
+  /* Movendo a linha para a esquerda em 50% da largura do título */
+  width: 100%;
+  /* A linha terá 100% de largura */
   height: 2px;
   background-color: #3498db;
   transition: all 0.3s ease;
 }
 
 .titulo h1:hover::after {
-  transform: translateX(-50%) scaleX(1); /* Movendo a linha e expandindo ao ser hover */
+  transform: translateX(-50%) scaleX(1);
+  /* Movendo a linha e expandindo ao ser hover */
 }
 
 
@@ -115,116 +135,123 @@
 .input-box label {
   color: #000;
 }
-  
-  .form :where(.input-box input, .select-box) {
-    
-    position: relative;
-    height: 35px;
-    width: 100%;
-    outline: none;
-    font-size: 1rem;
-    color: #333;
-    margin-top: 5px;
-    border: 1px solid #A4E3F0;
-    border-radius: 6px;
-    padding: 0 15px;
-    background: #E9F8FB;
-  
-  }
-  
-  .input-box input:focus {
-    box-shadow: 0 1px 0 rgba(0, 0, 0, 0.1);
-  }
-  
-  .form :where(.input-box textarea) {
-    
-    position: relative;
-    height: 100px;
-    width: 100%;
-    outline: none;
-    font-size: 1rem;
-    color: #333;
-    margin-top: 5px;
-    border: 1px solid #A4E3F0;
-    border-radius: 6px;
-    padding: 10px;
-    background: #E9F8FB;
-  
-  }
-  
-  .input-box textarea:focus {
-    box-shadow: 0 1px 0 rgba(0, 0, 0, 0.1);
-  }
-  
-  .form .column {
-    display: flex;
-    column-gap: 15px;
-  }
-  
-  .form .gender-box {
-    margin-top: 10px;
-  }
-  
-  .form :where(.gender-option, .gender) {
-    display: flex;
-    align-items: center;
-    column-gap: 50px;
-    flex-wrap: wrap;
-  }
-  
-  .form .gender {
-    column-gap: 5px;
-  }
-  
-  .gender input {
-  
-    accent-color: #007CFF;
-    float: left;
-    width: 15px;
-    height: 15px;
-  
-  }
-  
-  .form :where(.gender input,.gender textarea, .gender label) {
-    cursor: pointer;
-  }
-  
-  .gender label {
-    color: #000;
-  }
-  
-  .address :where(input, .select-box) {
-    margin-top: 10px;
-  }
-  
-  .select-box select {
-    height: 100%;
-    width: 100%;
-    outline: none;
-    border: none;
-    color: #808080;
-    font-size: 1em;
-    background: #e9f8fb;
-  }
-  
-  .cadbot:hover {
-    background: #28D1F2;
-  }
-  
-  /*Anti-span*/
-  .naoexibir { display:none; }
-  
-  .cadbot{
-    height: 40px;
-    width: 100%;
-    color: #ffffff;
-    font-size: 1rem;
-    font-weight: 400;
-    margin-top: 15px;
-    border: none;
-    border-radius: 6px;
-    cursor: pointer;
-    transition: all 0.2s ease;
-    background: #007cff;
-    margin-bottom: 2%;
-  }
+
+.form :where(.input-box input, .select-box) {
+
+  position: relative;
+  height: 35px;
+  width: 100%;
+  outline: none;
+  font-size: 1rem;
+  color: #333;
+  margin-top: 5px;
+  border: 1px solid #A4E3F0;
+  border-radius: 6px;
+  padding: 0 15px;
+  background: #E9F8FB;
+
+}
+
+.input-box input:focus {
+  box-shadow: 0 1px 0 rgba(0, 0, 0, 0.1);
+}
+
+.form :where(.input-box textarea) {
+
+  position: relative;
+  height: 100px;
+  width: 100%;
+  outline: none;
+  font-size: 1rem;
+  color: #333;
+  margin-top: 5px;
+  border: 1px solid #A4E3F0;
+  border-radius: 6px;
+  padding: 10px;
+  background: #E9F8FB;
+
+}
+
+.input-box textarea:focus {
+  box-shadow: 0 1px 0 rgba(0, 0, 0, 0.1);
+}
+
+.form .column {
+  display: flex;
+  column-gap: 15px;
+}
+
+.form .gender-box {
+  margin-top: 10px;
+}
+
+.form :where(.gender-option, .gender) {
+  display: flex;
+  align-items: center;
+  column-gap: 50px;
+  flex-wrap: wrap;
+}
+
+.form .gender {
+  column-gap: 5px;
+}
+
+.gender input {
+
+  accent-color: #007CFF;
+  float: left;
+  width: 15px;
+  height: 15px;
+
+}
+
+.form :where(.gender input, .gender textarea, .gender label) {
+  cursor: pointer;
+}
+
+.gender label {
+  color: #000;
+}
+
+.address :where(input, .select-box) {
+  margin-top: 10px;
+}
+
+.select-box select {
+  height: 100%;
+  width: 100%;
+  outline: none;
+  border: none;
+  color: #808080;
+  font-size: 1em;
+  background: #e9f8fb;
+}
+
+.cadbot:hover {
+  background: #28D1F2;
+}
+
+/*Anti-span*/
+.naoexibir {
+  display: none;
+}
+
+.cadbot {
+  height: 40px;
+  width: 100%;
+  color: #ffffff;
+  font-size: 1rem;
+  font-weight: 400;
+  margin-top: 15px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  background: #007cff;
+  margin-bottom: 2%;
+}
+
+.form .column {
+  display: flex;
+  column-gap: 15px;
+}

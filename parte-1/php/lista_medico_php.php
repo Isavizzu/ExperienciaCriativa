@@ -252,13 +252,13 @@
                     ?>
                     <div class="column">
                     
-                    <div class="input-box">
-                        <input type="submit" id="Atualizar" name="Atualizar" class="cadbot" value="Atualizar" >
-                    </div>
-                
-                    <div class="input-box">
-                        <input type="submit" id="Excluir" name="Excluir" class="cadbot" value="Excluir" >
-                    </div>
+                        <div class="input-box">
+                            <input type="submit" id="Atualizar" name="Atualizar" class="cadbot" value="Atualizar" >
+                        </div>
+                    
+                        <div class="input-box">
+                            <input type="submit" id="Excluir" name="Excluir" class="cadbot" value="Excluir" >
+                        </div>
                 
                 </div>
 

@@ -24,7 +24,7 @@
             $_SESSION['hora_marcada'] = $linha['horario'];
             $_SESSION['pagina_visitada'] = true;
         }
-        if(isset($_POST['confirmar'])){
+        if(isset($_POST['atualizar'])){
             mudar_variaveis();
         }
     ?>
@@ -85,8 +85,8 @@
                     //testes de inputs
                     $testeCpf = "/^[0-9]{3}[\.]?[0-9]{3}[\.]?[0-9]{3}[-]?[0-9]{2}$/";
                     $testeData = $testeData = "/^(\d{4})-(\d{2})-(\d{2})$/";
-                    $testeHorario = "/^(0[0-9]|1[0-9]|2[0-3]):[0-5][0-9]$/";
-                    $testeMinuto = "/^(0[0-9]|1[0-9]|2[0-3]):(00|30)$/";
+                    $testeHorario = "/^(0[0-9]|1[0-9]|2[0-3]):[0-5][0-9]:?0?0?$/";
+                    $testeMinuto = "/^(0[0-9]|1[0-9]|2[0-3]):(00|30):?0?0?$/";
                     $dataAtual = date('Y-m-d');
                     $dataFormatada = date('Y-m-d', strtotime(str_replace('/', '-', $data)));
                     $horarioTimestamp = strtotime($horario);
@@ -112,6 +112,7 @@
                         echo "<br><section class='section_invalido'><p>Escolha uma data válida, não é possível marcar uma consulta para uma data no passado!</p></section>";
                     }
                     else if (!preg_match($testeHorario, $horario)){
+                        echo $horario;
                         echo "<br><section class='section_invalido'><p>Digite um horário válido, formato: (HH:MM)!</p></section>";
                     }
                     else if(!preg_match($testeMinuto, $horario)){
@@ -143,7 +144,7 @@
                                     if($horario_formatado >= $horario_inicio_manha && $horario_formatado < $horario_fim_manha){//Verifica se o horário informado está dentro do horário do(a) médico(a)
                                         if(verifica_agendamento($horario,$crm_medico,$cpf,$data,$id)){   //verifica se há consulta no dia e horario informado
                                             $agendar_consulta = "UPDATE agendamento
-                                                                    SET horario= '$horario' AND data = '$data' AND medico_crm = '$crm_medico' AND paciente_cpf = '$cpf'
+                                                                    SET horario= '$horario', data = '$data', medico_crm = '$crm_medico', paciente_cpf = '$cpf'
                                                                     WHERE id = $id";
                                             $resultado_agendar_consulta = $conn->query($agendar_consulta);
                                             $_SESSION['pagina_visitada'] = false;
@@ -171,7 +172,7 @@
                                     if($horario_formatado >= $horario_inicio_tarde && $horario_formatado < $horario_fim_tarde){//Verifica se o horário informado está dentro do horário do(a) médico(a)
                                         if(verifica_agendamento($horario,$crm_medico,$cpf,$data,$id)){   //verifica se há consulta no dia e horario informado
                                             $agendar_consulta = "UPDATE agendamento
-                                                                    SET horario= '$horario' AND data = '$data' AND medico_crm = '$crm_medico' AND paciente_cpf = '$cpf'
+                                                                    SET horario= '$horario', data = '$data', medico_crm = '$crm_medico', paciente_cpf = '$cpf'
                                                                     WHERE id = $id";
                                             $resultado_agendar_consulta = $conn->query($agendar_consulta);
                                             echo '<meta http-equiv="refresh" content="0; URL=adicionar_consulta_php.php?verifica=2">';                                         
@@ -198,7 +199,8 @@
 
                 function verifica_agendamento($horario,$crm_medico,$cpf,$data,$id){
                     include("conexao.php");
-                    $pesquisa_agendamento = "SELECT * FROM agendamento WHERE horario='$horario' AND data='$data' AND medico_crm='$crm_medico'";
+                    $pesquisa_agendamento = "SELECT * FROM agendamento WHERE horario='$horario', data='$data', medico_crm='$crm_medico'";
+                                            $pesquisa_agendamento = $pesquisa_agendamento = "SELECT * FROM agendamento WHERE horario='$horario' AND data='$data' AND medico_crm='$crm_medico'";
                     $resultado_agendamento = $conn->query($pesquisa_agendamento);
                     $pesquisa_agendamento_paciente = "SELECT * FROM agendamento WHERE horario='$horario' AND data='$data' AND paciente_cpf='$cpf'";
                     $resultado_agendamento_paciente = $conn->query($pesquisa_agendamento_paciente);
@@ -219,12 +221,14 @@
                 }
             ?>
 
-            <div class="input-box">
-                <input type="submit" name="atualizar" class="cadbot" value="Atualizar" >
-            </div>
-        
-            <div class="input-box">
-                <input type="submit" name="excluir" class="cadbot" value="Excluir" >
+            <div class="column">
+                <div class="input-box">
+                    <input type="submit" name="atualizar" class="cadbot" value="Atualizar" >
+                </div>
+            
+                <div class="input-box">
+                    <input type="submit" name="excluir" class="cadbot" value="Excluir" >
+                </div>
             </div>
 
         </form>
