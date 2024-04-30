@@ -48,13 +48,47 @@ CREATE TABLE agenda (
 );
 
 CREATE TABLE agendamento (
+	id INT PRIMARY KEY auto_increment,
     horario time,
     data date,
     medico_crm varchar(7),
-    paciente_cpf varchar(15),
-    PRIMARY KEY (horario, data, medico_crm, paciente_cpf)
+    paciente_cpf varchar(15)
 );
  
+ CREATE TABLE registro (
+	id INT PRIMARY KEY auto_increment,
+    descricao TEXT,
+    data date,
+    horario time,
+    med_crm varchar (7),
+    paci_cpf varchar (15)
+);
+
+CREATE TABLE prescricao (
+	id INT PRIMARY KEY auto_increment,
+    medicamento VARCHAR(100),
+    orientacao TEXT,
+    id_registro INT 
+    );
+
+ALTER TABLE prescricao ADD CONSTRAINT FK_id_registro
+	FOREIGN KEY(id_registro)
+    REFERENCES registro (id)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE;
+
+ALTER TABLE registro ADD CONSTRAINT FK_cpf_paciente
+	FOREIGN KEY (paci_cpf)
+    REFERENCES paciente (paciente_cpf)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE;
+    
+ALTER TABLE registro ADD CONSTRAINT FK_crm_medico
+	FOREIGN KEY (med_crm)
+	REFERENCES medico (crm)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE;
+        
 ALTER TABLE recepcionista ADD CONSTRAINT FK_recepcionista_2
     FOREIGN KEY (recepcionista_cpf)
     REFERENCES usuario (cpf)
@@ -168,8 +202,6 @@ INSERT INTO usuario (cpf, nome, data_nascimento, senha) VALUES ('31313131313', '
 INSERT INTO recepcionista (recepcionista_cpf) VALUES
  ('31313131313');
 
-
-
 -- Inserção de 7 agendas para o médico 1
 INSERT INTO agenda (dia_semana, trabalha, trabalha_manha, trabalha_tarde, horario_inicio_manha, horario_fim_manha, horario_inicio_tarde, horario_fim_tarde, medico_crm) VALUES 
 (1, true, true, true, '09:00:00', '12:00:00', '14:00:00', '18:00:00', '1111111'),
@@ -208,5 +240,41 @@ INSERT INTO agendamento (horario, data, medico_crm, paciente_cpf) VALUES
 
 
 
+INSERT INTO registro (descricao, data, horario, med_crm, paci_cpf) VALUES
+-- Registro para o médico 1 e paciente 1
+('Consulta de rotina', '2024-04-01', '08:30:00', '1111111', '12121212121'),
 
+-- Registro para o médico 1 e paciente 2
+('Exame de sangue', '2024-04-02', '09:30:00', '1111111', '13131313131'),
+
+-- Registro para o médico 1 e paciente 3
+('Acompanhamento pós-operatório', '2024-04-03', '10:30:00', '1111111', '14141414141'),
+
+-- Registro para o médico 1 e paciente 4
+('Consulta de emergência', '2024-04-04', '11:30:00', '1111111', '15151515151'),
+
+-- Registro para o médico 1 e paciente 5
+('Consulta de acompanhamento', '2024-04-06', '14:00:00', '1111111', '16161616161'),
+
+-- Registro para o médico 2 e paciente 6
+('Consulta de rotina', '2024-04-01', '08:30:00', '2222222', '17171717171'),
+
+-- Registro para o médico 2 e paciente 7
+('Exame de sangue', '2024-04-02', '09:30:00', '2222222', '18181818181'),
+
+-- Registro para o médico 2 e paciente 8
+('Acompanhamento pós-operatório', '2024-04-03', '10:30:00', '2222222', '19191919191'),
+
+-- Registro para o médico 2 e paciente 9
+('Consulta de emergência', '2024-04-04', '11:30:00', '2222222', '20202020202'),
+
+-- Registro para o médico 2 e paciente 1
+('Consulta de acompanhamento', '2024-04-05', '14:00:00', '2222222', '12121212121');
+
+INSERT INTO prescricao (medicamento, orientacao, id_registro) VALUES
+('Paracetamol', 'Tomar 1 comprimido a cada 6 horas', 1),
+('Dipirona', 'Tomar 1 comprimido após as refeições', 2),
+('Amoxicilina', 'Tomar 1 comprimido de 8 em 8 horas', 3),
+('Dexametasona', 'Tomar 1 comprimido pela manhã', 4),
+('Omeprazol', 'Tomar 1 comprimido antes do café da manhã', 5);
 
