@@ -68,7 +68,7 @@
                     $_SESSION['tipo_usuario'] = 'Médico(a)';
                 }
                 else {
-                    header('location: paciente.php');
+                    header('location: inicio_paciente.php');
                     $_SESSION['tipo_usuario'] = 'Paciente';
                 }
 
