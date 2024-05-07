@@ -1,0 +1,185 @@
+/* Estilo para o corpo da página */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f0f0f0;
+}
+
+/* Estilo para o formulário */
+.form {
+    max-width: 500px;
+    margin: 20px auto;
+    padding: 20px;
+    background-color: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Estilo para os títulos */
+h1, h2 {
+    text-align: center;
+    color: #3498db; /* Nova cor */
+}
+
+/* Estilo para os títulos das caixas */
+.titulo {
+    background-color: #3498db; /* Nova cor */
+    color: #ffffff;
+    padding: 10px;
+    border-radius: 5px 5px 0 0;
+    cursor: pointer;
+}
+
+/* Estilo para o conteúdo das caixas */
+.conteudo {
+    padding: 10px;
+    border: 1px solid #3498db; /* Nova cor */
+    border-top: none;
+    border-radius: 0 0 5px 5px;
+}
+
+/* Estilo para os botões */
+input[type="submit"] {
+    background-color: #3498db; /* Nova cor */
+    color: #ffffff;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    display: block; /* Alteração */
+    margin: auto; /* Alteração */
+    margin-top: 1.5%;
+}
+
+input[type="submit"]:hover {
+    background-color: #3498db; /* Nova cor ao passar o mouse */
+}
+
+/* Estilo para a caixa de seleção de data */
+.form input[type="date"] {
+    width: 100%;
+    height: 35px;
+    padding: 0 15px;
+    border-radius: 6px;
+    border: 1px solid #3498db; /* Nova cor */
+    background: #E9F8FB;
+    outline: none;
+    color: #333;
+    margin-top: 5px;
+}
+
+/* Estilo para a seta do calendário */
+.form input[type="date"]::-webkit-calendar-picker-indicator {
+    color: #3498db; /* Nova cor */
+    font-size: 1.2em;
+    opacity: 1;
+}
+
+/* Estilo para a seta do calendário no Firefox */
+.form input[type="date"]::-moz-calendar-picker-indicator {
+    color: #3498db; /* Nova cor */
+    font-size: 1.2em;
+    opacity: 1;
+}
+
+
+/* Estilo para as caixas */
+.caixa {
+    background-color: #ffffff;
+    border: 1px solid #3498db; /* Nova cor */
+    border-radius: 5px;
+    margin-bottom: 20px;
+}
+
+/* Estilo para o texto dentro das caixas */
+.caixa p {
+    padding: 10px;
+    margin: 0;
+}
+
+/* Estilo para o botão de toggle */
+.toggle {
+    float: right;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+
+.prontuario_titulo {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.prontuario_titulo p {
+    font-size: 28px; /* Aumentando um pouco o tamanho da fonte */
+    color: #333;
+    margin: 0;
+    padding: 10px 0;
+    position: relative;
+    display: inline-block;
+}
+
+.prontuario_titulo p::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0; /* Mudando a posição inicial para 0 para manter a linha fixa */
+    width: 100%; /* Definindo a largura para 100% para que a linha cubra toda a largura */
+    height: 2px;
+    background-color: #3498db;
+    transition: none; /* Removendo a transição para manter a linha fixa */
+}
+
+.prontuario_titulo p:hover {
+    text-shadow: 0px 2px 4px rgba(0, 0, 0, 0.2); /* Efeito de sombra */
+}
+
+.erro {
+    background-color: #f8d7da;
+    border: 2px solid #f5c6cb;
+    padding: 10px 20px;
+    border-radius: 5px;
+    margin-bottom: 20px;
+    color: #721c24;
+    font-size: 14px;
+    text-align: center;
+}
+
+.erro {
+    margin: 0;
+    font-weight: bold;
+}
+
+/* Estilo para o rótulo "Selecione a data" */
+.form label {
+    display: block; /* Alteração */
+    text-align: center; /* Alteração */
+    margin-bottom: 10px; /* Adição para espaçamento inferior */
+}
+
+/* Estilo para o campo de entrada de data */
+.form input[type="date"] {
+    display: block; /* Alteração */
+    margin: 0 auto; /* Alteração */
+}
+
+
+/* Estilo para o botão de submit */
+input[type="submit"] {
+    background-color: #3498db; /* Nova cor */
+    color: #ffffff;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    display: block; /* Alteração */
+    margin: auto; /* Alteração */
+    margin-top: 1.5%;
+    transition: background-color 0.3s ease; /* Adicionando transição para a cor de fundo */
+}
+
+input[type="submit"]:hover {
+    background-color: #1e87d8; /* Nova cor ao passar o mouse */
+}
+
