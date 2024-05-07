@@ -238,13 +238,12 @@
                         $mensagem .= " - das " . $row['horario_inicio_tarde'] . " às " . $row['horario_fim_tarde']. ".";
                     }
                 }
+                else {
+                    $mensagem .= "não trabalha neste dia.";
+                }
                 echo "<section class='agenda_dia'>$mensagem</section>";
                 return;
             }
-            else {
-                $mensagem .= "não trabalha neste dia.";
-            }
-            echo "<section class='agenda_dia'>$mensagem</section>";
         }
     ?>
 
