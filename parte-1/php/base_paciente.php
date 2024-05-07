@@ -34,7 +34,7 @@ body {font-size:16px;}
   <div class="w3-bar-block">
     <a href="../php/inicio_paciente.php" onclick="w3_close()" class="w3-bar-item w3-button w3-hover-white">Bem-vindo</a> 
     <a href="../php/agendar_consulta_paciente.php" onclick="w3_close()" class="w3-bar-item w3-button w3-hover-white">Agendar consulta</a> 
-    <a href="#" onclick="w3_close()" class="w3-bar-item w3-button w3-hover-white">Visualizar consultas</a> 
+    <a href="../php/visualizar_consultas.php" onclick="w3_close()" class="w3-bar-item w3-button w3-hover-white">Consultas agendadas</a> 
     <a href="#" onclick="w3_close()" class="w3-bar-item w3-button w3-hover-white">Prontuário</a> 
     <a href="../php/deslogar_se.php" class="w3-bar-item w3-button w3-hover-white">Sair</a>
   </div>
