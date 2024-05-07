@@ -14,7 +14,7 @@
         $nome = $_GET['nome'];
         $id = $_GET['id'];
         if($_SESSION['pagina_visitada'] == false || !isset($_SESSION['pagina_visitada'])){
-            $consulta = "SELECT paciente_cpf, horario, data, medico_crm  
+            $consulta = "SELECT paciente_cpf, horario, data, medico_crm, presenca  
                         FROM agendamento
                         WHERE id=$id";
             $resultado = $conn->query($consulta);
@@ -23,6 +23,7 @@
             $_SESSION['data_marcada'] = $linha['data'];
             $_SESSION['hora_marcada'] = $linha['horario'];
             $_SESSION['pagina_visitada'] = true;
+            $_SESSION['presenca'] = $linha['presenca'];
         }
         if(isset($_POST['atualizar'])){
             mudar_variaveis();
@@ -55,6 +56,26 @@
                 <label>Hora da Consulta</label>
                 <input type="time" name="horario" value="<?php echo $_SESSION['hora_marcada']?>" placeholder="Digite o horário da consulta" required>
             </div>
+
+            <div class="input-box">
+                <label>Presença</label>
+                <div class="select-box">
+                <select name="presenca" required="">
+                    <?php 
+                        if($_SESSION['presenca'] == true){
+                            $pres = 'Compareceu';
+                        }
+                        else{
+                            $pres = 'Faltou';
+                        }
+                        echo "<option value='{$_SESSION['presenca']}'>$pres</option>";
+                    ?>
+                    <option value="1">Compareceu</option>
+                    <option value="0">Faltou</option>
+                </select>
+                </div>
+            </div>
+
             <input type='hidden' name='nome' value='<?php echo $nome?>'>
             <input type='hidden' name='id' value='<?php echo $id?>'>
 
@@ -81,6 +102,7 @@
                     $data = $_POST["data"];
                     $horario = $_POST["horario"];
                     $id = $_POST['id'];
+                    $presenca = $_POST['presenca'];
 
                     //testes de inputs
                     $testeCpf = "/^[0-9]{3}[\.]?[0-9]{3}[\.]?[0-9]{3}[-]?[0-9]{2}$/";
@@ -144,7 +166,7 @@
                                     if($horario_formatado >= $horario_inicio_manha && $horario_formatado < $horario_fim_manha){//Verifica se o horário informado está dentro do horário do(a) médico(a)
                                         if(verifica_agendamento($horario,$crm_medico,$cpf,$data,$id)){   //verifica se há consulta no dia e horario informado
                                             $agendar_consulta = "UPDATE agendamento
-                                                                    SET horario= '$horario', data = '$data', medico_crm = '$crm_medico', paciente_cpf = '$cpf'
+                                                                    SET presenca = '$presenca', horario= '$horario', data = '$data', medico_crm = '$crm_medico', paciente_cpf = '$cpf'
                                                                     WHERE id = $id";
                                             $resultado_agendar_consulta = $conn->query($agendar_consulta);
                                             $_SESSION['pagina_visitada'] = false;
@@ -172,7 +194,7 @@
                                     if($horario_formatado >= $horario_inicio_tarde && $horario_formatado < $horario_fim_tarde){//Verifica se o horário informado está dentro do horário do(a) médico(a)
                                         if(verifica_agendamento($horario,$crm_medico,$cpf,$data,$id)){   //verifica se há consulta no dia e horario informado
                                             $agendar_consulta = "UPDATE agendamento
-                                                                    SET horario= '$horario', data = '$data', medico_crm = '$crm_medico', paciente_cpf = '$cpf'
+                                                                    SET presenca = '$presenca', horario= '$horario', data = '$data', medico_crm = '$crm_medico', paciente_cpf = '$cpf'
                                                                     WHERE id = $id";
                                             $resultado_agendar_consulta = $conn->query($agendar_consulta);
                                             echo '<meta http-equiv="refresh" content="0; URL=adicionar_consulta_php.php?verifica=2">';                                         
@@ -247,6 +269,7 @@
     <?php
 
         function mudar_variaveis(){
+            $_SESSION['presenca'] = $_POST['presenca'];
             $_SESSION['cpf_paciente'] = $_POST['cpf'];
             $_SESSION['data_marcada'] = $_POST['data'];
             $_SESSION['hora_marcada'] = $_POST['horario'];
