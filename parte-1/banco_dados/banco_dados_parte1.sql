@@ -51,22 +51,22 @@ CREATE TABLE agendamento (
 	id INT PRIMARY KEY auto_increment,
     horario time,
     data date,
-    medico_crm varchar(7),
-    paciente_cpf varchar(15),
+    medico_crm varchar(7) NOT NULL,
+    paciente_cpf varchar(15) NOT NULL,
     presenca boolean default false
 );
  
  CREATE TABLE registro (
 	id INT PRIMARY KEY auto_increment,
     descricao TEXT,
-    id_agendamento int
+    id_agendamento int NOT NULL
 );
 
 CREATE TABLE prescricao (
 	id INT PRIMARY KEY auto_increment,
     medicamento VARCHAR(100),
     orientacao TEXT,
-    id_registro INT 
+    id_registro INT NOT NULL
     );
 ALTER TABLE registro ADD CONSTRAINT FK_id_agendamento
 	FOREIGN KEY(id_agendamento)
@@ -243,4 +243,3 @@ INSERT INTO prescricao (medicamento, orientacao, id_registro) VALUES
 ('Paracetamol', 'Tomar 1 comprimido a cada 6 horas', 1),
 ('Dipirona', 'Tomar 1 comprimido após as refeições', 2);
 
-oi
