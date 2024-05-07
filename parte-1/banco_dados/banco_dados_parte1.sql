@@ -243,3 +243,4 @@ INSERT INTO prescricao (medicamento, orientacao, id_registro) VALUES
 ('Paracetamol', 'Tomar 1 comprimido a cada 6 horas', 1),
 ('Dipirona', 'Tomar 1 comprimido após as refeições', 2);
 
+oi
