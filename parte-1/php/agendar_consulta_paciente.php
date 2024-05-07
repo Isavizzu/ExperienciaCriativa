@@ -11,6 +11,27 @@
     <title>Agendar consulta</title>
 </head>
 <body>
+    <?php
+        if($_SESSION['pagina_visitada'] == false || !isset($_SESSION['pagina_visitada'])){
+                $_SESSION['especialidade_escolhida'] = 'Selecione a especialidade';
+                $_SESSION['valor_especialidade_medico']= ''; 
+                $_SESSION['pagina_visitada'] = true;
+            }
+
+        if(isset($_POST['Buscar'])){
+            $_SESSION['valor_especialidade_medico']= $_POST['especialidade'];      
+            $sql = "SELECT * FROM especialidade";
+            $result = $conn->query($sql);
+            if ($result->num_rows > 0){
+                while($row = $result->fetch_assoc()){
+                    if ($_SESSION['valor_especialidade_medico'] == $row['id']){
+                        $_SESSION['especialidade_escolhida'] = $row['nome_especialidade'];
+                        $especialidade_nome = $row['nome_especialidade'];
+                    }
+                }
+            }
+        }
+    ?>
     <section class="agenda_titulo">
         <p>Agendar consulta</p>
     </section>
@@ -21,8 +42,8 @@
             <div class="column">
             <div class="select-box">
                 <select id="especialidade" name="especialidade" required="">
-                    <?php 
-                    echo "<option value=''>Selecione a especialidade</option>";
+                    <?php  
+                    echo "<option value='{$_SESSION['valor_especialidade_medico']}'>{$_SESSION['especialidade_escolhida']}</option>";
                     $sql = "SELECT * FROM especialidade";
                     $result = $conn->query($sql);
                     if ($result->num_rows > 0){
@@ -31,11 +52,13 @@
                         }
                     }
                     ?>
+
                 </select>
             </div>
                 <input type="submit" id="Enviar" class="cadbot" name="Buscar" value="Buscar">
             </div>
             </div>
+
 
             
     <section class="container">
@@ -43,7 +66,7 @@
          if (isset($_POST['Buscar'])) {
 
             $especialidade = $_POST['especialidade'];
-            $pesquisa_medico = "SELECT medico_cpf, crm 
+            $pesquisa_medico = "SELECT medico_cpf, crm
                                 FROM medico  WHERE especialidade_id='$especialidade'";
             $resultado_pesquisa_medico = $conn->query($pesquisa_medico);
             if ($resultado_pesquisa_medico->num_rows > 0){
@@ -51,10 +74,10 @@
                     $pesquisa_nome_medico = "SELECT nome 
                                             FROM usuario 
                                             WHERE cpf='$linha_pesquisa_medico[medico_cpf]'";
-                    $resultado_pesquisa_nome_medico = $conn->query($pesquisa_nome_medico);
+                    $resultado_pesquisa_nome_medico = $conn->query($pesquisa_nome_medico); 
                     $linha_pesquisa_nome_medico = $resultado_pesquisa_nome_medico->fetch_assoc();
                     echo"<section class='result-box'>
-                        <a href='../php/adicionar_consulta.php?crm=$linha_pesquisa_medico[crm]&nome=$linha_pesquisa_nome_medico[nome]'>$linha_pesquisa_nome_medico[nome]</a>
+                        <a href='../php/adicionar_consulta_paciente.php?crm=$linha_pesquisa_medico[crm]&nome=$linha_pesquisa_nome_medico[nome]&espe=$especialidade'>$linha_pesquisa_nome_medico[nome]</a>
                     </section>";
                 }
             }
@@ -68,6 +91,22 @@
         }
         ?>
     </section>
+
+    <?php
+        if(!isset($_POST['Buscar'])){
+            echo "<section class='container'>
+            <section class='message-box'>
+            <p>Selecione uma especialidade e clique em buscar, depois escolha um médico.</p>   
+            </section>
+            </section>";
+            
+            
+            //echo '<section class="success">
+              //  <p>Selecione uma especialidade e clique em buscar, depois escolha um médico.</p>
+                //</section>';
+    }
+    
+    ?>
 
             
 

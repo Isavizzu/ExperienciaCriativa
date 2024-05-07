@@ -4,47 +4,41 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../css/adicionar_consulta.css">
-    <title>Atualização de Consulta</title>
+    <title>Agendar de Consulta</title>
 </head>
-<body>
+<body> 
     <?php
-        include("session_start.php");
-        include("base.php");
-        $crm = $_GET['crm'];
+        include("session_start.php"); 
+        include("base_paciente.php");
+        $crm = $_GET['crm']; 
         $nome = $_GET['nome'];
-        $id = $_GET['id'];
         if($_SESSION['pagina_visitada'] == false || !isset($_SESSION['pagina_visitada'])){
-            $consulta = "SELECT paciente_cpf, horario, data, medico_crm, presenca  
-                        FROM agendamento
-                        WHERE id=$id";
-            $resultado = $conn->query($consulta);
-            $linha = $resultado->fetch_assoc();
-            $_SESSION['cpf_paciente'] = $linha['paciente_cpf'];
-            $_SESSION['data_marcada'] = $linha['data'];
-            $_SESSION['hora_marcada'] = $linha['horario'];
+            $_SESSION['cpf_paciente'] = '';
+            $_SESSION['data_marcada'] = '';
+            $_SESSION['hora_marcada'] = '';
             $_SESSION['pagina_visitada'] = true;
-            $_SESSION['presenca'] = $linha['presenca'];
         }
-        if(isset($_POST['atualizar'])){
+        if(isset($_POST['confirmar'])){
             mudar_variaveis();
         }
     ?>
 
     <br>
     <section class="titulo">
-        <h1>Verificação de Consulta</h1>
+        <h1>Agendamento de Consulta</h1>
     </section>
     
     <section class="caixa">
-        <form class="form" method="POST">
+        <form class="form"  method="POST">
+
             <div class="input-box">
-                <label>CRM</label>
-                <input type="text" name="crm" value="<?php echo $crm?>" readonly>
+                <label>Nome do Médico</label>
+                <input type="text" name="nome" value="<?php echo $nome?>" readonly>
             </div>
 
             <div class="input-box">
                 <label>CPF do Paciente</label>
-                <input type="text" name="cpf" value="<?php echo $_SESSION['cpf_paciente']?>" placeholder="Digite o CPF no formato xxxxxxxxxxx ou xxx.xxx.xxx-xx" required>
+                <input type="text" name="cpf" value="<?php echo $_SESSION['cpf']?>" readonly>
             </div>
             
             <div class="input-box">
@@ -56,59 +50,29 @@
                 <label>Hora da Consulta</label>
                 <input type="time" name="horario" value="<?php echo $_SESSION['hora_marcada']?>" placeholder="Digite o horário da consulta" required>
             </div>
-
-            <div class="input-box">
-                <label>Presença</label>
-                <div class="select-box">
-                <select name="presenca" required="">
-                    <?php 
-                        if($_SESSION['presenca'] == true){
-                            $pres = 'Compareceu';
-                        }
-                        else{
-                            $pres = 'Faltou';
-                        }
-                        echo "<option value='{$_SESSION['presenca']}'>$pres</option>";
-                    ?>
-                    <option value="1">Compareceu</option>
-                    <option value="0">Faltou</option>
-                </select>
-                </div>
-            </div>
-
             <input type='hidden' name='nome' value='<?php echo $nome?>'>
-            <input type='hidden' name='id' value='<?php echo $id?>'>
+            <input type='hidden' name='crm' value='<?php echo $crm?>'>
 
             <?php
-                if(isset($_POST['atualizar'])) {
-                    botao_confirmar($nome);
-                }
-                else if(isset($_POST['excluir'])) {
-                    botao_excluir($id);
+                if(isset($_POST['confirmar'])) {
+                    botao_confirmar($nome, $crm);
                 }
 
-                function botao_excluir($id){
-                    $_SESSION['pagina_visitada'] = false;
-                    echo "<meta http-equiv='refresh' content='0; URL=excluir_consulta.php?id=$id'>";
-                }
-
-                function botao_confirmar($nome){
+                function botao_confirmar($nome, $crm){
 
                     include("conexao.php");
                     
                     //pega os dados do form
-                    $crm_medico = $_POST['crm'];
+                    $crm_medico = $crm;
                     $cpf = $_POST["cpf"];
                     $data = $_POST["data"];
                     $horario = $_POST["horario"];
-                    $id = $_POST['id'];
-                    $presenca = $_POST['presenca'];
 
                     //testes de inputs
                     $testeCpf = "/^[0-9]{3}[\.]?[0-9]{3}[\.]?[0-9]{3}[-]?[0-9]{2}$/";
                     $testeData = $testeData = "/^(\d{4})-(\d{2})-(\d{2})$/";
-                    $testeHorario = "/^(0[0-9]|1[0-9]|2[0-3]):[0-5][0-9]:?0?0?$/";
-                    $testeMinuto = "/^(0[0-9]|1[0-9]|2[0-3]):(00|30):?0?0?$/";
+                    $testeHorario = "/^(0[0-9]|1[0-9]|2[0-3]):[0-5][0-9]$/";
+                    $testeMinuto = "/^(0[0-9]|1[0-9]|2[0-3]):(00|30)$/";
                     $dataAtual = date('Y-m-d');
                     $dataFormatada = date('Y-m-d', strtotime(str_replace('/', '-', $data)));
                     $horarioTimestamp = strtotime($horario);
@@ -134,7 +98,6 @@
                         echo "<br><section class='section_invalido'><p>Escolha uma data válida, não é possível marcar uma consulta para uma data no passado!</p></section>";
                     }
                     else if (!preg_match($testeHorario, $horario)){
-                        echo $horario;
                         echo "<br><section class='section_invalido'><p>Digite um horário válido, formato: (HH:MM)!</p></section>";
                     }
                     else if(!preg_match($testeMinuto, $horario)){
@@ -161,16 +124,15 @@
 
                                 if($row_agenda['trabalha_manha'] && $row_agenda['trabalha_manha'] !== null){        //verifica se trabalha de manhã
                                     $horario_inicio_manha = strtotime($row_agenda['horario_inicio_manha']);
-                                    $horario_fim_manha = strtotime($row_agenda['horario_fim_manha']);
+                                    $horario_fim_manha = strtotime($row_agenda['horario_fim_manha']); 
 
                                     if($horario_formatado >= $horario_inicio_manha && $horario_formatado < $horario_fim_manha){//Verifica se o horário informado está dentro do horário do(a) médico(a)
-                                        if(verifica_agendamento($horario,$crm_medico,$cpf,$data,$id)){   //verifica se há consulta no dia e horario informado
-                                            $agendar_consulta = "UPDATE agendamento
-                                                                    SET presenca = '$presenca', horario= '$horario', data = '$data', medico_crm = '$crm_medico', paciente_cpf = '$cpf'
-                                                                    WHERE id = $id";
+                                        if(verifica_agendamento($horario,$crm_medico,$cpf,$data)){   //verifica se há consulta no dia e horario informado
+                                            $agendar_consulta = "INSERT INTO agendamento (horario, data, medico_crm, paciente_cpf) 
+                                                                    VALUES ('$horario', '$data', '$crm_medico', '$cpf')";
                                             $resultado_agendar_consulta = $conn->query($agendar_consulta);
                                             $_SESSION['pagina_visitada'] = false;
-                                            echo '<meta http-equiv="refresh" content="0; URL=adicionar_consulta_php.php?verifica=2">';
+                                            echo '<meta http-equiv="refresh" content="0; URL=adicionar_consulta_confirmacao.php?verifica=1">';
                                         }
                                         else{
                                              $_SESSION['pagina_visitada'] = false;
@@ -192,12 +154,11 @@
                                     $horario_fim_tarde = strtotime($row_agenda['horario_fim_tarde']);
 
                                     if($horario_formatado >= $horario_inicio_tarde && $horario_formatado < $horario_fim_tarde){//Verifica se o horário informado está dentro do horário do(a) médico(a)
-                                        if(verifica_agendamento($horario,$crm_medico,$cpf,$data,$id)){   //verifica se há consulta no dia e horario informado
-                                            $agendar_consulta = "UPDATE agendamento
-                                                                    SET presenca = '$presenca', horario= '$horario', data = '$data', medico_crm = '$crm_medico', paciente_cpf = '$cpf'
-                                                                    WHERE id = $id";
+                                        if(verifica_agendamento($horario,$crm_medico,$cpf,$data)){   //verifica se há consulta no dia e horario informado
+                                            $agendar_consulta = "INSERT INTO agendamento (horario, data, medico_crm, paciente_cpf) 
+                                                                    VALUES ('$horario', '$data', '$crm_medico', '$cpf')";
                                             $resultado_agendar_consulta = $conn->query($agendar_consulta);
-                                            echo '<meta http-equiv="refresh" content="0; URL=adicionar_consulta_php.php?verifica=2">';                                         
+                                            echo '<meta http-equiv="refresh" content="0; URL=adicionar_consulta_confirmacao.php?verifica=1">';                                         
                                         }
                                         else{
                                             echo "<br><section class='section_invalido'><p>O(A) médico(a) " . $nome . " ou o paciente já tem um horário nesse dia.</p></section>";
@@ -219,23 +180,15 @@
                     }
                 }
 
-                function verifica_agendamento($horario,$crm_medico,$cpf,$data,$id){
+                function verifica_agendamento($horario,$crm_medico,$cpf,$data){
                     include("conexao.php");
-                    $pesquisa_agendamento = "SELECT * FROM agendamento WHERE horario='$horario', data='$data', medico_crm='$crm_medico'";
-                                            $pesquisa_agendamento = $pesquisa_agendamento = "SELECT * FROM agendamento WHERE horario='$horario' AND data='$data' AND medico_crm='$crm_medico'";
+                    $pesquisa_agendamento = "SELECT * FROM agendamento WHERE horario='$horario' AND data='$data' AND medico_crm='$crm_medico'";
                     $resultado_agendamento = $conn->query($pesquisa_agendamento);
                     $pesquisa_agendamento_paciente = "SELECT * FROM agendamento WHERE horario='$horario' AND data='$data' AND paciente_cpf='$cpf'";
                     $resultado_agendamento_paciente = $conn->query($pesquisa_agendamento_paciente);
                     
                     if($resultado_agendamento->num_rows > 0 || $resultado_agendamento_paciente->num_rows > 0){
-                        $row = $resultado_agendamento->fetch_assoc();
-                        $row2 = $resultado_agendamento_paciente->fetch_assoc();
-                        if ($row['id'] == $id || $row2['id'] == $id){
-                            return true;
-                        }
-                        else{
-                            return false;
-                        }
+                        return false;
                     }
                     else{
                         return true;
@@ -243,16 +196,7 @@
                 }
             ?>
 
-            <div class="column">
-                <div class="input-box">
-                    <input type="submit" name="atualizar" class="cadbot" value="Atualizar" >
-                </div>
-            
-                <div class="input-box">
-                    <input type="submit" name="excluir" class="cadbot" value="Excluir" >
-                </div>
-            </div>
-
+            <input type="submit" name="confirmar" class="cadbot" value="Confirmar">
         </form>
     </section>
 
@@ -269,7 +213,6 @@
     <?php
 
         function mudar_variaveis(){
-            $_SESSION['presenca'] = $_POST['presenca'];
             $_SESSION['cpf_paciente'] = $_POST['cpf'];
             $_SESSION['data_marcada'] = $_POST['data'];
             $_SESSION['hora_marcada'] = $_POST['horario'];

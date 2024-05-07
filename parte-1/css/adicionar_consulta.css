@@ -255,3 +255,13 @@
   display: flex;
   column-gap: 15px;
 }
+
+.select-box select {
+  height: 100%;
+  width: 100%;
+  outline: none;
+  border: none;
+  color: #808080;
+  font-size: 1em;
+  background: #e9f8fb;
+}
