@@ -96,12 +96,12 @@ body {
   }
   
   .container-form .form {
-    margin-top: 15px;
+    margin-top: 20px;
   }
   
   .form .input-box {
     width: 150%;
-    margin-top: 10px;
+    margin-top: 20px;
   }
   
   .input-box label {
@@ -221,26 +221,6 @@ body {
     margin-bottom: 2%;
   }
 
-
-.success-message {
-    background-color: #f0f7ff;
-    border: 2px solid #3498db;
-    padding: 5%;
-    border-radius: 10px;
-    text-align: center;
-    max-width: 80%;
-    margin: 20% auto;
-}
-
-.success-message h2 {
-    color: #3498db;
-}
-
-.success-message p {
-    color: #2980b9;
-    margin-bottom: 20px;
-}
-
 .btn {
     background-color: #3498db;
     color: white;
@@ -314,4 +294,26 @@ body {
 .div_semcoluna p {
   margin: 0;
   font-weight: bold;
+}
+
+
+.success{
+  background-color: #f0f7ff;
+  border: 2px solid #3498db;
+  padding: 5%;
+  border-radius: 10px;
+  text-align: center;
+  max-width: 80%;
+  margin: 20% auto;
+  margin-top: 5%;
+  
+}
+
+.success h2 {
+  color: #3498db;
+}
+
+.success p {
+  color: #2980b9;
+  margin-bottom: 20px;
 }
