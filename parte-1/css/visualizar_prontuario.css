@@ -98,6 +98,19 @@ input[type="submit"]:hover {
     margin: 0;
 }
 
+.caixa2 {
+    background-color: #ffffff;
+    border: 1px solid #3498db; /* Nova cor */
+    border-radius: 5px;
+    margin-bottom: 20px;
+}
+
+/* Estilo para o texto dentro das caixas */
+.caixa2 p {
+    padding: 10px;
+    margin: 0;
+}
+
 /* Estilo para o botão de toggle */
 .toggle {
     float: right;
