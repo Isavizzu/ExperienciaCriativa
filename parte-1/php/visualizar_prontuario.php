@@ -49,43 +49,64 @@ include("session_start.php");
             $data = $_POST['data'];
             $cpf_paci = $_SESSION['cpf'];
             // Consulta SQL para buscar os registros do paciente para a data selecionada
-            $pesq_agend = "SELECT agendamento.id, agendamento.data, agendamento.horario, medico.medico_cpf, medico.medico_cpf as nome_medico, registro.descricao, prescricao.medicamento, prescricao.orientacao
+            $pesq_agend = "SELECT usuario.nome, agendamento.id, agendamento.data, agendamento.horario, medico.medico_cpf, registro.descricao, registro.id as id 
                            FROM agendamento
                            INNER JOIN medico ON agendamento.medico_crm = medico.crm
+                           INNER JOIN usuario ON medico.medico_cpf = usuario.cpf
                            INNER JOIN registro ON agendamento.id = registro.id_agendamento
-                           LEFT JOIN prescricao ON registro.id = prescricao.id_registro
                            WHERE agendamento.data = '$data' AND agendamento.paciente_cpf = '$cpf_paci'";
             $result_agend = $conn->query($pesq_agend);
             if($result_agend->num_rows > 0){
                 while($row_agend = $result_agend->fetch_assoc()){
-                    echo "<div class='input-box'>";
+        
                     $data_form = date("d/m/y", strtotime($row_agend['data']));
-                    $titulo = "Consulta do dia " . $data_form . ", Horário: " . $row_agend['horario'] . ", Médico: " . $row_agend['nome_medico'];
-                    criarCaixa($titulo, $row_agend['descricao'], $row_agend['medicamento'], $row_agend['orientacao']);
-                    echo "</div>";
-                }
-            }
-            else {
-                echo "<div class='erro'>Ainda não há nenhum registro em seu prontuário para esta data.</div>";
+                    $titulo = "Consulta do dia " . $data_form . ", Horário: " . $row_agend['horario'] . ", Médico: " . $row_agend['nome'];
+                    criarCaixa($titulo, $row_agend['descricao']);
+                    $pesq_presc = "SELECT * FROM prescricao WHERE id_registro = '$row_agend[id]'";
+                    $result_presc = $conn->query($pesq_presc);
+                    if($result_presc->num_rows > 0){
+                        while($row_presc = $result_presc->fetch_assoc()){
+                            criarCaixa($row_presc['medicamento'], $row_presc['orientacao']);
+                            echo "</div>";
+                            echo '</div>';
+                        }
             }
         }
+        }
+        else {
+            echo "<div class='erro'>Ainda não há nenhum registro em seu prontuário para esta data.</div>";
+            }
+    }
         else{
             $cpf_paci = $_SESSION['cpf'];
-            // Consulta SQL para buscar os registros do paciente para a data selecionada
-            $pesq_agend = "SELECT agendamento.id, agendamento.data, agendamento.horario, medico.medico_cpf, medico.medico_cpf as nome_medico, registro.descricao, prescricao.medicamento, prescricao.orientacao
+            // Consulta SQL para buscar os registros do paciente para todas as datas
+            $pesq_agend = "SELECT usuario.nome, agendamento.id, agendamento.data, agendamento.horario, medico.medico_cpf, registro.descricao, registro.id as id
                            FROM agendamento
                            INNER JOIN medico ON agendamento.medico_crm = medico.crm
+                           INNER JOIN usuario ON medico.medico_cpf = usuario.cpf
                            INNER JOIN registro ON agendamento.id = registro.id_agendamento
-                           LEFT JOIN prescricao ON registro.id = prescricao.id_registro
                            WHERE agendamento.paciente_cpf = '$cpf_paci'";
             $result_agend = $conn->query($pesq_agend);
             if($result_agend->num_rows > 0){
                 while($row_agend = $result_agend->fetch_assoc()){
-                    echo "<div class='input-box'>";
+                    
                     $data_form = date("d/m/y", strtotime($row_agend['data']));
-                    $titulo = "Consulta do dia " . $data_form . ", Horário: " . $row_agend['horario'] . ", Médico: " . $row_agend['nome_medico'];
-                    criarCaixa($titulo, $row_agend['descricao'], $row_agend['medicamento'], $row_agend['orientacao']);
+                    $titulo = "Consulta do dia " . $data_form . ", Horário: " . $row_agend['horario'] . ", Médico: " . $row_agend['nome'];
+                    criarCaixa($titulo, $row_agend['descricao']);
+                    $pesq_presc = "SELECT * FROM prescricao WHERE id_registro = '$row_agend[id]'";
+                    $result_presc = $conn->query($pesq_presc);
+                    if($result_presc->num_rows > 0){
+                        while($row_presc = $result_presc->fetch_assoc()){
+                            criarCaixa($row_presc['medicamento'], $row_presc['orientacao']);
+                            echo "</div>";
+                            echo '</div>';
+                        }
+                    }
+                    else{
+                        echo "<div class='erro'>Não há nenhuma prescrição relacionada a esse registro.</div>";
+                    }
                     echo "</div>";
+                    echo '</div>';
                 }
             }
             else {
@@ -94,15 +115,12 @@ include("session_start.php");
         }
     ?>
     <?php
-    function criarCaixa($titulo, $descricao, $medicamento, $orientacao) {
+    function criarCaixa($titulo, $descricao) {
         echo '<div class="caixa">';
         echo '<div class="titulo">' . $titulo . ' <span class="toggle">+</span></div>';
         echo '<div class="conteudo" style="display: none;">';
         echo '<p><strong>Descrição:</strong> ' . $descricao . '</p>';
-        echo '<p><strong>Medicamento:</strong> ' . $medicamento . '</p>';
-        echo '<p><strong>Orientação:</strong> ' . $orientacao . '</p>';
-        echo '</div>';
-        echo '</div>';
+        
     }
     ?> 
 </div>
