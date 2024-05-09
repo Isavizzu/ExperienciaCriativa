@@ -143,6 +143,44 @@
                 return $idade->y;
             }
 
+            function validaCPF($cpf) {
+                // Remove caracteres não numéricos
+                $cpf = preg_replace('/[^0-9]/', '', $cpf);
+            
+                // Verifica se o CPF possui 11 dígitos
+                if (strlen($cpf) != 11) {
+                    return false;
+                }
+            
+                // Verifica se todos os dígitos são iguais, o que torna o CPF inválido
+                if (preg_match('/(\d)\1{10}/', $cpf)) {
+                    return false;
+                }
+            
+                // Calcula o primeiro dígito verificador
+                $sum = 0;
+                for ($i = 0; $i < 9; $i++) {
+                    $sum += $cpf[$i] * (10 - $i);
+                }
+                $remainder = $sum % 11;
+                $digit1 = ($remainder < 2) ? 0 : (11 - $remainder);
+            
+                // Calcula o segundo dígito verificador
+                $sum = 0;
+                for ($i = 0; $i < 10; $i++) {
+                    $sum += $cpf[$i] * (11 - $i);
+                }
+                $remainder = $sum % 11;
+                $digit2 = ($remainder < 2) ? 0 : (11 - $remainder);
+            
+                // Verifica se os dígitos verificadores estão corretos
+                if ($cpf[9] != $digit1 || $cpf[10] != $digit2) {
+                    return false;
+                }
+            
+                return true;
+            }
+
             function botao_cadastrar(){
 
                 global $conn;
@@ -177,7 +215,10 @@
                 } 
                 else if (!preg_match('/^[0-9]{3}[\.]?[0-9]{3}[\.]?[0-9]{3}[-]?[0-9]{2}$/', $cpf)) {
                     echo "<section class='section_invalido'><p>Digite um CPF válido!</p></section>";
-                } 
+                }
+                else if (!validaCPF($_POST['cpf'])) {
+                    echo "<section class='section_invalido'><p>Digite um CPF válido!</p></section>";
+                }
                 else if (!preg_match('/^.{6,30}$/', $Senha)) {
                     echo "<section class='section_invalido'><p>A senha precisa ter no mínimo 6 caracteres!</p></section>";
                 } 

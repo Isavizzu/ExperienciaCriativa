@@ -163,6 +163,43 @@
       }
 
 
+      function validaCPF($cpf) {
+        // Remove caracteres não numéricos
+        $cpf = preg_replace('/[^0-9]/', '', $cpf);
+    
+        // Verifica se o CPF possui 11 dígitos
+        if (strlen($cpf) != 11) {
+            return false;
+        }
+    
+        // Verifica se todos os dígitos são iguais, o que torna o CPF inválido
+        if (preg_match('/(\d)\1{10}/', $cpf)) {
+            return false;
+        }
+    
+        // Calcula o primeiro dígito verificador
+        $sum = 0;
+        for ($i = 0; $i < 9; $i++) {
+            $sum += $cpf[$i] * (10 - $i);
+        }
+        $remainder = $sum % 11;
+        $digit1 = ($remainder < 2) ? 0 : (11 - $remainder);
+    
+        // Calcula o segundo dígito verificador
+        $sum = 0;
+        for ($i = 0; $i < 10; $i++) {
+            $sum += $cpf[$i] * (11 - $i);
+        }
+        $remainder = $sum % 11;
+        $digit2 = ($remainder < 2) ? 0 : (11 - $remainder);
+    
+        // Verifica se os dígitos verificadores estão corretos
+        if ($cpf[9] != $digit1 || $cpf[10] != $digit2) {
+            return false;
+        }
+    
+        return true;      
+      }
         function botao_atualizar($CPF){
 
             global $conn; 
@@ -184,6 +221,9 @@
             }
             else if(verifica_cpf($Cpf, $CPF) == false){
               echo "<section class='section_invalido'><p>Esse CPF já foi cadastrado anteriormente!</p></section>";
+            }
+            else if (!validaCPF($_POST['cpf'])) {
+              echo "<section class='section_invalido'><p>Digite um CPF válido!</p></section>";
             }
             else if($datformat > date('Y-m-d')){
               echo "<section class='section_invalido'><p>Digite uma data válida!</p></section>";
