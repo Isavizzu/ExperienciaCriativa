@@ -75,7 +75,7 @@
       
           <div class="input-box">
             <label>Senha</label>
-            <input type="password" id="Senha" name="Senha" placeholder="Digite uma senha com 6 a 30 caracteres" value="<?php echo $_SESSION['senha_paciente_atualiza']; ?>" required="" >
+            <input type="password" id="Senha" name="Senha" placeholder="Digite uma senha com 8 a 30 caracteres contendo um número, um caracter especial, uma leta maiúscula e uma letra minúscula" value="<?php echo $_SESSION['senha_paciente_atualiza']; ?>" required="" >
             <span onclick="showPassword()"></span>
           </div>
       
@@ -231,9 +231,9 @@
             else if(!preg_match('/^[0-9]{3}[\.]?[0-9]{3}[\.]?[0-9]{3}[-]?[0-9]{2}$/', $Cpf)){
                 echo "<section class='section_invalido'><p>Digite um CPF válido!</p></section>";
             }
-            else if(!preg_match('/^.{6,30}$/', $Senha)){
-                echo "<section class='section_invalido'><p>A senha precisa ter no mínimo 6 caracteres!</p></section>";
-            }
+            else if(!preg_match('/^(?=.\d)(?=.[a-z])(?=.[A-Z])(?=.[$&@#])[0-9a-zA-Z$&@#]{8,30}$/', $Senha)){
+              echo "<section class='section_invalido'><p>A senha precisa ter no mínimo 8 caracteres e incluir pelo menos uma letra minúscula, uma letra maiúscula, um número e um caractere especial ($, *, &, @, #).</p></section>";
+           }
             else if(!preg_match('/^\d(\.\d{2})?$/', $altura)){
                 echo "<section class='section_invalido'><p>Digite a altura em metros!</p></section>";
             }
