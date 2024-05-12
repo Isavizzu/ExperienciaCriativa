@@ -39,7 +39,7 @@
             <div class="input-box">
                 <label>CPF do Paciente</label>
                 <input type="text" name="cpf" value="<?php echo $_SESSION['cpf']?>" readonly>
-            </div>
+            </div> 
             
             <div class="input-box">
                 <label>Data da Consulta</label>
@@ -53,17 +53,18 @@
             <input type='hidden' name='nome' value='<?php echo $nome?>'>
             <input type='hidden' name='crm' value='<?php echo $crm?>'>
 
+            
             <?php
                 if(isset($_POST['confirmar'])) {
-                    botao_confirmar($nome, $crm);
+                    botao_confirmar($nome);
                 }
 
-                function botao_confirmar($nome, $crm){
+                function botao_confirmar($nome){
 
                     include("conexao.php");
                     
                     //pega os dados do form
-                    $crm_medico = $crm;
+                    $crm_medico = $_POST['crm'];
                     $cpf = $_POST["cpf"];
                     $data = $_POST["data"];
                     $horario = $_POST["horario"];
@@ -124,7 +125,7 @@
 
                                 if($row_agenda['trabalha_manha'] && $row_agenda['trabalha_manha'] !== null){        //verifica se trabalha de manhã
                                     $horario_inicio_manha = strtotime($row_agenda['horario_inicio_manha']);
-                                    $horario_fim_manha = strtotime($row_agenda['horario_fim_manha']); 
+                                    $horario_fim_manha = strtotime($row_agenda['horario_fim_manha']);
 
                                     if($horario_formatado >= $horario_inicio_manha && $horario_formatado < $horario_fim_manha){//Verifica se o horário informado está dentro do horário do(a) médico(a)
                                         if(verifica_agendamento($horario,$crm_medico,$cpf,$data)){   //verifica se há consulta no dia e horario informado
@@ -240,16 +241,14 @@
                         $mensagem .= " - das " . $row['horario_inicio_tarde'] . " às " . $row['horario_fim_tarde']. ".";
                     }
                 }
+                else {
+                    $mensagem .= "não trabalha neste dia.";
+                }
                 echo "<section class='agenda_dia'>$mensagem</section>";
                 return;
             }
-            else {
-                $mensagem .= "não trabalha neste dia.";
-            }
-            echo "<section class='agenda_dia'>$mensagem</section>";
         }
     ?>
-
 
     
 </body>

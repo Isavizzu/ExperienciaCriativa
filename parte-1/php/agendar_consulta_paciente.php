@@ -69,17 +69,32 @@
             $pesquisa_medico = "SELECT medico_cpf, crm
                                 FROM medico  WHERE especialidade_id='$especialidade'";
             $resultado_pesquisa_medico = $conn->query($pesquisa_medico);
+            
+
             if ($resultado_pesquisa_medico->num_rows > 0){
-                while($linha_pesquisa_medico = $resultado_pesquisa_medico->fetch_assoc()){
-                    $pesquisa_nome_medico = "SELECT nome 
-                                            FROM usuario 
-                                            WHERE cpf='$linha_pesquisa_medico[medico_cpf]'";
-                    $resultado_pesquisa_nome_medico = $conn->query($pesquisa_nome_medico); 
-                    $linha_pesquisa_nome_medico = $resultado_pesquisa_nome_medico->fetch_assoc();
-                    echo"<section class='result-box'>
-                        <a href='../php/adicionar_consulta_paciente.php?crm=$linha_pesquisa_medico[crm]&nome=$linha_pesquisa_nome_medico[nome]&espe=$especialidade'>$linha_pesquisa_nome_medico[nome]</a>
-                    </section>";
+                while ($linha_pesquisa_medico = $resultado_pesquisa_medico->fetch_assoc()) {
+                    $crm_medico = $linha_pesquisa_medico['crm'];
+                    
+                    $pesquisa_agenda = "SELECT medico_crm FROM agenda WHERE medico_crm = '$crm_medico'";
+                    $resultado_agenda = $conn->query($pesquisa_agenda);
+                    
+                    if ($resultado_agenda->num_rows > 0) {
+                        $medico_cpf = $linha_pesquisa_medico['medico_cpf'];
+                        
+                        $pesquisa_nome_medico = "SELECT nome FROM usuario WHERE cpf = '$medico_cpf'";
+                        $resultado_pesquisa_nome_medico = $conn->query($pesquisa_nome_medico);
+                        
+                        if ($resultado_pesquisa_nome_medico->num_rows > 0) {
+                            $linha_pesquisa_nome_medico = $resultado_pesquisa_nome_medico->fetch_assoc();
+                            $nome_medico = $linha_pesquisa_nome_medico['nome'];
+                            
+                            echo "<section class='result-box_outro'>
+                                    <a href='../php/adicionar_consulta_paciente.php?crm=$crm_medico&nome=$nome_medico&espe=$especialidade'>$nome_medico</a>
+                                  </section>";
+                        }
+                    }
                 }
+                
             }
             else {
                 echo "<section class='container'>
@@ -89,6 +104,8 @@
                     </section>";
             }
         }
+            
+        
         ?>
     </section>
 

@@ -36,6 +36,32 @@ body {
     color: #2980b9;
 }
 
+
+.result-box_outro {
+  width: 500px;
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  margin: 20px;
+  padding: 20px;
+  transition: all 0.3s ease;
+  text-align: center;
+}
+
+.result-box_outro:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+}
+
+.result-box_outro a {
+  text-decoration: none;
+  color: #3498db;
+}
+
+.result-box_outro a:hover {
+  color: #2980b9;
+}
+
 .message-box {
     background-color: #fff;
     padding: 20px;
