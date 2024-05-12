@@ -204,7 +204,7 @@
             else if (!validaCPF($_POST['cpf'])) {
                 echo "<section class='section_invalido'><p>Digite um CPF válido!</p></section>";
             }
-            else if(!preg_match('/^(?=.\d)(?=.[a-z])(?=.[A-Z])(?=.[$&@#])[0-9a-zA-Z$&@#]{8,30}$/', $Senha)){
+            else if(!preg_match('/^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[^\w\s]).{8,30}$/', $Senha)){
                 echo "<section class='section_invalido'><p>A senha precisa ter no mínimo 8 caracteres e incluir pelo menos uma letra minúscula, uma letra maiúscula, um número e um caractere especial ($, *, &, @, #).</p></section>";
             }
             else if($datformat > date('Y-m-d')){
