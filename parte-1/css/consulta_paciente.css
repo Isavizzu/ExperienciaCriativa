@@ -12,13 +12,14 @@ body {
 }
 
 .result-box {
-    width: 300px;
+    width: auto;
     background-color: #fff;
     border-radius: 8px;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     margin: 20px;
     padding: 20px;
     transition: all 0.3s ease;
+    text-align: center;
 }
 
 .result-box:hover {
