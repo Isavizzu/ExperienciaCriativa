@@ -62,51 +62,38 @@
 
             
     <section class="container">
-        <?php
-         if (isset($_POST['Buscar'])) {
+    <?php
+        if (isset($_POST['Buscar'])) {
 
             $especialidade = $_POST['especialidade'];
-            $pesquisa_medico = "SELECT medico_cpf, crm
-                                FROM medico  WHERE especialidade_id='$especialidade'";
-            $resultado_pesquisa_medico = $conn->query($pesquisa_medico);
-            
+            $pesquisa_medico = "SELECT m.medico_cpf, m.crm, u.nome
+                                FROM medico m 
+                                INNER JOIN usuario u ON m.medico_cpf = u.cpf
+                                LEFT JOIN agenda a ON m.crm = a.medico_crm
+                                WHERE m.especialidade_id='$especialidade'
+                                AND a.medico_crm IS NOT NULL
+                                GROUP BY m.crm";
 
-            if ($resultado_pesquisa_medico->num_rows > 0){
+            $resultado_pesquisa_medico = $conn->query($pesquisa_medico);
+
+            if ($resultado_pesquisa_medico->num_rows == 0) {
+                echo "<section class='container'>
+                    <section class='message-box'>
+                        Ainda não há consultas para essa especialidade
+                    </section>
+                    </section>";
+            } else {
                 while ($linha_pesquisa_medico = $resultado_pesquisa_medico->fetch_assoc()) {
                     $crm_medico = $linha_pesquisa_medico['crm'];
-                    
-                    $pesquisa_agenda = "SELECT medico_crm FROM agenda WHERE medico_crm = '$crm_medico'";
-                    $resultado_agenda = $conn->query($pesquisa_agenda);
-                    
-                    if ($resultado_agenda->num_rows > 0) {
-                        $medico_cpf = $linha_pesquisa_medico['medico_cpf'];
-                        
-                        $pesquisa_nome_medico = "SELECT nome FROM usuario WHERE cpf = '$medico_cpf'";
-                        $resultado_pesquisa_nome_medico = $conn->query($pesquisa_nome_medico);
-                        
-                        if ($resultado_pesquisa_nome_medico->num_rows > 0) {
-                            $linha_pesquisa_nome_medico = $resultado_pesquisa_nome_medico->fetch_assoc();
-                            $nome_medico = $linha_pesquisa_nome_medico['nome'];
-                            
-                            echo "<section class='result-box_outro'>
-                                    <a href='../php/adicionar_consulta_paciente.php?crm=$crm_medico&nome=$nome_medico&espe=$especialidade'>$nome_medico</a>
-                                  </section>";
-                        }
-                    }
+                    $nome_medico = $linha_pesquisa_medico['nome'];
+
+                    echo "<section class='result-box_outro'>
+                            <a href='../php/adicionar_consulta_paciente.php?crm=$crm_medico&nome=$nome_medico&espe=$especialidade'>$nome_medico</a>
+                        </section>";
                 }
-                
-            }
-            else {
-                echo "<section class='container'>
-                        <section class='message-box'>
-                            Ainda não há consultas para essa especialidade
-                        </section>
-                    </section>";
             }
         }
-            
-        
-        ?>
+    ?>
     </section>
 
     <?php
@@ -132,3 +119,4 @@
     
 </body>
 </html>
+

@@ -25,7 +25,7 @@
             $_SESSION['hora_marcada'] =  $linha['horario'];
             $_SESSION['pagina_visitada'] = true;
         }
-        if(isset($_POST['confirmar'])){
+        if(isset($_POST['atualizar'])){
             mudar_variaveis();
         }
     ?>
@@ -253,8 +253,6 @@
     <?php
 
         function mudar_variaveis(){
-            $_SESSION['presenca'] = $_POST['presenca'];
-            $_SESSION['cpf_paciente'] = $_POST['cpf'];
             $_SESSION['data_marcada'] = $_POST['data'];
             $_SESSION['hora_marcada'] = $_POST['horario'];
         }
