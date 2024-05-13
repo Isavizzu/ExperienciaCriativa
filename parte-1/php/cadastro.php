@@ -220,7 +220,8 @@
                 echo "<section class='section_invalido'><p>Digite um telefone válido!</p></section>";
             }
             else{
-                $sqlInsert = "INSERT INTO usuario(cpf, nome, data_nascimento, senha) VALUES ('$cpf', '$Nome', '$datformat', '$Senha')";
+                $hash = md5($Senha);
+                $sqlInsert = "INSERT INTO usuario(cpf, nome, data_nascimento, senha) VALUES ('$cpf', '$Nome', '$datformat', '$hash')";
                 $sqlInsert1 = "INSERT INTO paciente(telefone, paciente_cpf, altura, peso, sexo) VALUES ('$telefone', '$cpf', '$altura', '$peso', '$sexo')";
                 $conn->query($sqlInsert);
                 $conn->query($sqlInsert1);

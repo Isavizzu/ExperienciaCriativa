@@ -79,21 +79,6 @@
                 </div>
             </div>
 
-            <div class="column">
-
-                <div class="input-box">
-                    <label>Senha</label>
-                    <input type="password" id="Senha" name="Senha" placeholder="Digite uma senha com 8 a 30 caracteres contendo um número, um caracter especial, uma leta maiúscula e uma letra minúscula" value="<?php echo $_SESSION['senha_medico_atualiza']; ?>" required="">
-                    <span onclick="showPassword()"></span>
-                </div>
-
-                <div class="input-box">
-                    <label>Confirme a senha</label>
-                    <input type="password" id="confirmaSenha" name="confirmaSenha"  placeholder="Confirme sua senha" value="<?php echo $_SESSION['conf_senha_medico_atualiza']; ?>" required="">
-                    <span onclick="showPassword()"></span>
-                </div>
-            </div>
-
             <div class="input-box">
 
             <label>Especialidade</label>
@@ -116,6 +101,12 @@
             </div>
             </div>
             </div>
+
+            <div class="input-box">
+            <label>Senha <a href="alterar_senha.php?cpf=<?php echo $CPF; ?>">(Alterar senha)</a></label>
+            <input type="text" id="Senha" name="Senha" value="********" readonly>
+            </div>
+            <br> 
 
             <div class="column">
                 <div class="input-box">
@@ -276,7 +267,7 @@
                                 echo "<section class='section_invalido'><p>Digite um CRM válido (7 dígitos)!</p></section>";    
                         }
                         else{
-                                $sql = "UPDATE usuario SET cpf = '$Cpf', nome = '$Nome', data_nascimento = '$datformat', senha = '$Senha' WHERE cpf = '$CPF'";
+                                $sql = "UPDATE usuario SET cpf = '$Cpf', nome = '$Nome', data_nascimento = '$datformat' WHERE cpf = '$CPF'";
                                 $sql1 = "UPDATE medico SET crm = '$crm', especialidade_id = $especialidade WHERE medico_cpf = '$Cpf'";
                                 $conn->query($sql);
                                 $conn->query($sql1);

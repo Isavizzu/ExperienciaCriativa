@@ -223,7 +223,8 @@
                     echo "<section class='section_invalido'><p>Digite um CPF válido!</p></section>";
                 }
                 else {
-                    $sqlInsertUsuario = "INSERT INTO usuario(cpf, nome, data_nascimento, senha) VALUES ('$cpf', '$Nome', '$datformat', '$Senha')";
+                    $hash = md5($Senha);
+                    $sqlInsertUsuario = "INSERT INTO usuario(cpf, nome, data_nascimento, senha) VALUES ('$cpf', '$Nome', '$datformat', '$hash')";
                     $sqlInsertMedico = "INSERT INTO medico(crm, medico_cpf, especialidade_id, ativo) VALUES ('$crm', '$cpf', '$especialidade', 1)";
                     $conn->query($sqlInsertUsuario);
                     $conn->query($sqlInsertMedico);

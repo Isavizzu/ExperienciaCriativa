@@ -242,3 +242,15 @@ h1 {
   margin: 0;
   font-weight: bold;
 }
+
+a {
+  font-size: 14px; /* Define o tamanho da fonte para 14 pixels */
+  text-decoration: none; /* Remove o sublinhado padrão */
+  color: black; /* Define a cor do texto para preto */
+  transition: color 0.3s; /* Adiciona uma transição suave para a mudança de cor */
+}
+
+/* Estilo para o link quando passa o mouse por cima */
+a:hover {
+  color: blue; /* Muda a cor do texto para azul quando o mouse está sobre o link */
+}
