@@ -41,7 +41,7 @@
             $senha_hash = md5($senha);
             $cpf = $_POST["cpf"];
 
-            $pesquisa_login = "SELECT cpf, nome FROM usuario WHERE senha = '$senha' AND cpf = '$cpf'";
+            $pesquisa_login = "SELECT cpf, nome FROM usuario WHERE senha = '$senha_hash' AND cpf = '$cpf'";
 
             $resultado_pesquisa = $conn->query($pesquisa_login);
             $row = $resultado_pesquisa->fetch_assoc();

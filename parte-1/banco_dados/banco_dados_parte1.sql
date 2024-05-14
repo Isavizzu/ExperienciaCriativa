@@ -172,42 +172,18 @@ INSERT INTO agenda (dia_semana, trabalha, trabalha_manha, trabalha_tarde, horari
 (6, true, true, true, '08:00:00', '12:00:00', '14:00:00', '18:00:00', '1111111'),
 (0, false, true, true, '08:00:00', '12:00:00', '14:00:00', '18:00:00', '1111111');
 
--- Inserção de 7 agendas para o médico 2
-INSERT INTO agenda (dia_semana, trabalha, trabalha_manha, trabalha_tarde, horario_inicio_manha, horario_fim_manha, horario_inicio_tarde, horario_fim_tarde, medico_crm) VALUES 
-(1, true, true, true, '08:00:00', '12:00:00', '14:00:00', '18:00:00', '2222222'),
-(2, true, true, true, '08:00:00', '12:00:00', '14:00:00', '18:00:00', '2222222'),
-(3, true, true, true, '08:00:00', '12:00:00', '14:00:00', '18:00:00', '2222222'),
-(4, true, true, true, '08:00:00', '12:00:00', '14:00:00', '18:00:00', '2222222'),
-(5, true, true, true, '08:00:00', '12:00:00', '14:00:00', '18:00:00', '2222222'),
-(6, true, true, true, '08:00:00', '12:00:00', '14:00:00', '18:00:00', '2222222'),
-(0, false, true, true, '08:00:00', '12:00:00', '14:00:00', '18:00:00', '2222222');
-
 -- Inserção de 5 agendamentos para o médico 1 com pacientes existentes
 INSERT INTO agendamento (horario, data, medico_crm, paciente_cpf) VALUES 
-('08:30:00', '2024-04-01', '1111111', '12121212121'),
-('09:30:00', '2024-04-02', '1111111', '13131313131'),
-('10:30:00', '2024-04-03', '1111111', '14141414141'),
-('11:30:00', '2024-04-04', '1111111', '15151515151'),
-('14:00:00', '2024-04-06', '1111111', '16161616161');
-
--- Inserção de 5 agendamentos para o médico 2 com pacientes existentes
-INSERT INTO agendamento (horario, data, medico_crm, paciente_cpf) VALUES 
-('08:30:00', '2024-04-01', '2222222', '17171717171'),
-('09:30:00', '2024-04-02', '2222222', '18181818181'),
-('10:30:00', '2024-04-03', '2222222', '19191919191'),
-('11:30:00', '2024-04-04', '2222222', '20202020202'),
-('14:00:00', '2024-04-05', '2222222', '12121212121');
+('08:30:00', '2024-04-01', '1111111', '913.118.130-98');
 
 
 
 INSERT INTO registro (descricao, id_agendamento) VALUES
 -- Registro para o médico 1 e paciente 1
-('Consulta de rotina', 1),
+('Consulta de rotina', 1);
 
--- Registro para o médico 1 e paciente 2
-('Exame de sangue', 2);
+
 
 INSERT INTO prescricao (medicamento, orientacao, id_registro) VALUES
-('Paracetamol', 'Tomar 1 comprimido a cada 6 horas', 1),
-('Dipirona', 'Tomar 1 comprimido após as refeições', 2);
+('Paracetamol', 'Tomar 1 comprimido a cada 6 horas', 1);
 
