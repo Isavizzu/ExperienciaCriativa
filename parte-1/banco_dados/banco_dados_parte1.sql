@@ -23,7 +23,7 @@ CREATE TABLE usuario (
     cpf varchar(15) PRIMARY KEY,
     nome varchar(100),
     data_nascimento date,
-    senha varchar(20)
+    senha varchar(40)
 );
 
 CREATE TABLE paciente (
