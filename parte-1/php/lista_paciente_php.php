@@ -34,8 +34,6 @@
         if($_SESSION['pagina_visitada'] == false ){
             $_SESSION['nome_paciente_atualiza'] = $nome;
             $_SESSION['cpf_paciente_atualiza'] = $CPF;
-            $_SESSION['senha_paciente_atualiza'] = $senha;
-            $_SESSION['conf_senha_paciente_atualiza'] = $senha;
             $_SESSION['altura_paciente_atualiza'] = $alt;
             $_SESSION['peso_paciente_atualiza'] = $pes;
             $_SESSION['telefone_paciente_atualiza'] = $tel;
@@ -108,8 +106,8 @@
       </div>
 
     <div class="input-box">
-    <label>Senha <a href="alterar_senha.php?cpf=<?php echo $CPF; ?>">(Alterar senha)</a></label>
-    <input type="text" id="Senha" name="Senha" value="********" readonly>
+      <label>Senha <a href="alterar_senha.php?cpf=<?php echo $CPF; ?>">(Alterar senha)</a></label>
+      <input type="text" id="Senha" name="Senha" value="********" readonly>
     </div>
     <br>
 
@@ -144,8 +142,6 @@
       function mudar_variaveis(){
           $_SESSION['nome_paciente_atualiza'] = $_POST['nome'];
           $_SESSION['cpf_paciente_atualiza'] = $_POST['cpf'];
-          $_SESSION['senha_paciente_atualiza'] = $_POST['Senha'];
-          $_SESSION['conf_senha_paciente_atualiza'] =  $_POST['confirmaSenha'];
           $_SESSION['altura_paciente_atualiza'] = $_POST['alt'];
           $_SESSION['peso_paciente_atualiza'] = $_POST['pes'];
           $_SESSION['telefone_paciente_atualiza'] = $_POST['telefone'];
@@ -200,17 +196,13 @@
             $peso = $_POST['pes'];
             $altura = $_POST['alt'];
             $dat = $_POST['data'];
-            $Senha = $_POST['Senha'];
-            $confirmasenha = $_POST['confirmaSenha'];
             $telefone = $_POST['telefone'];
             $sexo = $_POST['sexo'];
 
             $datformat = date('Y-m-d',strtotime($dat));
 
-            if($Senha != $confirmasenha){
-                echo "<section class='section_invalido'><p>As senhas não correspondem!</p></section>";
-            }
-            else if(verifica_cpf($Cpf, $CPF) == false){
+    
+            if(verifica_cpf($Cpf, $CPF) == false){
               echo "<section class='section_invalido'><p>Esse CPF já foi cadastrado anteriormente!</p></section>";
             }
             else if (!validaCPF($_POST['cpf'])) {
@@ -222,9 +214,6 @@
             else if(!preg_match('/^[0-9]{3}[\.]?[0-9]{3}[\.]?[0-9]{3}[-]?[0-9]{2}$/', $Cpf)){
                 echo "<section class='section_invalido'><p>Digite um CPF válido!</p></section>";
             }
-            else if(!preg_match('/^(?=.\d)(?=.[a-z])(?=.[A-Z])(?=.[$&@#])[0-9a-zA-Z$&@#]{8,30}$/', $Senha)){
-              echo "<section class='section_invalido'><p>A senha precisa ter no mínimo 8 caracteres e incluir pelo menos uma letra minúscula, uma letra maiúscula, um número e um caractere especial ($, *, &, @, #).</p></section>";
-           }
             else if(!preg_match('/^\d(\.\d{2})?$/', $altura)){
                 echo "<section class='section_invalido'><p>Digite a altura em metros!</p></section>";
             }

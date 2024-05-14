@@ -38,8 +38,6 @@
         if($_SESSION['pagina_visitada'] == false || !isset($_SESSION['pagina_visitada'])){
             $_SESSION['nome_medico_atualiza'] = $nome;
             $_SESSION['cpf_medico_atualiza'] = $CPF;
-            $_SESSION['senha_medico_atualiza'] = $senha;
-            $_SESSION['conf_senha_medico_atualiza'] = $senha;
             $_SESSION['data_medico_atualiza'] = $data_nascimento;
             $_SESSION['crm_medico_atualiza'] = $CRM;
             $_SESSION['especialidade_medico_atualiza'] = $especialidade_nome;
@@ -170,8 +168,6 @@
                         // Atualiza as demais variáveis de sessão
                         $_SESSION['nome_medico_atualiza'] = $_POST['nome'];
                         $_SESSION['cpf_medico_atualiza'] = $_POST['cpf'];
-                        $_SESSION['senha_medico_atualiza'] = $_POST['Senha'];
-                        $_SESSION['conf_senha_medico_atualiza'] = $_POST['confirmaSenha'];
                         $_SESSION['data_medico_atualiza'] = $_POST['data'];
                         $_SESSION['crm_medico_atualiza'] = $_POST['crm'];
                         $_SESSION['valor_especialidade_medico_atualiza'] = $_POST['especialidade'];
@@ -231,15 +227,11 @@
                         $Nome = $_POST['nome'];
                         $dat = $_POST['data'];
                         $crm = $_POST['crm'];
-                        $Senha = $_POST['Senha'];
                         $especialidade = $_POST['especialidade'];
-                        $confirmasenha = $_POST['confirmaSenha'];
                         $datformat = date('Y-m-d',strtotime($dat));
                     
-                        if ($Senha != $confirmasenha){
-                            echo "<section class='section_invalido'><p>As senhas não correspondem!</p></section>";
-                        } 
-                        else if(verifica_cpf($Cpf, $CPF) == false){
+            
+                        if(verifica_cpf($Cpf, $CPF) == false){
                             echo "<section class='section_invalido'><p>Esse CPF já foi cadastrado anteriormente!</p></section>";
                         }
                         else if(verifica_crm($crm, $CRM) == false){
@@ -253,9 +245,6 @@
                         }
                         else if($datformat > date('Y-m-d')){
                             echo "<section class='section_invalido'><p>Digite uma data válida!</p></section>";
-                          }
-                          else if(!preg_match('/^(?=.\d)(?=.[a-z])(?=.[A-Z])(?=.[$&@#])[0-9a-zA-Z$&@#]{8,30}$/', $Senha)){
-                            echo "<section class='section_invalido'><p>A senha precisa ter no mínimo 8 caracteres e incluir pelo menos uma letra minúscula, uma letra maiúscula, um número e um caractere especial ($, *, &, @, #).</p></section>";
                         }
                         else if (!preg_match('/^[A-Za-zÀ-úçÇ ]{3,100}$/', $Nome)){
                             echo "<section class='section_invalido'><p>Digite o nome completo!</p></section>";
