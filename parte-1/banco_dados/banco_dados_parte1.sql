@@ -138,57 +138,25 @@ INSERT INTO especialidade (id, nome_especialidade) VALUES
 
 -- Inserção de 10 usuários de médico
 INSERT INTO usuario (cpf, nome, data_nascimento, senha) VALUES 
-('11111111111', 'Usuário 1', '1990-01-01', 'Senha1@'),
-('22222222222', 'Usuário 2', '1991-02-02', 'Senha2@'),
-('33333333333', 'Usuário 3', '1992-03-03', 'Senha3@'),
-('44444444444', 'Usuário 4', '1993-04-04', 'Senha4@'),
-('55555555555', 'Usuário 5', '1994-05-05', 'Senha5@'),
-('66666666666', 'Usuário 6', '1995-06-06', 'Senha6@'),
-('77777777777', 'Usuário 7', '1996-07-07', 'Senha7@'),
-('88888888888', 'Usuário 8', '1997-08-08', 'Senha8@'),
-('99999999999', 'Usuário 9', '1998-09-09', 'Senha9@'),
-('10101010101', 'Usuário 10', '1999-10-10', 'Senha10@');
+('913.118.130-98', 'Julia Helena', '1990-01-01', '4542d8f0b2562d983104a332b16b6cbb'),
+('964.120.220-07', 'Maria Fernanda', '1991-02-02', 'b247e6522b4264081a5b3263642ffdb0'),
+('046.647.190-43', 'Isabelle Vizzu', '1992-03-03', '5dae746f560eb5c4ab4c425fded69031');
+
 
 -- Inserção de 10 médicos
 INSERT INTO medico (crm, medico_cpf, especialidade_id) VALUES 
-('1111111', '11111111111', 1),
-('2222222', '22222222222', 2),
-('3333333', '33333333333', 3),
-('4444444', '44444444444', 1),
-('5555555', '55555555555', 2),
-('6666666', '66666666666', 3),
-('7777777', '77777777777', 1),
-('8888888', '88888888888', 2),
-('9999999', '99999999999', 3),
-('1010101', '10101010101', 9);
+('1111111', '046.647.190-43', 1);
 
--- Inserção de 9 usuários de paciente
-INSERT INTO usuario (cpf, nome, data_nascimento, senha) VALUES 
-('12121212121', 'Usuário 11', '1990-11-11', 'Senha11@'),
-('13131313131', 'Usuário 12', '1991-12-12', 'Senha12@'),
-('14141414141', 'Usuário 13', '1992-01-13', 'Senha13@'),
-('15151515151', 'Usuário 14', '1993-02-14', 'Senha14@'),
-('16161616161', 'Usuário 15', '1994-03-15', 'Senha15@'),
-('17171717171', 'Usuário 16', '1995-04-16', 'Senha16@'),
-('18181818181', 'Usuário 17', '1996-05-17', 'Senha17@'),
-('19191919191', 'Usuário 18', '1997-06-18', 'Senha18@'),
-('20202020202', 'Usuário 19', '1998-07-19', 'Senha19@');
 
 -- Inserção de 9 pacientes
 INSERT INTO paciente (telefone, peso, altura, paciente_cpf) VALUES 
-('11122233344', '70', '170', '12121212121'),
-('22233344455', '65', '165', '13131313131'),
-('33344455566', '80', '180', '14141414141'),
-('44455566677', '75', '175', '15151515151'),
-('55566677788', '68', '168', '16161616161'),
-('66677788899', '85', '175', '17171717171'),
-('77788899900', '72', '172', '18181818181'),
-('88899900011', '78', '178', '19191919191'),
-('99900011122', '90', '185', '20202020202');
+('11122233344', '70', '170', '913.118.130-98'),
+('22233344455', '65', '165', '964.120.220-07');
+
 
 
 -- Inserção de 1 usuário recepcionista
-INSERT INTO usuario (cpf, nome, data_nascimento, senha) VALUES ('31313131313', 'Nome do Recepcionista', '1980-01-01', 'Senharecep12@');
+INSERT INTO usuario (cpf, nome, data_nascimento, senha) VALUES ('31313131313', 'Nome do Recepcionista', '1980-01-01', '535f2994ee5d06430c7c1093551081fd');
  
  -- Inserção de 1 recepcionista
 INSERT INTO recepcionista (recepcionista_cpf) VALUES
