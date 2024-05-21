@@ -70,13 +70,19 @@ include("session_start.php");
                             echo "</div>";
                             echo '</div>';
                         }
+                    }
+                    else{
+                        echo "<div class='erro'>Não há nenhuma prescrição relacionada a esse registro.</div>";
+                    }
+                    echo "</div>";
+                    echo '</div>';
+                }
+            }        
+            else {
+                echo "<div class='erro'>Ainda não há nenhum registro em seu prontuário para esta data.</div>";
             }
+        
         }
-        }
-        else {
-            echo "<div class='erro'>Ainda não há nenhum registro em seu prontuário para esta data.</div>";
-            }
-    }
         else{
             $cpf_paci = $_SESSION['cpf'];
             // Consulta SQL para buscar os registros do paciente para todas as datas
