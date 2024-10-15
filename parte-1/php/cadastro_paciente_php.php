@@ -16,7 +16,7 @@
 
     $VerificaBotao = $_GET['val'];
 
-    if($VerificaBotao == 1){
+    if($VerificaBotao == 1){ 
         echo '<section class="success-message">
             <h2>Cadastro realizado com sucesso!</h2>
             <p>O paciente foi cadastrado com sucesso em nosso sistema.</p>
