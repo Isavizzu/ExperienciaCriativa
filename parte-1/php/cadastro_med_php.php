@@ -17,11 +17,11 @@
     $VerificaBotao = $_GET['val'];
 
     if($VerificaBotao == 1){
-        echo '<section class="success-message">
+        echo "<section class='success-message'>
             <h2>Cadastro realizado com sucesso!</h2>
             <p>O médico foi cadastrado com sucesso em nosso sistema.</p>
-            <a href="../php/agenda_recepcionista.php" class="btn">Voltar à Agenda</a>
-            </section>';
+            <a href='../php/agenda_recepcionista.php' class='btn'>Voltar à Agenda</a>
+            </section>";
     }
     else if($VerificaBotao == 2){
         echo '<section class="success-message">
